@@ -46,6 +46,6 @@ class Player: SKSpriteNode {
     scene.addChild(projectile)
     projectile.startDecay()
     projectile.physicsBody!.usesPreciseCollisionDetection = true
-    projectile.physicsBody!.applyImpulse(CGVector(dx: direction.dx * projectile.initialSpeed * physicsBody.velocity.normalized().dx, dy: direction.dy  * projectile.initialSpeed))
+    projectile.physicsBody!.applyImpulse(CGVector(dx: direction.dx * projectile.initialSpeed, dy: direction.dy * projectile.initialSpeed))
   }
 }

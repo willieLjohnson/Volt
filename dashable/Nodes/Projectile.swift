@@ -11,7 +11,7 @@ import Foundation
 import SpriteKit
 
 class Projectile: SKSpriteNode {
-  let initialSpeed: CGFloat = 2
+  let initialSpeed: CGFloat = 4
 
   init(position: CGPoint, size: CGFloat, color: SKColor = Style.PROJECTILE_COLOR) {
     super.init(texture: nil, color: Style.OBSTACLE_COLOR, size: CGSize(width: size, height: size))
@@ -22,8 +22,8 @@ class Projectile: SKSpriteNode {
     physicsBody = SKPhysicsBody(circleOfRadius: size)
 
     guard let physicsBody = physicsBody else { return }
-    physicsBody.density = 0.45
-    physicsBody.affectedByGravity = true
+    physicsBody.density = 0.4
+    physicsBody.affectedByGravity = false
     physicsBody.isDynamic = true
     physicsBody.categoryBitMask = PhysicsCategory.projectile
     physicsBody.collisionBitMask = PhysicsCategory.enemy | PhysicsCategory.ground | PhysicsCategory.obstacles
