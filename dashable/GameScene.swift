@@ -167,7 +167,7 @@ private extension GameScene {
     cam.setScale(3.5)
 
     // Setup joystick to control player movement.
-    movePlayerStick.position = CGPoint(x: -size.width / 2 + movePlayerStick.radius * 1.7, y: -size.height / 2 + movePlayerStick.radius * 1.7)
+    movePlayerStick.position = CGPoint(x: -size.width / 2 + movePlayerStick.radius * 2, y: -size.height / 2 + movePlayerStick.radius * 1.7)
     movePlayerStick.stick.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
     movePlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
     movePlayerStick.trackingHandler = { [unowned self] data in
@@ -178,7 +178,7 @@ private extension GameScene {
 
 
     // Setup joystick to control player movement.
-    shootPlayerStick.position = CGPoint(x: size.width / 2 - shootPlayerStick.radius * 1.7, y: -size.height / 2 + shootPlayerStick.radius * 1.7)
+    shootPlayerStick.position = CGPoint(x: size.width / 2 - shootPlayerStick.radius * 2, y: -size.height / 2 + shootPlayerStick.radius * 1.7)
     shootPlayerStick.stick.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
     shootPlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
     shootPlayerStick.trackingHandler = { [unowned self] data in
