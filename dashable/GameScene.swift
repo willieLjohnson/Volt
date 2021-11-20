@@ -68,7 +68,7 @@ class GameScene: SKScene {
     let xOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100 - 1) - 0.04)
     let yOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dy) / 100 - 1) - 0.04)
     let scaleExpo = CGFloat(0.001 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100  - 1) + 3.16)
-    var xOffset = xOffsetExpo.clamped(to: -1000...1500) * (playerPhysicsBody.velocity.dx > 0 ? 1 : -1)
+    let xOffset = xOffsetExpo.clamped(to: -1000...1500) * (playerPhysicsBody.velocity.dx > 0 ? 1 : -1)
 
     let scale = scaleExpo.clamped(to: 3...5.5)
     cam.setScale(scale)
@@ -130,6 +130,7 @@ private extension GameScene {
     yellowEnemy.physicsBody = nil
     yellowEnemy.logic = Logic.yellowEnemyLogic
     addChild(yellowEnemy)
+
     addGroundObstacles()
     cam = SKCameraNode()
     cam.zPosition = 1000
@@ -188,6 +189,7 @@ private extension GameScene {
   }
 }
 
+// MARK: Scene Environment
 private extension GameScene {
   func createBackground() {
     for i in 0...1000 {
@@ -222,12 +224,35 @@ private extension GameScene {
   }
 }
 
+// MARK: Setup
 extension GameScene: SKPhysicsContactDelegate {
   func didBegin(_ contact: SKPhysicsContact) {
     lightImpactFeedbackGenerator.prepare()
     mediumImpactFeedbackGenerator.prepare()
     heavyImpactFeedbackGenerator.prepare()
     guard let playerPhysicsBody = player.physicsBody else { return }
+    guard let redPhysicsBody = redEnemy.physicsBody else { return }
+    guard let nodeA = contact.bodyA.node else { return }
+    guard let nodeB = contact.bodyB.node else { return }
+
+    if nodeA.name == "projectile" {
+      if let projectile = nodeA as? Obstacle {
+        projectile.color = .red
+      }
+      nodeB.alpha -= nodeB.name == "enemy" ? 0.001 : 0.1
+      if nodeB.alpha <= 0.5 {
+        nodeB.removeFromParent()
+      }
+    } else if nodeB.name == "projectile" {
+      if let projectile = nodeB as? Obstacle {
+        projectile.color = .red
+      }
+      nodeA.alpha -= nodeA.name == "enemy" ? 0.001 : 0.1
+      if nodeA.alpha <= 0.5 {
+        nodeA.removeFromParent()
+      }
+    }
+//    guard let yellowPhysicsBody = redEnemy.physicsBody else { return }
 
     let contactTestBitMask = contact.bodyA.contactTestBitMask | contact.bodyB.contactTestBitMask
     switch contactTestBitMask {
@@ -243,6 +268,7 @@ extension GameScene: SKPhysicsContactDelegate {
       } else if speed >= 1000 {
         heavyImpactFeedbackGenerator.impactOccurred()
       }
+
     default:
       return
     }

@@ -40,6 +40,7 @@ class Player: SKSpriteNode {
   func shoot(at direction: CGVector) {
     guard let scene = scene else { return }
     guard let physicsBody = physicsBody else { return }
+
     let obstacleSize = CGSize(width: 50, height: 50)
     let obstaclePosition = CGPoint(x: position.x, y: position.y)
 
@@ -50,6 +51,7 @@ class Player: SKSpriteNode {
     let projectile = Obstacle(position: obstaclePosition, size: obstacleSize, categoryMask: categoryMask, collisionMask: collisionMask, contactMask: contactMask)
     projectile.color = Style.PROJECTILE_COLOR
     projectile.physicsBody?.density = 0.45
+    projectile.name = "projectile"
 
     let fade = SKAction.fadeAlpha(to: 0, duration: 1)
     projectile.run(fade, completion: { projectile.removeFromParent() })
