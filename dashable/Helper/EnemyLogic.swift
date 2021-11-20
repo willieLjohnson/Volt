@@ -42,8 +42,8 @@ struct Logic {
 
     // Calculate forces to apply.
     let angle = atan2(positionDifferenceToPlayer.y, positionDifferenceToPlayer.x)
-    let vx: CGFloat = cos(angle) * 600
-    let vy: CGFloat = shouldJump ? 1800 : 0.0
+    let vx: CGFloat = cos(angle) * 1200
+    let vy: CGFloat = shouldJump ? 3200 : 0.0
 
     // Capture player if the position to.
     if thinksPlayerTooFast && isAheadOfPlayer && !isNearPlayer {
