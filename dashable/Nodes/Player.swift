@@ -23,6 +23,7 @@ class Player: SKSpriteNode {
       physicsBody.contactTestBitMask = PhysicsCategory.ground | PhysicsCategory.player | PhysicsCategory.sleeper
       physicsBody.usesPreciseCollisionDetection = true
     }
+    self.addGlow()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -39,12 +40,12 @@ class Player: SKSpriteNode {
     let collisionMask = PhysicsCategory.ground | PhysicsCategory.enemy | PhysicsCategory.obstacles
     let contactMask = PhysicsCategory.enemy
 
-    let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize, categoryMask: categoryMask, collisionMask: collisionMask, contactMask: contactMask)
-    obstacle.color = Style.PROJECTILE_COLOR
-    scene.addChild(obstacle)
+    let projectile = Obstacle(position: obstaclePosition, size: obstacleSize, categoryMask: categoryMask, collisionMask: collisionMask, contactMask: contactMask)
+    projectile.color = Style.PROJECTILE_COLOR
+    scene.addChild(projectile)
 
     let speed: CGFloat = 5
-    obstacle.physicsBody!.usesPreciseCollisionDetection = true
-    obstacle.physicsBody!.applyImpulse(CGVector(dx: direction.dx * speed, dy: direction.dy  * speed))
+    projectile.physicsBody!.usesPreciseCollisionDetection = true
+    projectile.physicsBody!.applyImpulse(CGVector(dx: direction.dx * speed, dy: direction.dy  * speed))
   }
 }

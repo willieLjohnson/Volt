@@ -33,6 +33,7 @@ class Enemy: SKSpriteNode {
       physicsBody.usesPreciseCollisionDetection = true
       physicsBody.density = 2
     }
+    self.addGlow()
   }
 
   required init?(coder aDecoder: NSCoder) {

@@ -23,3 +23,15 @@ class SpriteComponent: GKComponent {
   }
 }
 
+extension SKNode {
+    func addGlow(radius: CGFloat = 30)
+    {
+        let view = SKView()
+        let effectNode = SKEffectNode()
+        let texture = view.texture(from: self)
+        effectNode.shouldRasterize = true
+        effectNode.filter = CIFilter(name: "CIGaussianBlur",withInputParameters: ["inputRadius":radius])
+        addChild(effectNode)
+        effectNode.addChild(SKSpriteNode(texture: texture))
+    }
+}
