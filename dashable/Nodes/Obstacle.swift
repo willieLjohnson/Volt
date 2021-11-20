@@ -15,7 +15,6 @@ class Obstacle: SKSpriteNode {
     self.position = position
     self.zPosition = 10
     name = "obstacle"
-
     physicsBody = SKPhysicsBody(rectangleOf: size)
 
     guard let physicsBody = physicsBody else { return }
@@ -28,7 +27,7 @@ class Obstacle: SKSpriteNode {
 
   convenience init(position: CGPoint, size: CGSize, isDynamic: Bool = true) {
     let collisionMask = PhysicsCategory.ground | PhysicsCategory.player | PhysicsCategory.obstacles | PhysicsCategory.enemy
-    let contactMask = PhysicsCategory.player
+    let contactMask: UInt32 = 0
     self.init(position: position, size: size, isDynamic: isDynamic, collisionMask: collisionMask, contactMask: contactMask)
   }
 

@@ -19,8 +19,15 @@ class Player: SKSpriteNode {
     if let physicsBody = physicsBody {
       physicsBody.affectedByGravity = true
       physicsBody.categoryBitMask = PhysicsCategory.player
-      physicsBody.collisionBitMask = PhysicsCategory.ground | PhysicsCategory.enemy | PhysicsCategory.obstacles
-      physicsBody.contactTestBitMask = PhysicsCategory.ground | PhysicsCategory.enemy | PhysicsCategory.sleeper
+      physicsBody.collisionBitMask =
+        PhysicsCategory.ground |
+        PhysicsCategory.enemy |
+        PhysicsCategory.obstacles
+
+      physicsBody.contactTestBitMask =
+        PhysicsCategory.ground |
+        PhysicsCategory.enemy |
+        PhysicsCategory.obstacles
       physicsBody.usesPreciseCollisionDetection = true
     }
     self.addGlow()
@@ -38,7 +45,7 @@ class Player: SKSpriteNode {
 
     let categoryMask = PhysicsCategory.projectile
     let collisionMask = PhysicsCategory.ground | PhysicsCategory.enemy | PhysicsCategory.obstacles
-    let contactMask = PhysicsCategory.enemy
+    let contactMask = PhysicsCategory.enemy | PhysicsCategory.obstacles
 
     let projectile = Obstacle(position: obstaclePosition, size: obstacleSize, categoryMask: categoryMask, collisionMask: collisionMask, contactMask: contactMask)
     projectile.color = Style.PROJECTILE_COLOR
@@ -49,7 +56,6 @@ class Player: SKSpriteNode {
     scene.addChild(projectile)
 
     let speed: CGFloat = 2
-
 
     projectile.physicsBody!.usesPreciseCollisionDetection = true
     projectile.physicsBody!.applyImpulse(CGVector(dx: direction.dx * speed * physicsBody.velocity.normalized().dx, dy: direction.dy  * speed))

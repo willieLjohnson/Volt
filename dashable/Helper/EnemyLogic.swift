@@ -33,8 +33,10 @@ struct Logic {
     let isObstacleAhead = obstaclesAhead.first != nil
     // Analyze self.
     let hasStopped = abs(currentVelocity.dx) <= 80
-    
+
+    // TODO: Replace with collision contact detection rather than velocity.
     let hasHitObstacle = abs(currentVelocity.dx) - abs(enemy.previousVelocity.dx) > 10
+    
     let yVelocityIsTooFast = abs(currentVelocity.dy) > 300
     let xVelocityIsTooFast = abs(currentVelocity.dx) > 6000
     let thinksPlayerTooFast = abs(currentVelocity.dx) > 5000

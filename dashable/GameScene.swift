@@ -84,12 +84,10 @@ class GameScene: SKScene {
     guard let touch = touches.first else { return }
     touchLocation = touch.location(in: cam)
     
-    if touchLocation.x > cam.frame.width / 2 {
+    if touchLocation.x > cam.frame.width / 2 && !isPlayerJumping {
       guard let playerPhysicsBody = player.physicsBody else { return }
-      if !isPlayerJumping {
-        playerPhysicsBody.applyImpulse(CGVector(dx: 0, dy: 80))
-        isPlayerJumping = true
-      }
+      playerPhysicsBody.applyImpulse(CGVector(dx: 0, dy: 80))
+      isPlayerJumping = true
     }
 
     // Get UI node that was touched.

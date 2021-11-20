@@ -29,7 +29,11 @@ class Enemy: SKSpriteNode {
     if let physicsBody = physicsBody {
       physicsBody.affectedByGravity = true
       physicsBody.categoryBitMask = PhysicsCategory.enemy
-      physicsBody.collisionBitMask = PhysicsCategory.ground | PhysicsCategory.player | PhysicsCategory.projectile | PhysicsCategory.obstacles
+      physicsBody.collisionBitMask =
+        PhysicsCategory.ground |
+        PhysicsCategory.player |
+        PhysicsCategory.projectile |
+        PhysicsCategory.obstacles
       physicsBody.usesPreciseCollisionDetection = true
       physicsBody.density = 8
     }

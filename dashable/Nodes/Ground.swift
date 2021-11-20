@@ -20,7 +20,11 @@ class Ground: SKSpriteNode {
       physicsBody.affectedByGravity = false
       physicsBody.isDynamic = false
       physicsBody.categoryBitMask = PhysicsCategory.ground
-      physicsBody.collisionBitMask = PhysicsCategory.player
+      physicsBody.collisionBitMask =
+        PhysicsCategory.player |
+        PhysicsCategory.enemy |
+        PhysicsCategory.projectile |
+        PhysicsCategory.obstacles
     }
   }
 
