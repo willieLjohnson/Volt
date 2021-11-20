@@ -12,9 +12,11 @@ import GameplayKit
 
 typealias EnemyLogic = (Enemy, Player, GameScene) -> ()
 
+//TODO: Refactor code and clean up for easier read
 struct Logic {
   /// Attempts to get ahead and stop the player by growing in size on blocking their way.
-  static var redEnemyLogic: EnemyLogic = { enemy, player, scene in
+  static var chaserLogic: EnemyLogic = { enemy, player, scene in
+    let moveSpeed: CGFloat = 10000
     // Grab physics bodies.
     guard let physicsBody = enemy.physicsBody else { return }
     guard let playerPhysicsBody = player.physicsBody else { return }
@@ -36,16 +38,18 @@ struct Logic {
 
     // TODO: Replace with collision contact detection rather than velocity.
     let hasHitObstacle = abs(currentVelocity.dx) - abs(enemy.previousVelocity.dx) > 10
-    
-    let yVelocityIsTooFast = abs(currentVelocity.dy) > 300
-    let xVelocityIsTooFast = abs(currentVelocity.dx) > 6000
-    let thinksPlayerTooFast = abs(currentVelocity.dx) > 5000
+
+    let yVelocityIsTooFast = abs(currentVelocity.dy) > 150
+    let xVelocityIsTooFast = abs(currentVelocity.dx) > moveSpeed * 2
+    let thinksPlayerTooFast = abs(currentVelocity.dx) > 2500
+
+    // TODO: Replace with obstackle/ground contact detection
     let shouldJump = !yVelocityIsTooFast && ((hasStopped && hasHitObstacle) || isObstacleAhead)
 
     // Calculate forces to apply.
     let angle = atan2(positionDifferenceToPlayer.y, positionDifferenceToPlayer.x)
-    let vx: CGFloat = cos(angle) * 1200
-    let vy: CGFloat = shouldJump ? 3200 : 0.0
+    let vx: CGFloat = cos(angle) * moveSpeed
+    let vy: CGFloat = shouldJump ? moveSpeed * 2 : 0.0
 
     // Capture player if the position to.
     if thinksPlayerTooFast && isAheadOfPlayer && !isNearPlayer {
@@ -66,7 +70,7 @@ struct Logic {
   }
 
   /// Flies above and ehead of the player and drops obstacles.
-  static var yellowEnemyLogic: EnemyLogic = { yellowEnemy, player, scene in
+  static var flyerLogic: EnemyLogic = { yellowEnemy, player, scene in
     yellowEnemy.run(SKAction.move(to: CGPoint(x: player.position.x + player.physicsBody!.velocity.dx, y: player.position.y + 500), duration: 0.8))
     // Only run if there is no action(dropObstacle) already running
     let shouldDropObstacle = !yellowEnemy.isAbilityActionRunning
@@ -82,7 +86,7 @@ struct Logic {
       let obstaclePosition = CGPoint(x: yellowEnemy.position.x, y: yellowEnemy.position.y - obstacleSize.height)
 
       let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize)
-      obstacle.color = #colorLiteral(red: 0.8765190972, green: 0.5600395258, blue: 0, alpha: 1)
+      obstacle.color = Style.FLYER_COLOR
       scene.addChild(obstacle)
 
       let difference = Useful.differenceBetween(obstacle, and: player)

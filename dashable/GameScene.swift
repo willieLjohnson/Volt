@@ -125,10 +125,10 @@ private extension GameScene {
 
     redEnemy = Enemy(position: CGPoint(x: player.position.x - 100, y: size.height / 2), size: CGSize(width: 60, height:  60), color: Style.CHASER_COLOR)
     addChild(redEnemy)
-    redEnemy.logic = Logic.redEnemyLogic
+    redEnemy.logic = Logic.chaserLogic
     yellowEnemy = Enemy(position: CGPoint(x: player.position.x - 100, y: size.height / 1.5), size: CGSize(width: 60, height: 40), color: Style.FLYER_COLOR)
     yellowEnemy.physicsBody = nil
-    yellowEnemy.logic = Logic.yellowEnemyLogic
+    yellowEnemy.logic = Logic.flyerLogic
     addChild(yellowEnemy)
 
     addGroundObstacles()
