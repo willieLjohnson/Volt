@@ -25,6 +25,8 @@ class GameScene: SKScene {
   
   /// On screen control to move player.
   let movePlayerStick = AnalogJoystick(diameters: (135, 100))
+  let shootPlayerStick = AnalogJoystick(diameters: (135, 100))
+
   
   // The multiplier that will be applied to player's gravity to create "heaviness".
   let fallMultiplier: CGFloat = 1.25
@@ -88,8 +90,6 @@ class GameScene: SKScene {
         playerPhysicsBody.applyImpulse(CGVector(dx: 0, dy: 80))
         isPlayerJumping = true
       }
-
-      player.shoot()
     }
 
     // Get UI node that was touched.
@@ -116,16 +116,19 @@ class GameScene: SKScene {
 // MARK: Setup
 private extension GameScene {
   func setupScene() {
+    guard let scene = scene else { return }
+    scene.backgroundColor = Style.BACKGROUND_COLOR
+
     ground = Ground(position: CGPoint(x: size.width / 2, y: 0), size: CGSize(width: size.width * 1000, height: size.height / 4))
     addChild(ground)
 
     player = Player(position: CGPoint(x: size.width / 2, y: size.height / 2), size: CGSize(width: 40, height: 40))
     addChild(player)
 
-    redEnemy = Enemy(position: CGPoint(x: player.position.x - 100, y: size.height / 2), size: CGSize(width: 40, height: 40), color: #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1))
+    redEnemy = Enemy(position: CGPoint(x: player.position.x - 100, y: size.height / 2), size: CGSize(width: 40, height: 40), color: Style.CHASER_COLOR)
     addChild(redEnemy)
     redEnemy.logic = Logic.redEnemyLogic
-    yellowEnemy = Enemy(position: CGPoint(x: player.position.x - 100, y: size.height / 1.5), size: CGSize(width: 40, height: 40), color: #colorLiteral(red: 1, green: 0.8337777597, blue: 0, alpha: 1))
+    yellowEnemy = Enemy(position: CGPoint(x: player.position.x - 100, y: size.height / 1.5), size: CGSize(width: 40, height: 40), color: Style.FLYER_COLOR)
     yellowEnemy.physicsBody = nil
     yellowEnemy.logic = Logic.yellowEnemyLogic
     addChild(yellowEnemy)
@@ -173,13 +176,24 @@ private extension GameScene {
       self.player.physicsBody?.applyForce(CGVector(dx: data.velocity.x * 2, dy: 0))
     }
     cam.addChild(movePlayerStick)
+
+
+    // Setup joystick to control player movement.
+    shootPlayerStick.position = CGPoint(x: size.width / 2 - shootPlayerStick.radius * 1.7, y: -size.height / 2 + shootPlayerStick.radius * 1.7)
+    shootPlayerStick.stick.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+    shootPlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
+    shootPlayerStick.trackingHandler = { [unowned self] data in
+    //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
+      self.player.shoot(at: CGVector(dx: data.velocity.x, dy: data.velocity.y))
+    }
+    cam.addChild(shootPlayerStick)
   }
 }
 
 private extension GameScene {
   func createBackground() {
     for i in 0...1000 {
-      let node = SKSpriteNode(color: #colorLiteral(red: 0.8276178896, green: 0.4138089448, blue: 0, alpha: 1), size: CGSize(width: size.width * 0.9, height: size.height * 0.95))
+      let node = SKSpriteNode(color: Style.OBSTACLE_COLOR , size: CGSize(width: size.width * 0.9, height: size.height * 0.95))
       node.position = CGPoint(x: CGFloat(i) * node.frame.width + 50, y: node.frame.height)
       addChild(node)
     }

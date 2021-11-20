@@ -26,6 +26,7 @@
 		3DA7C5CB2051FE71005C60B9 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA7C5CA2051FE71005C60B9 /* Ground.swift */; };
 		3DA7C5CD2051FE77005C60B9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA7C5CC2051FE77005C60B9 /* Player.swift */; };
 		3DA7C5CF2051FFA0005C60B9 /* PhysicsCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA7C5CE2051FFA0005C60B9 /* PhysicsCategories.swift */; };
+		3DAAFD782748793000CE5D49 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAAFD772748793000CE5D49 /* Styles.swift */; };
 		3DEBB396205B02010017C9BB /* AnalogJoystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBB395205B02010017C9BB /* AnalogJoystick.swift */; };
 		3DEDC91C2063549E0076364E /* CGVector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEDC91B2063549E0076364E /* CGVector+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		3DA7C5CA2051FE71005C60B9 /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		3DA7C5CC2051FE77005C60B9 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		3DA7C5CE2051FFA0005C60B9 /* PhysicsCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategories.swift; sourceTree = "<group>"; };
+		3DAAFD772748793000CE5D49 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		3DEBB395205B02010017C9BB /* AnalogJoystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalogJoystick.swift; sourceTree = "<group>"; };
 		3DEDC91B2063549E0076364E /* CGVector+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGVector+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 				3D55FDE9205BD19E0059FC92 /* Useful.swift */,
 				3D59A2E2205A60A5006CAB22 /* QuickMaths.swift */,
 				3D36AA2D2063944A0004A9DF /* EnemyLogic.swift */,
+				3DAAFD772748793000CE5D49 /* Styles.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				3D28C25E205CF6180058771E /* MoveComponent.swift in Sources */,
 				3D28C258205CF0F70058771E /* EntityManager.swift in Sources */,
 				3D55FDEA205BD19E0059FC92 /* Useful.swift in Sources */,
+				3DAAFD782748793000CE5D49 /* Styles.swift in Sources */,
 				3D28C25C205CF58A0058771E /* MoveBehavior.swift in Sources */,
 				3DA7C5CB2051FE71005C60B9 /* Ground.swift in Sources */,
 				3D59A2E3205A60A5006CAB22 /* QuickMaths.swift in Sources */,

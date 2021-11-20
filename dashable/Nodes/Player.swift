@@ -9,12 +9,8 @@
 import SpriteKit
 
 class Player: SKSpriteNode {
-  let PLAYER_COLOR = #colorLiteral(red: 0.5294117647, green: 0.8, blue: 0.8980392157, alpha: 1)
-  let PROJECTILE_COLOR = #colorLiteral(red: 0.5879158241, green: 0.8891195576, blue: 1, alpha: 0.4944783928)
-
-
   init(position: CGPoint, size: CGSize) {
-    super.init(texture: nil, color: PLAYER_COLOR, size: size)
+    super.init(texture: nil, color: Style.PLAYER_COLOR, size: size)
     self.position = position
     self.zPosition = 10
     name = "player"
@@ -33,7 +29,7 @@ class Player: SKSpriteNode {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func shoot() {
+  func shoot(at direction: CGVector) {
     guard let scene = scene else { return }
     guard let physicsBody = physicsBody else { return }
     let obstacleSize = CGSize(width: 50, height: 50)
@@ -44,11 +40,11 @@ class Player: SKSpriteNode {
     let contactMask = PhysicsCategory.enemy
 
     let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize, categoryMask: categoryMask, collisionMask: collisionMask, contactMask: contactMask)
-    obstacle.color = PROJECTILE_COLOR
+    obstacle.color = Style.PROJECTILE_COLOR
     scene.addChild(obstacle)
 
-    let shootDirection = physicsBody.velocity.normalized()
+    let speed: CGFloat = 5
     obstacle.physicsBody!.usesPreciseCollisionDetection = true
-    obstacle.physicsBody!.applyImpulse(CGVector(dx: shootDirection.dx * 200, dy: shootDirection.dy * 200))
+    obstacle.physicsBody!.applyImpulse(CGVector(dx: direction.dx * speed, dy: direction.dy  * speed))
   }
 }

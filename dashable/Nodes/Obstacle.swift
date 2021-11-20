@@ -11,7 +11,7 @@ import SpriteKit
 class Obstacle: SKSpriteNode {
   
   init(position: CGPoint, size: CGSize, isDynamic: Bool = true, categoryMask: UInt32 = PhysicsCategory.obstacles, collisionMask: UInt32, contactMask: UInt32) {
-    super.init(texture: nil, color: #colorLiteral(red: 0.9882352941, green: 0.4941176471, blue: 0, alpha: 1), size: size)
+    super.init(texture: nil, color: Style.OBSTACLE_COLOR, size: size)
     self.position = position
     self.zPosition = 10
     name = "obstacle"
