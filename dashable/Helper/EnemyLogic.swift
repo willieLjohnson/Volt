@@ -16,7 +16,6 @@ typealias EnemyLogic = (Enemy, Player, GameScene) -> ()
 struct Logic {
   /// Attempts to get ahead and stop the player by growing in size on blocking their way.
   static var chaserLogic: EnemyLogic = { enemy, player, scene in
-    // TODO: Make enemy grow in size when stuck
     let moveSpeed: CGFloat = 10000
     // Grab physics bodies.
     guard let physicsBody = enemy.physicsBody else { return }
@@ -45,12 +44,16 @@ struct Logic {
     let thinksPlayerTooFast = abs(currentVelocity.dx) > 2500
 
     // TODO: Replace with obstackle/ground contact detection
-    let shouldJump = !yVelocityIsTooFast && ((hasStopped && hasHitObstacle) || isObstacleAhead)
+    let shouldJump = !yVelocityIsTooFast && ((hasHitObstacle) || isObstacleAhead) && !isAbovePlayer
 
     // Calculate forces to apply.
     let angle = atan2(positionDifferenceToPlayer.y, positionDifferenceToPlayer.x)
     let vx: CGFloat = cos(angle) * moveSpeed
-    let vy: CGFloat = shouldJump ? moveSpeed * 2 : 0.0
+    let vy: CGFloat = shouldJump ? moveSpeed : 0.0
+
+    if shouldJump {
+      enemy.run(SKAction.scale(to: 20, duration: 1))
+    }
 
     // Capture player if the position to.
     if thinksPlayerTooFast && isAheadOfPlayer && !isNearPlayer {
@@ -66,6 +69,7 @@ struct Logic {
     if xVelocityIsTooFast && isAheadOfPlayer && !isNearPlayer {
       physicsBody.applyForce(stopForce)
     }
+
     // Move towards player.
     physicsBody.applyForce(moveForce)
   }
