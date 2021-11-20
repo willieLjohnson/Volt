@@ -226,6 +226,21 @@ private extension GameScene {
 
 // MARK: Setup
 extension GameScene: SKPhysicsContactDelegate {
+
+  func onContactBetween(projectile: SKNode, node: SKNode) {
+    guard let projectile = projectile as? Projectile  else { return }
+    if let node = node as? SKSpriteNode {
+      projectile.color = node.color
+    } else {
+      projectile.color = .systemPink
+    }
+
+    node.alpha -= node.name == "enemy" ? 0.001 : 0.005
+    if node.alpha <= 0.5 {
+      node.removeFromParent()
+    }
+  }
+
   func didBegin(_ contact: SKPhysicsContact) {
     lightImpactFeedbackGenerator.prepare()
     mediumImpactFeedbackGenerator.prepare()
@@ -236,23 +251,10 @@ extension GameScene: SKPhysicsContactDelegate {
     guard let nodeB = contact.bodyB.node else { return }
 
     if nodeA.name == "projectile" {
-      if let projectile = nodeA as? Obstacle {
-        projectile.color = .red
-      }
-      nodeB.alpha -= nodeB.name == "enemy" ? 0.001 : 0.1
-      if nodeB.alpha <= 0.5 {
-        nodeB.removeFromParent()
-      }
+      onContactBetween(projectile: nodeA, node: nodeB)
     } else if nodeB.name == "projectile" {
-      if let projectile = nodeB as? Obstacle {
-        projectile.color = .red
-      }
-      nodeA.alpha -= nodeA.name == "enemy" ? 0.001 : 0.1
-      if nodeA.alpha <= 0.5 {
-        nodeA.removeFromParent()
-      }
+      onContactBetween(projectile: nodeB, node: nodeA)
     }
-//    guard let yellowPhysicsBody = redEnemy.physicsBody else { return }
 
     let contactTestBitMask = contact.bodyA.contactTestBitMask | contact.bodyB.contactTestBitMask
     switch contactTestBitMask {

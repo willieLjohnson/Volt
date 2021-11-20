@@ -27,6 +27,7 @@
 		3DA7C5CD2051FE77005C60B9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA7C5CC2051FE77005C60B9 /* Player.swift */; };
 		3DA7C5CF2051FFA0005C60B9 /* PhysicsCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA7C5CE2051FFA0005C60B9 /* PhysicsCategories.swift */; };
 		3DAAFD782748793000CE5D49 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAAFD772748793000CE5D49 /* Styles.swift */; };
+		3DAAFD7A27494CD000CE5D49 /* Projectile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAAFD7927494CCF00CE5D49 /* Projectile.swift */; };
 		3DEBB396205B02010017C9BB /* AnalogJoystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBB395205B02010017C9BB /* AnalogJoystick.swift */; };
 		3DEDC91C2063549E0076364E /* CGVector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEDC91B2063549E0076364E /* CGVector+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -54,6 +55,7 @@
 		3DA7C5CC2051FE77005C60B9 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		3DA7C5CE2051FFA0005C60B9 /* PhysicsCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategories.swift; sourceTree = "<group>"; };
 		3DAAFD772748793000CE5D49 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		3DAAFD7927494CCF00CE5D49 /* Projectile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projectile.swift; sourceTree = "<group>"; };
 		3DEBB395205B02010017C9BB /* AnalogJoystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalogJoystick.swift; sourceTree = "<group>"; };
 		3DEDC91B2063549E0076364E /* CGVector+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGVector+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,6 +145,7 @@
 				3DA7C5CC2051FE77005C60B9 /* Player.swift */,
 				3D4D468F2058765B00747B26 /* Enemy.swift */,
 				3D55FDE5205B7DB70059FC92 /* Obstacle.swift */,
+				3DAAFD7927494CCF00CE5D49 /* Projectile.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DAAFD7A27494CD000CE5D49 /* Projectile.swift in Sources */,
 				3D4D46902058765B00747B26 /* Enemy.swift in Sources */,
 				3DEBB396205B02010017C9BB /* AnalogJoystick.swift in Sources */,
 				3D28C25A205CF1700058771E /* SpriteComponent.swift in Sources */,

@@ -41,25 +41,11 @@ class Player: SKSpriteNode {
     guard let scene = scene else { return }
     guard let physicsBody = physicsBody else { return }
 
-    let obstacleSize = CGSize(width: 50, height: 50)
-    let obstaclePosition = CGPoint(x: position.x, y: position.y)
-
-    let categoryMask = PhysicsCategory.projectile
-    let collisionMask = PhysicsCategory.ground | PhysicsCategory.enemy | PhysicsCategory.obstacles
-    let contactMask = PhysicsCategory.enemy | PhysicsCategory.obstacles
-
-    let projectile = Obstacle(position: obstaclePosition, size: obstacleSize, categoryMask: categoryMask, collisionMask: collisionMask, contactMask: contactMask)
-    projectile.color = Style.PROJECTILE_COLOR
-    projectile.physicsBody?.density = 0.45
-    projectile.name = "projectile"
-
-    let fade = SKAction.fadeAlpha(to: 0, duration: 1)
-    projectile.run(fade, completion: { projectile.removeFromParent() })
+    let projectilePosition = CGPoint(x: position.x, y: position.y)
+    let projectile = Projectile(position: projectilePosition, size: 50)
     scene.addChild(projectile)
-
-    let speed: CGFloat = 2
-
+    projectile.startDecay()
     projectile.physicsBody!.usesPreciseCollisionDetection = true
-    projectile.physicsBody!.applyImpulse(CGVector(dx: direction.dx * speed * physicsBody.velocity.normalized().dx, dy: direction.dy  * speed))
+    projectile.physicsBody!.applyImpulse(CGVector(dx: direction.dx * projectile.initialSpeed * physicsBody.velocity.normalized().dx, dy: direction.dy  * projectile.initialSpeed))
   }
 }
