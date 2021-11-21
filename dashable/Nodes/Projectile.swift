@@ -35,7 +35,9 @@ class Projectile: SKSpriteNode {
   }
 
   func startDecay() {
-    let fade = SKAction.fadeAlpha(to: 0, duration: 1)
+    let fade = SKAction.fadeAlpha(to: 0, duration: 2)
+    let scale = SKAction.scale(to: 0, duration: 2)
+    run(scale)
     run(fade, completion: { self.removeFromParent() })
   }
 }

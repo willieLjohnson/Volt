@@ -16,7 +16,7 @@ typealias EnemyLogic = (Enemy, Player, GameScene) -> ()
 struct Logic {
   /// Attempts to get ahead and stop the player by growing in size on blocking their way.
   static var chaserLogic: EnemyLogic = { enemy, player, scene in
-    let moveSpeed: CGFloat = 10000
+    let moveSpeed: CGFloat = enemy.moveSpeed
     // Grab physics bodies.
     guard let physicsBody = enemy.physicsBody else { return }
     guard let playerPhysicsBody = player.physicsBody else { return }
@@ -92,6 +92,7 @@ struct Logic {
 
       let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize)
       obstacle.color = Style.FLYER_COLOR
+      obstacle.name = "flyerDrop"
       scene.addChild(obstacle)
 
       let difference = Useful.differenceBetween(obstacle, and: player)

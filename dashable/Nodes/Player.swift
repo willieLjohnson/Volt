@@ -9,6 +9,8 @@
 import SpriteKit
 
 class Player: SKSpriteNode {
+  var canShoot = true
+
   init(position: CGPoint, size: CGSize) {
     super.init(texture: nil, color: Style.PLAYER_COLOR, size: size)
     self.position = position
@@ -40,12 +42,24 @@ class Player: SKSpriteNode {
   func shoot(at direction: CGVector) {
     guard let scene = scene else { return }
     guard let physicsBody = physicsBody else { return }
+    if !canShoot { return }
 
     let projectilePosition = CGPoint(x: position.x, y: position.y)
-    let projectile = Projectile(position: projectilePosition, size: 50)
+    let projectile = Projectile(position: projectilePosition, size: 40)
     scene.addChild(projectile)
     projectile.startDecay()
     projectile.physicsBody!.usesPreciseCollisionDetection = true
     projectile.physicsBody!.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed) + (physicsBody.velocity.dx * 0.15), dy: direction.dy * projectile.initialSpeed))
+    projectile.physicsBody!.applyAngularImpulse(1000)
+    canShoot = false
+
+    let command: SKAction = .run {
+      self.canShoot = true
+    }
+
+    let wait: SKAction = .wait(forDuration: 0.01)
+    let sequence: SKAction = .sequence([wait, command])
+
+    run(sequence)
   }
 }

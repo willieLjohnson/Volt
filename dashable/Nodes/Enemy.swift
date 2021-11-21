@@ -18,6 +18,8 @@ class Enemy: SKSpriteNode {
   var logic: EnemyLogic?
   /// Tracks whether or not an SKAction is running on the Enemy.
   var isAbilityActionRunning: Bool = false
+
+  var moveSpeed: CGFloat = 10000.0
   
   init(position: CGPoint, size: CGSize, color: SKColor) {
     super.init(texture: nil, color: color, size: size)

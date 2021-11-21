@@ -12,15 +12,15 @@ import GameplayKit
 class GameScene: SKScene {
   var ground: Ground!
   var player: Player!
-  var redEnemy: Enemy!
   var yellowEnemy: Enemy!
+
+  var chasers = [Enemy]()
 
   // Keeps track of whether or not the player has a finger that's touching the screen.
   var touchDown = false
   var isPlayerJumping = false
   var touchLocation: CGPoint!
   var cam: SKCameraNode!
-  var enemyPreviousVelocity: CGVector = .zero
   var playerPreviousVelocity: CGVector = .zero
   
   /// On screen control to move player.
@@ -56,12 +56,16 @@ class GameScene: SKScene {
     guard scene != nil else { return }
     guard let cam = cam else { return }
 
-    redEnemy.update(self)
+    for chaser in chasers {
+      chaser.update(self)
+      guard let chaserPhysicsBody = chaser.physicsBody else { continue }
+      applyGravityMultipliers(to: chaserPhysicsBody)
+    }
+
     yellowEnemy.update(self)
 
     // Get player bodies
     guard let playerPhysicsBody = player.physicsBody else { return }
-    guard let enemyPhysicsBody = redEnemy.physicsBody else { return }
 
     // Move cam to player
     let duration = TimeInterval(0.4 * pow(0.9, abs(playerPhysicsBody.velocity.dx / 100) - 1) + 0.05)
@@ -74,17 +78,15 @@ class GameScene: SKScene {
     cam.setScale(scale)
     cam.run(SKAction.move(to: CGPoint(x: player.position.x + xOffset, y: player.position.y + (size.height / 2) + yOffsetExpo), duration: duration))
 
-    enemyPreviousVelocity = enemyPhysicsBody.velocity
     playerPreviousVelocity = playerPhysicsBody.velocity
     applyGravityMultipliers(to: playerPhysicsBody)
-    applyGravityMultipliers(to: enemyPhysicsBody)
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let touch = touches.first else { return }
     touchLocation = touch.location(in: cam)
     
-    if touchLocation.x > cam.frame.width / 2 && !isPlayerJumping {
+    if !isPlayerJumping {
       guard let playerPhysicsBody = player.physicsBody else { return }
       playerPhysicsBody.applyImpulse(CGVector(dx: 0, dy: 80))
       isPlayerJumping = true
@@ -123,9 +125,8 @@ private extension GameScene {
     player = Player(position: CGPoint(x: size.width / 2, y: size.height / 2), size: CGSize(width: 40, height: 40))
     addChild(player)
 
-    redEnemy = Enemy(position: CGPoint(x: player.position.x - 100, y: size.height / 2), size: CGSize(width: 60, height:  60), color: Style.CHASER_COLOR)
-    addChild(redEnemy)
-    redEnemy.logic = Logic.chaserLogic
+    addChaser(position: CGPoint(x: player.position.x - 100, y: size.height / 2))
+
     yellowEnemy = Enemy(position: CGPoint(x: player.position.x - 100, y: size.height / 1.5), size: CGSize(width: 60, height: 40), color: Style.FLYER_COLOR)
     yellowEnemy.physicsBody = nil
     yellowEnemy.logic = Logic.flyerLogic
@@ -199,6 +200,7 @@ private extension GameScene {
     }
   }
 
+
   func addGroundObstacles() {
     makeObstacles(at: player.position, amount: 100, size: CGSize(width: 500, height: 100), spacing: 2)
     makeObstacles(at: player.position.applying(CGAffineTransform(translationX: 0, y: 130)), amount: 250, size: CGSize(width: 50, height: 120), spacing: 2)
@@ -224,29 +226,92 @@ private extension GameScene {
   }
 }
 
-// MARK: Setup
+// MARK: Public helpers
+extension GameScene {
+  func createChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60)) -> Enemy {
+    var chaser = Enemy(position: position, size: size, color: Style.CHASER_COLOR)
+    chaser.physicsBody?.contactTestBitMask = PhysicsCategory.obstacles
+    chaser.logic = Logic.chaserLogic
+    return chaser
+  }
+
+  func addChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60)) {
+    let chaser = createChaser(position: position, size: size)
+    chasers.append(chaser)
+    addChild(chaser)
+  }
+
+  func addBee(position: CGPoint) {
+    var bee = createChaser(position: position, size: CGSize(width: 30, height: 30))
+    bee.color = Style.BEE_COLOR
+    bee.name = "bee"
+    bee.physicsBody!.contactTestBitMask = PhysicsCategory.player
+    bee.moveSpeed = 1000.0
+    chasers.append(bee)
+    addChild(bee)
+  }
+}
+
+// MARK: Collision detection
 extension GameScene: SKPhysicsContactDelegate {
 
   func onContactBetween(projectile: SKNode, node: SKNode) {
     guard let projectile = projectile as? Projectile  else { return }
     if let node = node as? SKSpriteNode {
-      projectile.color = node.color
+      projectile.run(SKAction.colorize(with: node.color, colorBlendFactor: 1, duration: 0.25))
+      node.run(SKAction.colorize(with: projectile.color, colorBlendFactor: 0.2, duration: 0.01))
+      node.run(.sequence([.wait(forDuration: 0.025), .run {
+        switch node.name {
+        case "bee":
+          node.color = Style.BEE_COLOR
+        case "enemy":
+          node.color = Style.CHASER_COLOR
+        case "obstacle":
+          node.color = Style.OBSTACLE_COLOR
+        case "flyerDrop":
+          node.color = Style.FLYER_COLOR
+        default:
+          node.color = Style.PROJECTILE_COLOR
+        }
+      }]))
     } else {
       projectile.color = .systemPink
     }
 
-    node.alpha -= node.name == "enemy" ? 0.001 : 0.005
+    projectile.physicsBody!.contactTestBitMask = 0
+    
+
+    node.alpha -= node.name == "enemy" ? 0.0007 : node.name == "bee" ? 0.01 : 0.1
     if node.alpha <= 0.5 {
       node.removeFromParent()
     }
   }
+
+  func onContactBetween(enemy: SKNode, node: SKNode) {
+    if node.name == "flyerDrop" {
+      if let node = node as? SKSpriteNode {
+        node.run(SKAction.colorize(with: Style.BEE_COLOR, colorBlendFactor: 1, duration: 1))
+      }
+      node.run(SKAction.scale(to: 2, duration: 2), completion: {
+        self.addBee(position: node.position)
+        node.removeFromParent()
+      })
+    }
+  }
+
+  func onContactBetween(bee: SKNode, node: SKNode) {
+    bee.run(SKAction.scale(to: 10, duration: 0.5), completion: {
+      bee.removeFromParent()
+    })
+
+  }
+
 
   func didBegin(_ contact: SKPhysicsContact) {
     lightImpactFeedbackGenerator.prepare()
     mediumImpactFeedbackGenerator.prepare()
     heavyImpactFeedbackGenerator.prepare()
     guard let playerPhysicsBody = player.physicsBody else { return }
-    guard let redPhysicsBody = redEnemy.physicsBody else { return }
     guard let nodeA = contact.bodyA.node else { return }
     guard let nodeB = contact.bodyB.node else { return }
 
@@ -254,6 +319,18 @@ extension GameScene: SKPhysicsContactDelegate {
       onContactBetween(projectile: nodeA, node: nodeB)
     } else if nodeB.name == "projectile" {
       onContactBetween(projectile: nodeB, node: nodeA)
+    }
+
+    if nodeA.name == "enemy" {
+      onContactBetween(enemy: nodeA, node: nodeB)
+    } else if nodeB.name == "enemy" {
+      onContactBetween(enemy: nodeB, node: nodeA)
+    }
+
+    if nodeA.name == "bee" {
+      onContactBetween(bee: nodeA, node: nodeB)
+    } else if nodeB.name == "bee" {
+      onContactBetween(bee: nodeB, node: nodeA)
     }
 
     let contactTestBitMask = contact.bodyA.contactTestBitMask | contact.bodyB.contactTestBitMask
