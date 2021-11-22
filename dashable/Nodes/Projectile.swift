@@ -14,7 +14,7 @@ class Projectile: SKSpriteNode {
   let initialSpeed: CGFloat = 4
 
   init(position: CGPoint, size: CGFloat, color: SKColor = Style.PROJECTILE_COLOR) {
-    super.init(texture: nil, color: Style.OBSTACLE_COLOR, size: CGSize(width: size, height: size))
+    super.init(texture: nil, color: Style.OBSTACLE_COLOR, size: CGSize(width: size * 1.5, height: size * 0.5))
     self.position = position
     self.color = color
 

@@ -246,9 +246,14 @@ extension GameScene {
     bee.color = Style.BEE_COLOR
     bee.name = "bee"
     bee.physicsBody!.contactTestBitMask = PhysicsCategory.player
+    bee.physicsBody!.collisionBitMask = bee.physicsBody!.collisionBitMask | PhysicsCategory.enemy
     bee.moveSpeed = 1000.0
+    let randx = Int.random(in: -1000..<1000)
+    let randy = Int.random(in: -1000..<1000)
+
     chasers.append(bee)
     addChild(bee)
+    bee.physicsBody!.applyImpulse(CGVector(dx: CGFloat(randx), dy: CGFloat(randy)))
   }
 }
 
@@ -258,8 +263,9 @@ extension GameScene: SKPhysicsContactDelegate {
   func onContactBetween(projectile: SKNode, node: SKNode) {
     guard let projectile = projectile as? Projectile  else { return }
     if let node = node as? SKSpriteNode {
-      projectile.run(SKAction.colorize(with: node.color, colorBlendFactor: 1, duration: 0.25))
       node.run(SKAction.colorize(with: projectile.color, colorBlendFactor: 0.2, duration: 0.01))
+      projectile.color = node.color
+      projectile.run(SKAction.colorize(with: Style.PROJECTILE_COLOR, colorBlendFactor: 1, duration: 0.25))
       node.run(.sequence([.wait(forDuration: 0.025), .run {
         switch node.name {
         case "bee":
@@ -278,10 +284,9 @@ extension GameScene: SKPhysicsContactDelegate {
       projectile.color = .systemPink
     }
 
-    projectile.physicsBody!.contactTestBitMask = 0
-    
+//    projectile.physicsBody!.contactTestBitMask = 0
 
-    node.alpha -= node.name == "enemy" ? 0.0007 : node.name == "bee" ? 0.01 : 0.1
+    node.alpha -= node.name == "enemy" ? 0.0007 : node.name == "bee" ? 0.08 : 0.01
     if node.alpha <= 0.5 {
       node.removeFromParent()
     }
@@ -290,20 +295,24 @@ extension GameScene: SKPhysicsContactDelegate {
   func onContactBetween(enemy: SKNode, node: SKNode) {
     if node.name == "flyerDrop" {
       if let node = node as? SKSpriteNode {
-        node.run(SKAction.colorize(with: Style.BEE_COLOR, colorBlendFactor: 1, duration: 1))
+        node.run(SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 1, duration: 0.5))
       }
-      node.run(SKAction.scale(to: 2, duration: 2), completion: {
-        self.addBee(position: node.position)
+      node.run(SKAction.scale(to: 5, duration: 1), completion: {
+        for i in 0...10 {
+          self.addBee(position: node.position)
+        }
         node.removeFromParent()
       })
     }
   }
 
   func onContactBetween(bee: SKNode, node: SKNode) {
-    bee.run(SKAction.scale(to: 10, duration: 0.5), completion: {
+    if node.name != "player" { return }
+    bee.run(SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 1, duration: 0.5))
+    bee.run(SKAction.scale(to: 50, duration: 5), completion: {
+      self.addChaser(position: bee.position)
       bee.removeFromParent()
     })
-
   }
 
 

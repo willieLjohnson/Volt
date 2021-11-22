@@ -48,16 +48,23 @@ class Player: SKSpriteNode {
     let projectile = Projectile(position: projectilePosition, size: 40)
     scene.addChild(projectile)
     projectile.startDecay()
-    projectile.physicsBody!.usesPreciseCollisionDetection = true
-    projectile.physicsBody!.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed) + (physicsBody.velocity.dx * 0.15), dy: direction.dy * projectile.initialSpeed))
-    projectile.physicsBody!.applyAngularImpulse(1000)
+    if let projectileBody = projectile.physicsBody {
+      projectileBody.usesPreciseCollisionDetection = true
+      projectileBody.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed) + (physicsBody.velocity.dx * 0.15), dy: direction.dy * projectile.initialSpeed))
+      projectileBody.applyAngularImpulse(CGFloat(Int.random(in: -1000..<1000)))
+
+      projectile.zRotation = atan2(projectileBody.velocity.dy, projectileBody.velocity.dx)
+
+    }
+    
+
     canShoot = false
 
     let command: SKAction = .run {
       self.canShoot = true
     }
 
-    let wait: SKAction = .wait(forDuration: 0.01)
+    let wait: SKAction = .wait(forDuration: 0.025)
     let sequence: SKAction = .sequence([wait, command])
 
     run(sequence)

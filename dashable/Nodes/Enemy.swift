@@ -35,7 +35,8 @@ class Enemy: SKSpriteNode {
         PhysicsCategory.ground |
         PhysicsCategory.player |
         PhysicsCategory.projectile |
-        PhysicsCategory.obstacles
+        PhysicsCategory.obstacles |
+        PhysicsCategory.enemy
       physicsBody.usesPreciseCollisionDetection = true
       physicsBody.density = 8
     }
