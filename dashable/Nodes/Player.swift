@@ -39,22 +39,21 @@ class Player: SKSpriteNode {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func shoot(at direction: CGVector) {
-    guard let scene = scene else { return }
+  func shoot(at direction: CGVector, scene: GameScene) {
     guard let physicsBody = physicsBody else { return }
     if !canShoot { return }
 
     let projectilePosition = CGPoint(x: position.x, y: position.y)
     let projectile = Projectile(position: projectilePosition, size: 40)
     scene.addChild(projectile)
+
     projectile.startDecay()
     if let projectileBody = projectile.physicsBody {
       projectileBody.usesPreciseCollisionDetection = true
-      projectileBody.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed) + (physicsBody.velocity.dx * 0.15), dy: direction.dy * projectile.initialSpeed))
-      projectileBody.applyAngularImpulse(CGFloat(Int.random(in: -1000..<1000)))
+      projectileBody.velocity = physicsBody.velocity
+      projectileBody.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed), dy: direction.dy * projectile.initialSpeed))
 
       projectile.zRotation = atan2(projectileBody.velocity.dy, projectileBody.velocity.dx)
-
     }
     
 
@@ -64,7 +63,7 @@ class Player: SKSpriteNode {
       self.canShoot = true
     }
 
-    let wait: SKAction = .wait(forDuration: 0.025)
+    let wait: SKAction = .wait(forDuration: 0.015)
     let sequence: SKAction = .sequence([wait, command])
 
     run(sequence)

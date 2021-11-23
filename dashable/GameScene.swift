@@ -14,7 +14,8 @@ class GameScene: SKScene {
   var player: Player!
   var yellowEnemy: Enemy!
 
-  var chasers = [Enemy]()
+  // TODO: Fix enemies never being deleted after death
+  var enemies = [Enemy]()
 
   // Keeps track of whether or not the player has a finger that's touching the screen.
   var touchDown = false
@@ -56,10 +57,10 @@ class GameScene: SKScene {
     guard scene != nil else { return }
     guard let cam = cam else { return }
 
-    for chaser in chasers {
-      chaser.update(self)
-      guard let chaserPhysicsBody = chaser.physicsBody else { continue }
-      applyGravityMultipliers(to: chaserPhysicsBody)
+    for enemy in enemies {
+      enemy.update(self)
+      guard let enemyPhysicsBody = enemy.physicsBody else { continue }
+      applyGravityMultipliers(to: enemyPhysicsBody)
     }
 
     yellowEnemy.update(self)
@@ -184,7 +185,7 @@ private extension GameScene {
     shootPlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
     shootPlayerStick.trackingHandler = { [unowned self] data in
     //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
-      self.player.shoot(at: CGVector(dx: data.velocity.x, dy: data.velocity.y))
+      self.player.shoot(at: CGVector(dx: data.velocity.x, dy: data.velocity.y), scene: self)
     }
     cam.addChild(shootPlayerStick)
   }
@@ -228,30 +229,29 @@ private extension GameScene {
 
 // MARK: Public helpers
 extension GameScene {
-  func createChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60)) -> Enemy {
-    var chaser = Enemy(position: position, size: size, color: Style.CHASER_COLOR)
-    chaser.physicsBody?.contactTestBitMask = PhysicsCategory.obstacles
-    chaser.logic = Logic.chaserLogic
-    return chaser
+  func addChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60)) {
+    let chaser = Enemy.createChaser(position: position, size: size)
+    let initalSpeed = chaser.moveSpeed * 0.8
+    let randx = CGFloat.random(in: -initalSpeed..<initalSpeed)
+    let randy = CGFloat.random(in: -initalSpeed..<initalSpeed)
+    enemies.append(chaser)
+    addChild(chaser)
+    chaser.physicsBody!.applyImpulse(CGVector(dx: CGFloat(randx), dy: CGFloat(randy)))
   }
 
-  func addChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60)) {
-    let chaser = createChaser(position: position, size: size)
-    chasers.append(chaser)
-    addChild(chaser)
+  func remove(deadEnemy: Enemy) {
+    enemies.removeAll { enemy in
+      deadEnemy == enemy
+    }
   }
 
   func addBee(position: CGPoint) {
-    var bee = createChaser(position: position, size: CGSize(width: 30, height: 30))
-    bee.color = Style.BEE_COLOR
-    bee.name = "bee"
-    bee.physicsBody!.contactTestBitMask = PhysicsCategory.player
-    bee.physicsBody!.collisionBitMask = bee.physicsBody!.collisionBitMask | PhysicsCategory.enemy
-    bee.moveSpeed = 1000.0
-    let randx = Int.random(in: -1000..<1000)
-    let randy = Int.random(in: -1000..<1000)
+    let bee = Enemy.createBee(position: position)
+    let initalSpeed = bee.moveSpeed * 0.8
+    let randx = CGFloat.random(in: -initalSpeed..<initalSpeed)
+    let randy = CGFloat.random(in: -initalSpeed..<initalSpeed)
 
-    chasers.append(bee)
+    enemies.append(bee)
     addChild(bee)
     bee.physicsBody!.applyImpulse(CGVector(dx: CGFloat(randx), dy: CGFloat(randy)))
   }
@@ -259,7 +259,6 @@ extension GameScene {
 
 // MARK: Collision detection
 extension GameScene: SKPhysicsContactDelegate {
-
   func onContactBetween(projectile: SKNode, node: SKNode) {
     guard let projectile = projectile as? Projectile  else { return }
     if let node = node as? SKSpriteNode {
@@ -285,31 +284,21 @@ extension GameScene: SKPhysicsContactDelegate {
     }
 
 //    projectile.physicsBody!.contactTestBitMask = 0
-
-    node.alpha -= node.name == "enemy" ? 0.0007 : node.name == "bee" ? 0.08 : 0.01
-    if node.alpha <= 0.5 {
-      node.removeFromParent()
+    if let node = node as? Entity {
+      node.damage()
     }
   }
 
   func onContactBetween(enemy: SKNode, node: SKNode) {
     if node.name == "flyerDrop" {
-      if let node = node as? SKSpriteNode {
-        node.run(SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 1, duration: 0.5))
-      }
-      node.run(SKAction.scale(to: 5, duration: 1), completion: {
-        for i in 0...10 {
-          self.addBee(position: node.position)
-        }
-        node.removeFromParent()
-      })
+ 
     }
   }
 
   func onContactBetween(bee: SKNode, node: SKNode) {
     if node.name != "player" { return }
     bee.run(SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 1, duration: 0.5))
-    bee.run(SKAction.scale(to: 50, duration: 5), completion: {
+    bee.run(SKAction.scale(to: 50, duration: 2), completion: {
       self.addChaser(position: bee.position)
       bee.removeFromParent()
     })

@@ -24,14 +24,21 @@ class SpriteComponent: GKComponent {
 }
 
 extension SKNode {
-    func addGlow(radius: CGFloat = 30)
-    {
-        let view = SKView()
-        let effectNode = SKEffectNode()
-        let texture = view.texture(from: self)
-        effectNode.shouldRasterize = true
-        effectNode.filter = CIFilter(name: "CIGaussianBlur",withInputParameters: ["inputRadius":radius])
-        addChild(effectNode)
-        effectNode.addChild(SKSpriteNode(texture: texture))
-    }
+  func addTrail(scene: GameScene, color: UIColor) {
+    guard let emitter = SKEmitterNode(fileNamed: "spark.sks") else { return }
+    emitter.targetNode = scene
+    emitter.particleColor = color
+    emitter.particleLifetime = 0.01
+    addChild(emitter)
+  }
+
+  func addGlow(radius: CGFloat = 30) {
+    let view = SKView()
+    let effectNode = SKEffectNode()
+    let texture = view.texture(from: self)
+    effectNode.shouldRasterize = true
+    effectNode.filter = CIFilter(name: "CIGaussianBlur",withInputParameters: ["inputRadius":radius])
+    addChild(effectNode)
+    effectNode.addChild(SKSpriteNode(texture: texture))
+  }
 }

@@ -11,7 +11,7 @@ import Foundation
 import SpriteKit
 
 class Projectile: SKSpriteNode {
-  let initialSpeed: CGFloat = 4
+  let initialSpeed: CGFloat = 5
 
   init(position: CGPoint, size: CGFloat, color: SKColor = Style.PROJECTILE_COLOR) {
     super.init(texture: nil, color: Style.OBSTACLE_COLOR, size: CGSize(width: size * 1.5, height: size * 0.5))
@@ -22,12 +22,15 @@ class Projectile: SKSpriteNode {
     physicsBody = SKPhysicsBody(circleOfRadius: size)
 
     guard let physicsBody = physicsBody else { return }
-    physicsBody.density = 0.4
+    physicsBody.density = 0.45
     physicsBody.affectedByGravity = false
     physicsBody.isDynamic = true
+    physicsBody.usesPreciseCollisionDetection = true
     physicsBody.categoryBitMask = PhysicsCategory.projectile
     physicsBody.collisionBitMask = PhysicsCategory.enemy | PhysicsCategory.ground | PhysicsCategory.obstacles
     physicsBody.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.obstacles
+
+    addGlow()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -35,9 +38,7 @@ class Projectile: SKSpriteNode {
   }
 
   func startDecay() {
-    let fade = SKAction.fadeAlpha(to: 0, duration: 2)
     let scale = SKAction.scale(to: 0, duration: 2)
-    run(scale)
-    run(fade, completion: { self.removeFromParent() })
+    run(scale, completion: { self.removeFromParent() })
   }
 }

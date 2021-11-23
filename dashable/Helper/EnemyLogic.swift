@@ -76,6 +76,7 @@ struct Logic {
 
   /// Flies above and ehead of the player and drops obstacles.
   static var flyerLogic: EnemyLogic = { yellowEnemy, player, scene in
+
     yellowEnemy.run(SKAction.move(to: CGPoint(x: player.position.x + player.physicsBody!.velocity.dx, y: player.position.y + 500), duration: 0.8))
     // Only run if there is no action(dropObstacle) already running
     let shouldDropObstacle = !yellowEnemy.isAbilityActionRunning
@@ -94,6 +95,12 @@ struct Logic {
       obstacle.color = Style.FLYER_COLOR
       obstacle.name = "flyerDrop"
       scene.addChild(obstacle)
+
+      obstacle.run(SKAction.repeatForever(SKAction.sequence([SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 1, duration: 0.1), SKAction.colorize(with: Style.OBSTACLE_COLOR, colorBlendFactor: 1, duration: 0.1)])))
+      obstacle.run(SKAction.scale(to: 5, duration: 2), completion: {
+        scene.addChaser(position: obstacle.position)
+        obstacle.die()
+      })
 
       let difference = Useful.differenceBetween(obstacle, and: player)
       let angle = atan2(difference.y, difference.x)

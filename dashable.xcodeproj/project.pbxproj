@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D272483274C3C4A0084E7F5 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D272482274C3C4A0084E7F5 /* Entity.swift */; };
+		3D272485274C7CD20084E7F5 /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D272484274C7CD20084E7F5 /* spark.sks */; };
+		3D272487274C7CF00084E7F5 /* magic.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D272486274C7CF00084E7F5 /* magic.sks */; };
 		3D28C256205CF0A20058771E /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28C255205CF0A20058771E /* Monster.swift */; };
 		3D28C258205CF0F70058771E /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28C257205CF0F70058771E /* EntityManager.swift */; };
 		3D28C25A205CF1700058771E /* SpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28C259205CF1700058771E /* SpriteComponent.swift */; };
@@ -33,6 +36,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D272482274C3C4A0084E7F5 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		3D272484274C7CD20084E7F5 /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = spark.sks; path = dashable/spark.sks; sourceTree = "<group>"; };
+		3D272486274C7CF00084E7F5 /* magic.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = magic.sks; path = dashable/magic.sks; sourceTree = "<group>"; };
 		3D28C255205CF0A20058771E /* Monster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monster.swift; sourceTree = "<group>"; };
 		3D28C257205CF0F70058771E /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		3D28C259205CF1700058771E /* SpriteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteComponent.swift; sourceTree = "<group>"; };
@@ -105,6 +111,8 @@
 		3DA7C5A52051FC9D005C60B9 = {
 			isa = PBXGroup;
 			children = (
+				3D272486274C7CF00084E7F5 /* magic.sks */,
+				3D272484274C7CD20084E7F5 /* spark.sks */,
 				3DA7C5B02051FC9E005C60B9 /* dashable */,
 				3DA7C5AF2051FC9E005C60B9 /* Products */,
 			);
@@ -146,6 +154,7 @@
 				3D4D468F2058765B00747B26 /* Enemy.swift */,
 				3D55FDE5205B7DB70059FC92 /* Obstacle.swift */,
 				3DAAFD7927494CCF00CE5D49 /* Projectile.swift */,
+				3D272482274C3C4A0084E7F5 /* Entity.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -217,7 +226,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D272487274C7CF00084E7F5 /* magic.sks in Resources */,
 				3DA7C5BD2051FC9E005C60B9 /* Main.storyboard in Resources */,
+				3D272485274C7CD20084E7F5 /* spark.sks in Resources */,
 				3DA7C5BF2051FC9E005C60B9 /* Assets.xcassets in Resources */,
 				3DA7C5C22051FC9E005C60B9 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -232,6 +243,7 @@
 			files = (
 				3DAAFD7A27494CD000CE5D49 /* Projectile.swift in Sources */,
 				3D4D46902058765B00747B26 /* Enemy.swift in Sources */,
+				3D272483274C3C4A0084E7F5 /* Entity.swift in Sources */,
 				3DEBB396205B02010017C9BB /* AnalogJoystick.swift in Sources */,
 				3D28C25A205CF1700058771E /* SpriteComponent.swift in Sources */,
 				3D36AA2E2063944A0004A9DF /* EnemyLogic.swift in Sources */,
