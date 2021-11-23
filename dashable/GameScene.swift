@@ -19,7 +19,6 @@ class GameScene: SKScene {
 
   // Keeps track of whether or not the player has a finger that's touching the screen.
   var touchDown = false
-  var isPlayerJumping = false
   var touchLocation: CGPoint!
   var cam: SKCameraNode!
   var playerPreviousVelocity: CGVector = .zero
@@ -57,6 +56,8 @@ class GameScene: SKScene {
     guard scene != nil else { return }
     guard let cam = cam else { return }
 
+    player.update(self)
+    
     for enemy in enemies {
       enemy.update(self)
       guard let enemyPhysicsBody = enemy.physicsBody else { continue }
@@ -86,12 +87,8 @@ class GameScene: SKScene {
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let touch = touches.first else { return }
     touchLocation = touch.location(in: cam)
-    
-    if !isPlayerJumping {
-      guard let playerPhysicsBody = player.physicsBody else { return }
-      playerPhysicsBody.applyImpulse(CGVector(dx: 0, dy: 80))
-      isPlayerJumping = true
-    }
+
+    player.jump()
 
     // Get UI node that was touched.
     let touchedNodes = cam.nodes(at: touchLocation)
@@ -174,7 +171,7 @@ private extension GameScene {
     movePlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
     movePlayerStick.trackingHandler = { [unowned self] data in
       //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
-      self.player.physicsBody?.applyForce(CGVector(dx: data.velocity.x * 2, dy: 0))
+      self.player.physicsBody?.applyForce(CGVector(dx: data.velocity.x * player.moveSpeed, dy: 0))
     }
     cam.addChild(movePlayerStick)
 
@@ -214,6 +211,16 @@ private extension GameScene {
       let obstaclePosition = CGPoint(x: origin.x + CGFloat(obstacleSize.width * CGFloat(i) * spacing), y: origin.y + CGFloat(obstacleSize.height))
       let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize, isDynamic: true)
       obstacle.physicsBody!.density = 0.05
+      addChild(obstacle)
+    }
+
+    for i in 0...amount {
+      let obstacleSize = CGSize(width: 250, height: 10000)
+      let obstaclePosition = CGPoint(x: origin.x + CGFloat(250 * CGFloat(i) * 10), y: 2500)
+      let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize, isDynamic: false)
+      obstacle.physicsBody = nil
+      obstacle.zPosition = -10
+      obstacle.alpha = 0.2
       addChild(obstacle)
     }
   }
@@ -297,7 +304,7 @@ extension GameScene: SKPhysicsContactDelegate {
 
   func onContactBetween(bee: SKNode, node: SKNode) {
     if node.name != "player" { return }
-    bee.run(SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 1, duration: 0.5))
+    bee.run(SKAction.repeatForever(SKAction.sequence([SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 0.5, duration: 0.1), SKAction.colorize(with: Style.BEE_COLOR, colorBlendFactor: 1, duration: 0.1)])))
     bee.run(SKAction.scale(to: 50, duration: 2), completion: {
       self.addChaser(position: bee.position)
       bee.removeFromParent()
@@ -334,7 +341,8 @@ extension GameScene: SKPhysicsContactDelegate {
     let contactTestBitMask = contact.bodyA.contactTestBitMask | contact.bodyB.contactTestBitMask
     switch contactTestBitMask {
     case playerPhysicsBody.contactTestBitMask:
-      isPlayerJumping = false
+      player.isJumping = false
+
       let deltaVelocity = playerPhysicsBody.velocity - playerPreviousVelocity
       let speed = abs(deltaVelocity.dx) + abs(deltaVelocity.dy)
 
