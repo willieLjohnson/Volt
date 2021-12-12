@@ -9,11 +9,13 @@
 import Foundation
 
 struct PhysicsCategory {
-  static let none: UInt32 = 1
-  static let player:  UInt32 = 2
-  static let ground: UInt32 = 4
-  static let obstacles:  UInt32 = 8
-  static let sleeper:  UInt32 = 16
-  static let enemy:  UInt32 = 32
-  static let projectile:  UInt32 = 64
+    static let none: UInt32 = 1
+    static let player:  UInt32 = 2
+    static let ground: UInt32 = 4
+    static let obstacles:  UInt32 = 8
+    static let sleeper:  UInt32 = 16
+    static let enemy:  UInt32 = 32
+    static let projectile:  UInt32 = 64
+    static let all: UInt32 = player | ground | obstacles | enemy | projectile
+    static let playerContacts: UInt32 = ground | enemy | obstacles
 }
