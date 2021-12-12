@@ -18,8 +18,8 @@ struct Logic {
   static var chaserLogic: EnemyLogic = { enemy, player, scene in
     let moveSpeed: CGFloat = enemy.moveSpeed
     // Grab physics bodies.
-    guard let physicsBody = enemy.physicsBody else { return }
-    guard let playerPhysicsBody = player.physicsBody else { return }
+    guard let physicsBody = enemy.getPhysicsBody() else { return }
+      guard let playerPhysicsBody = player.getPhysicsBody() else { return }
 
     // Distance between the enemy and the player as CGPoint.
     let positionDifferenceToPlayer = Useful.differenceBetween(enemy, and: player)

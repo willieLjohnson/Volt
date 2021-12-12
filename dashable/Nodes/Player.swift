@@ -19,29 +19,12 @@ class Player: Actor {
     var isJumping: Bool = false
     var justJumped: Bool = false
     
-    init(position: CGPoint, color: SKColor = Style.PLAYER_COLOR, size: CGSize = CGSize(width: 40, height: 40)) {
-        super.init(name: ActorNames.PLAYER)
-        self.color = color
-        self.size = size
-        
-        configureComponents()
+    init(name: String, position: CGPoint, color: SKColor, size: CGSize) {
+        super.init(name: name, color: color, size: size)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    required convenience init(name: String = ActorNames.PLAYER, components: [Component]) {
-        self.name = name
-        for component in components {
-            set(component: component)
-        }
-    }
-    
-    func configureComponents() {
-        if let body = getComponent(by: .BODY) as? Body {
-            body.color = color
-        }
+    required init() {
+        super.init(name: ActorNames.PLAYER, color: Style.PLAYER_COLOR, size: Player.SIZE)
     }
     
     func jump() {
@@ -86,6 +69,8 @@ class Player: Actor {
 }
 
 extension Player {
+
+    
     func move(velocity: CGVector) {
         return
     }
