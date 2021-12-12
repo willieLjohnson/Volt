@@ -9,7 +9,7 @@
 import SpriteKit
 
 /// The Enemy SKSpriteNode that handles enemy logic.
-class Enemy: Actor  {
+class Enemy: Actor {
   /// How fast the enemy was moving on the last update.
   var previousVelocity: CGVector = .zero
   /// How far the enemy can see.

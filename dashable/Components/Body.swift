@@ -10,19 +10,21 @@ import Foundation
 import SpriteKit
 
 
-class Body: SKSpriteNode, Component {
+class Body: Component {
     var entityId: UUID
-    var type: ComponentType = .BODY    
+    var type: ComponentType = .BODY
     
+    var sprite: SKSpriteNode!
     
     init(_ entity: Entity, size: CGSize, color: SKColor) {
         entityId = entity.id
-        name = entity.name
-        self.color = color
-        physicsBody = SKPhysicsBody(rectangleOf: size)
-        physicsBody!.isDynamic = true
-        physicsBody!.affectedByGravity = false
-        physicsBody!.usesPreciseCollisionDetection = true
+        
+        sprite = SKSpriteNode(color: color, size: size)
+        sprite.name = entity.name
+        sprite.physicsBody = SKPhysicsBody(rectangleOf: size)
+        sprite.physicsBody!.isDynamic = true
+        sprite.physicsBody!.affectedByGravity = false
+        sprite.physicsBody!.usesPreciseCollisionDetection = true
     }
 
     required init?(coder: NSCoder) {
@@ -30,7 +32,7 @@ class Body: SKSpriteNode, Component {
     }
     
     func accelerate(using controls: Controls) {
-        guard let physicsBody = physicsBody else { return }
-        physicsBody.applyForce(CGVector(dx: controls.dx, dy: controls.dy))
+        guard let physicsBody = sprite.physicsBody else { return }
+        physicsBody.applyForce(controls.vectorWithAccel)
     }
 }

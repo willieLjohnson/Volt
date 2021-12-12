@@ -74,7 +74,7 @@ class Actor: Entity {
     
     func getPhysicsBody() -> SKPhysicsBody? {
         guard let body = getComponent(by: .BODY) as? Body else { return nil }
-        return body.physicsBody
+        return body.sprite.physicsBody
     }
     
 }
