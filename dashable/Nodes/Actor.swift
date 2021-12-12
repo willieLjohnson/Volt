@@ -37,11 +37,11 @@ extension Entity {
     
 }
 
-let ActorNames =  {
-    let PLAYER = "Player"
-    let ENEMY = "Enemy"
-    let FRIENDLY = "Friendly"
-    let NEUTRAL = "Neutral"
+struct ActorNames {
+    static let PLAYER = "Player"
+    static let ENEMY = "Enemy"
+    static let FRIENDLY = "Friendly"
+    static let NEUTRAL = "Neutral"
 }
 
 class Actor: Entity {

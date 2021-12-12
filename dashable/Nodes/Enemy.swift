@@ -42,7 +42,7 @@ class Enemy: SKSpriteNode, Entity {
       physicsBody.usesPreciseCollisionDetection = true
       physicsBody.density = 8
     }
-    self.addGlow()
+//    self.addGlow()
   }
 
   func move(velocity: CGVector) {
@@ -76,7 +76,7 @@ class Enemy: SKSpriteNode, Entity {
         evolve(scene)
       } else {
         scene.remove(deadEnemy: self)
-        die()
+//        die()
       }
     }
   }

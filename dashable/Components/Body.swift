@@ -28,4 +28,9 @@ class Body: SKSpriteNode, Component {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func accelerate(using controls: Controls) {
+        guard let physicsBody = physicsBody else { return }
+        physicsBody.applyForce(CGVector(dx: controls.dx, dy: controls.dy))
+    }
 }

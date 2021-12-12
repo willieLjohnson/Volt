@@ -7,10 +7,10 @@
 //
 
 import Foundation
-
+import SpriteKit
 
 class MovementSystem: System {
-    var type: SystemType = .Collision
+    var type: SystemType = .Movement
     
     var entities: [UUID : Entity] =  [UUID : Entity]()
     
@@ -19,18 +19,17 @@ class MovementSystem: System {
     }
     
     func onDestroyed(entity: Entity) {
-        return
+        guard let index = entities.index(forKey: entity.id) else { return }
+        entities.remove(at: index)
     }
     
     func update() {
-        for entity in entities {
-            
-            guard let entity = entity as Actor,
-                  entityBody = entity.get,
-                  entityControl = entity.control else { continue }
-            entityBody.applyForce(<#T##CGVector#>, at: <#T##CGPoint#>)
+        for (_, entity) in entities {
+            guard let entity = entity as? Actor,
+                  let entityBody = entity.getComponent(by: .BODY) as? Body,
+                  let entityControl = entity.getComponent(by: .CONTROLS) as? Controls else { continue }
+            guard let physicsBody = entityBody.physicsBody else { continue }
+            physicsBody.applyForce(entityControl.vectorWithAccel)
         }
     }
-    
-    
 }

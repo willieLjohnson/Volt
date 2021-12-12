@@ -30,7 +30,7 @@ class Projectile: SKSpriteNode {
     physicsBody.collisionBitMask = PhysicsCategory.enemy | PhysicsCategory.ground | PhysicsCategory.obstacles
     physicsBody.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.obstacles
 
-    addGlow()
+//    addGlow()
   }
 
   required init?(coder aDecoder: NSCoder) {

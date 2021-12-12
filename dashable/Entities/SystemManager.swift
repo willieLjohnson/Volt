@@ -38,4 +38,6 @@ class SystemManager {
             system.onDestroyed(entity: entity)
         }
     }
+    
+    
 }

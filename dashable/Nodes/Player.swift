@@ -12,9 +12,7 @@ class Player: Entity {
     var id: UUID
     
     var components: [ComponentType : Component]
-
-    
-    var health: Health = Health(max: 1000)
+    var health: Health = Health(self, max: 1000)
     var body: Body!
     
     var canEvolve: Bool = false
@@ -46,7 +44,7 @@ class Player: Entity {
     }
     
     init(position: CGPoint, size: CGSize, color: SKColor = Style.PLAYER_COLOR, categoryMask: UInt32 = PhysicsCategory.player) {
-        self.init(name: , components: <#T##[Component]#>)
+//        self.init(name: , components: <#T##[Component]#>)
 
     }
     

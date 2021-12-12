@@ -15,6 +15,9 @@ struct Controls: Component {
     
     var dx: CGFloat
     var dy: CGFloat
+    var vectorWithAccel: CGVector {
+        CGVector(dx: self.dx * acceleration, dy: self.dy * acceleration)
+    }
     var acceleration: CGFloat = 2
     var moving: Bool {
         return dx != 0 || dy != 0
@@ -22,5 +25,10 @@ struct Controls: Component {
     
     init(_ entity: Entity) {
         entityId = entity.id
+    }
+    
+    mutating func move(dx: CGFloat, dy: CGFloat) {
+        self.dx = dx
+        self.dy = dy
     }
 }
