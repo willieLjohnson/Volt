@@ -120,7 +120,8 @@ private extension GameScene {
         ground = Ground(position: CGPoint(x: size.width / 2, y: 0), size: CGSize(width: size.width * 1000, height: size.height / 4))
         addChild(ground)
         
-        player = Player(position: CGPoint(x: size.width / 2, y: size.height / 2), size: CGSize(width: 40, height: 40))
+        player = Player(position:CGPoint(x: size.width / 2, y: size.height / 2)
+        )
         addChild(player)
         
         addChaser(position: CGPoint(x: player.position.x - 100, y: size.height / 2))

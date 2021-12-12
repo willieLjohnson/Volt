@@ -16,7 +16,7 @@ protocol Entity {
     var name: String { get set }
     var components: [ComponentType: Component] { get set }
     
-    init(name: String, components: [Component])
+    init(name: String, components: [ComponentType : Component])
     
     func set(component: Component)
     func getComponent(by type: ComponentType) -> Component?
@@ -45,26 +45,41 @@ struct ActorNames {
 }
 
 class Actor: Entity {
+    static var COLOR: SKColor = .clear
+    static var SIZE: CGSize = CGSize(width: 10, height: 10)
+    static var MAX_HEALTH: Double = 100
+    
     var id: UUID = UUID()
     var name: String = ""
+    
     var components: [ComponentType : Component] = [ComponentType : Component]()
     
-    required init(name: String, components: [Component]) {
-        self.name = name
-        for component in components {
-            set(component: component)
+    init(name: String, color: SKColor = .clear, size: CGSize = Actor.SIZE, maxHealth: Double = Actor.MAX_HEALTH) {
+        configureComponents(color: color, size: size, maxHealth: maxHealth)
+    }
+    
+    required convenience init(name: String, components: [ComponentType : Component]) {
+        var size: CGSize = Actor.SIZE
+        var color: SKColor = Actor.COLOR
+        var maxHealth: Double = Actor.MAX_HEALTH
+        
+        if let body = components[.BODY] as? Body {
+            size = body.size
+            color = body.color
         }
+        
+        if let health = components[.HEALTH] as? Health {
+            maxHealth = health.max
+        }
+        
+        self.init(name: name, color: color, size: size, maxHealth: maxHealth)
     }
     
-    convenience init(name: String) {
-        self.init(name: name, components: createBaseComponents())
-    }
-    
-    func createBaseComponents() -> [Component] {
-        return [
-            Body(self, size: CGSize(width: 10, height: 10), color: .clear),
-            Controls(self),
-            Health(self, max: 100)
+    func configureComponents(color: SKColor, size: CGSize, maxHealth: Double) {
+        self.components =  [
+            .BODY: Body(self, size: size, color: color),
+            .CONTROLS: Controls(self),
+            .HEALTH: Health(self, max: maxHealth)
         ]
     }
     

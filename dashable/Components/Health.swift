@@ -12,25 +12,21 @@ struct Health: Component {
     var type: ComponentType = .HEALTH
     var entityId: UUID
     
-    private var MAX: Int = 100
-    private var current: Int
+    var max: Double = 100
+    var current: Double
     
-    init(_ entity: Entity, max: Int) {
-        self.MAX = max
+    init(_ entity: Entity, max: Double) {
+        self.max = max
         entityId = entity.id
-        current = MAX
+        current = max
     }
     
-    mutating func decrease(by amount: Int) {
+    mutating func decrease(by amount: Double) {
         current -= amount
     }
     
-    mutating func increase(by amount: Int) {
+    mutating func increase(by amount: Double) {
         current += amount
-    }
-    
-    func getCurrent() -> Int {
-        return current
     }
     
     func isDead() -> Bool {
