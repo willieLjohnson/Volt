@@ -25,7 +25,7 @@ class Player: Actor {
     }
     
     required init() {
-        super.init(name: Names.Actor.PLAYER, color: Style.PLAYER_COLOR, size: Player.SIZE)
+        super.init(name: Names.Collidable.Actor.PLAYER, color: Style.PLAYER_COLOR, size: Player.SIZE)
     }
     
     func jump() {

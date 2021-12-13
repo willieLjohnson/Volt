@@ -25,11 +25,11 @@ class MovementSystem: System {
     
     func update() {
         for (_, entity) in entities {
-            guard let entity = entity as? Actor,
-                  let entityBody = entity.getComponent(by: .BODY) as? Body,
-                  let entityControl = entity.getComponent(by: .CONTROLS) as? Controls else { continue }
-            guard let physicsBody = entityBody.physicsBody else { continue }
-            physicsBody.applyForce(entityControl.vectorWithAccel)
+            guard let entity = entity as? Actor else { continue }
+            let entityControls = entity.getControls()
+            let entityPhysicsBody = entity.getPhysicsBody()
+            
+            entityPhysicsBody.applyForce(entityControls.vectorWithAccel)
         }
     }
 }

@@ -25,6 +25,8 @@ struct Controls: Component {
     
     init(_ entity: Entity) {
         entityId = entity.id
+        dx = 0
+        dy = 0
     }
     
     mutating func move(dx: CGFloat, dy: CGFloat) {

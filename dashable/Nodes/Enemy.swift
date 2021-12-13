@@ -43,7 +43,7 @@ class Enemy: Actor {
     }
     
     required init() {
-        super.init(name: Names.Actor.Enemy.CHASER, color: Style.PLAYER_COLOR, size: Player.SIZE)
+        super.init(name: Names.Collidable.Actor.Enemy.CHASER, color: Style.PLAYER_COLOR, size: Player.SIZE)
     }
     
     
@@ -75,7 +75,7 @@ class Enemy: Actor {
 
 extension Enemy {
     static func createChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60)) -> Enemy {
-        let chaser = Enemy(name: Names.Actor.Enemy.CHASER, position: position, color: Style.CHASER_COLOR, size: size)
+        let chaser = Enemy(name: Names.Collidable.Actor.Enemy.CHASER, position: position, color: Style.CHASER_COLOR, size: size)
         if let physicsBody = chaser.getPhysicsBody() {
             physicsBody.contactTestBitMask = PhysicsCategory.obstacles
         }

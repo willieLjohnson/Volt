@@ -9,15 +9,22 @@
 import Foundation
 
 struct Names {
-    struct Actor {
-        static let PLAYER = "Player"
-        static let FRIENDLY = "Friendly"
-        static let NEUTRAL = "Neutral"
+    struct Collidable {
+        static let OBSTACLE = "Obstacle"
         
-        struct Enemy {
-            static let CHASER = "Chaser"
-            static let FLYER = "Flyer"
+        struct Actor {
+            static let PLAYER = "Player"
+            static let FRIENDLY = "Friendly"
+            static let NEUTRAL = "Neutral"
+            static let OBSTACLE = "Obstacle"
+
+            
+            struct Enemy {
+                static let CHASER = "Chaser"
+                static let FLYER = "Flyer"
+            }
         }
+
     }
 
 }

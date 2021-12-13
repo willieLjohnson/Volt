@@ -18,13 +18,13 @@ struct Logic {
     static var chaserLogic: EnemyLogic = { enemy, player, scene in
         let moveSpeed: CGFloat = enemy.moveSpeed
         // Grab physics bodies.
-        guard let physicsBody = enemy.getPhysicsBody() else { return }
-        guard let playerPhysicsBody = player.getPhysicsBody() else { return }
+        let enemyPhysicsBody = enemy.getPhysicsBody()
+        let playerPhysicsBody = player.getPhysicsBody()
         
         // Distance between the enemy and the player as CGPoint.
         let positionDifferenceToPlayer = Useful.differenceBetween(enemy.getSprite(), and: player.getSprite())
         // The velocity of the enemy before any action is taken.
-        let currentVelocity = enemy.getPhysicsBody()!.velocity
+        let currentVelocity = enemyPhysicsBody.velocity
         
         // Analyze player.
         let isNearPlayer = abs(positionDifferenceToPlayer.x) < 100
@@ -67,17 +67,19 @@ struct Logic {
         
         // Stop accelerating once ahead of player.
         if xVelocityIsTooFast && isAheadOfPlayer && !isNearPlayer {
-            physicsBody.applyForce(stopForce)
+            enemyPhysicsBody.applyForce(stopForce)
         }
         
         // Move towards player.
-        physicsBody.applyForce(moveForce)
+        enemyPhysicsBody.applyForce(moveForce)
     }
     
     /// Flies above and ehead of the player and drops obstacles.
     static var flyerLogic: EnemyLogic = { yellowEnemy, player, scene in
+        let playerPhysicsBody = player.getPhysicsBody()
+        let playerPosition = player.getPosition()
         
-        yellowEnemy.getSprite().run(SKAction.move(to: CGPoint(x: player.getPosition().x + player.getPhysicsBody()!.velocity.dx, y: player.getPosition().y + 500), duration: 0.8))
+        yellowEnemy.getSprite().run(SKAction.move(to: CGPoint(x: playerPosition.x + playerPhysicsBody.velocity.dx, y: playerPosition.y + 500), duration: 0.8))
         // Only run if there is no action(dropObstacle) already running
         let shouldDropObstacle = !yellowEnemy.isAbilityActionRunning
         guard shouldDropObstacle else { return }
@@ -91,15 +93,15 @@ struct Logic {
             let obstacleSize = CGSize(width: 100 + randWidthModifier, height: 100 + randHeightModifier)
             let obstaclePosition = CGPoint(x: yellowEnemy.getPosition().x, y: yellowEnemy.getPosition().y - obstacleSize.height)
             
-            let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize)
-            obstacle.color = Style.FLYER_COLOR
+            let obstacle = Obstacle(position: obstaclePosition, color: Style.FLYER_COLOR, size: obstacleSize)
+    
             obstacle.name = "flyerDrop"
             scene.addChild(obstacle)
             
             obstacle.run(SKAction.repeatForever(SKAction.sequence([SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 1, duration: 0.1), SKAction.colorize(with: Style.OBSTACLE_COLOR, colorBlendFactor: 1, duration: 0.1)])))
             obstacle.run(SKAction.scale(to: 5, duration: 2), completion: {
                 scene.addChaser(position: obstacle.position)
-//                obstacle.die()
+                //                obstacle.die()
             })
             
             let difference = Useful.differenceBetween(obstacle, and: player.getSprite())

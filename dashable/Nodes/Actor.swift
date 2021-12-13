@@ -39,7 +39,32 @@ extension Entity {
 
 
 
-class Actor: Entity {
+protocol Collidable: Entity {
+    func getBody() -> Body
+    func getSprite() -> SKSpriteNode
+    func getPhysicsBody() -> SKPhysicsBody
+    func getPosition() -> CGPoint
+}
+
+extension Collidable {
+    func getBody() -> Body {
+       return getComponent(by: .BODY) as! Body
+    }
+    
+    func getSprite() -> SKSpriteNode {
+        return getBody().sprite
+    }
+    
+    func getPhysicsBody() -> SKPhysicsBody {
+        return getSprite().physicsBody!
+    }
+    
+    func getPosition() -> CGPoint {
+        return getSprite().position
+    }
+}
+
+class Actor: Collidable {
     static let COLOR: SKColor = .black
     static let SIZE: CGSize  = CGSize(width: 40, height: 40)
     static let MAX_HEALTH: Double = 100
@@ -66,21 +91,12 @@ class Actor: Entity {
     func set(component: Component) {
         components[component.type] = component
     }
-    
-    func getBody() -> Body {
-       return getComponent(by: .BODY) as! Body
-    }
-    
-    func getSprite() -> SKSpriteNode {
-        return getBody().sprite
-    }
-    
-    func getPhysicsBody() -> SKPhysicsBody? {
-        return getSprite().physicsBody
-    }
-    
-    func getPosition() -> CGPoint {
-        return getSprite().position
+
+}
+
+extension Actor {
+    func getControls() -> Controls {
+        return getComponent(by: .CONTROLS) as! Controls
     }
 }
 
