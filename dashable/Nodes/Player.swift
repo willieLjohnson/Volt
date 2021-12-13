@@ -55,27 +55,21 @@ class Player: Actor {
 //
 //            projectile.zRotation = atan2(projectileBody.velocity.dy, projectileBody.velocity.dx)
 //        }
-        
-        canShoot = false
-        
-        let command: SKAction = .run {
-            self.canShoot = true
-        }
-        
-        let wait: SKAction = .wait(forDuration: 0.015)
-        let sequence: SKAction = .sequence([wait, command])
-        
+//
+//        canShoot = false
+//
+//        let command: SKAction = .run {
+//            self.canShoot = true
+//        }
+//
+//        let wait: SKAction = .wait(forDuration: 0.015)
+//        let sequence: SKAction = .sequence([wait, command])
+//
 //        run(sequence)
     }
 }
 
 extension Player {
-
-    
-    func move(velocity: CGVector) {
-        return
-    }
-    
     func update(_ scene: GameScene) {
         if !isJumping && justJumped {
 //            physicsBody!.density = defaultDensity

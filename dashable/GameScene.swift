@@ -44,17 +44,20 @@ class GameScene: SKScene {
     let mediumImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     let heavyImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
+    let movementSystem = MovementSystem()
+    
     override func didMove(to view: SKView) {
         setupScene()
     }
     
     override func update(_ currentTime: TimeInterval) {
         lastUpdateTimeInterval = currentTime
-        
         super.update(currentTime)
         // Make sure that the scene has already loaded.
         guard scene != nil else { return }
         guard let cam = cam else { return }
+        
+        movementSystem.update()
         
         player.update(self)
         
@@ -66,6 +69,7 @@ class GameScene: SKScene {
         
         // Get player bodies
         let playerPhysicsBody = player.getPhysicsBody()
+    
         
         // Move cam to player
         let duration = TimeInterval(0.4 * pow(0.9, abs(playerPhysicsBody.velocity.dx / 100) - 1) + 0.05)
@@ -120,7 +124,8 @@ private extension GameScene {
         
         player = Player(position: CGPoint(x: size.width / 2, y: size.height / 2))
         addChild(player.getSprite())
-        
+        movementSystem.register(entity: player)
+
         addChaser(position: CGPoint(x: player.getPosition().x - 100, y: size.height / 2))
         
         yellowEnemy = Enemy(Names.Collidable.Actor.Enemy.FLYER, position: CGPoint(x: player.getPosition().x - 100, y: size.height / 1.5), color: Style.FLYER_COLOR, size: CGSize(width: 60, height: 40))
@@ -128,6 +133,7 @@ private extension GameScene {
         addChild(yellowEnemy.getSprite())
         
         addGroundObstacles()
+        
         cam = SKCameraNode()
         cam.zPosition = 1000
         
@@ -168,7 +174,7 @@ private extension GameScene {
         movePlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
         movePlayerStick.trackingHandler = { [unowned self] data in
             //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
-            self.player.getPhysicsBody().applyForce(CGVector(dx: data.velocity.x * player.moveSpeed, dy: 0))
+            self.player.move(direction: CGVector(dx: data.velocity.x, dy: 0))
         }
         cam.addChild(movePlayerStick)
         
@@ -244,6 +250,7 @@ extension GameScene {
         enemies.append(chaser)
         addChild(chaser.getSprite())
         chaser.getPhysicsBody().applyImpulse(CGVector(dx: CGFloat(randx), dy: CGFloat(randy)))
+        movementSystem.register(entity: chaser)
     }
     
     func remove(deadEnemy: Enemy) {
@@ -297,7 +304,7 @@ extension GameScene: SKPhysicsContactDelegate {
     }
     
     func onContactBetween(enemy: SKNode, node: SKNode) {
-        if node.name == "flyerDrop" {≥≥./l;;;/
+        if node.name == "flyerDrop" {
             
         }
     }

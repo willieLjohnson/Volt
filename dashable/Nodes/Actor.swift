@@ -102,5 +102,9 @@ extension Actor {
     func getHealeth() -> Health {
         return getComponent(by: .HEALTH) as! Health
     }
+    
+    func move(direction: CGVector) {
+        set(component: getControls().with(direction: direction))
+    }
 }
 
