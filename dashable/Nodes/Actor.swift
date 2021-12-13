@@ -37,12 +37,7 @@ extension Entity {
     
 }
 
-struct ActorNames {
-    static let PLAYER = "Player"
-    static let ENEMY = "Enemy"
-    static let FRIENDLY = "Friendly"
-    static let NEUTRAL = "Neutral"
-}
+
 
 class Actor: Entity {
     static let COLOR: SKColor = .black
@@ -72,10 +67,20 @@ class Actor: Entity {
         components[component.type] = component
     }
     
-    func getPhysicsBody() -> SKPhysicsBody? {
-        guard let body = getComponent(by: .BODY) as? Body else { return nil }
-        return body.sprite.physicsBody
+    func getBody() -> Body {
+       return getComponent(by: .BODY) as! Body
     }
     
+    func getSprite() -> SKSpriteNode {
+        return getBody().sprite
+    }
+    
+    func getPhysicsBody() -> SKPhysicsBody? {
+        return getSprite().physicsBody
+    }
+    
+    func getPosition() -> CGPoint {
+        return getSprite().position
+    }
 }
 

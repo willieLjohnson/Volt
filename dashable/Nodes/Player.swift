@@ -21,10 +21,11 @@ class Player: Actor {
     
     init(name: String, position: CGPoint, color: SKColor, size: CGSize) {
         super.init(name: name, color: color, size: size)
+        getBody().sprite.position = position
     }
     
     required init() {
-        super.init(name: ActorNames.PLAYER, color: Style.PLAYER_COLOR, size: Player.SIZE)
+        super.init(name: Names.Actor.PLAYER, color: Style.PLAYER_COLOR, size: Player.SIZE)
     }
     
     func jump() {
