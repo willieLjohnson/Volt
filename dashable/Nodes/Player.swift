@@ -40,32 +40,33 @@ class Player: Actor {
     }
     
     func shoot(at direction: CGVector, scene: GameScene) {
-//        guard let physicsBody = body.physicsBody else { return }
-//        if !canShoot { return }
-//
-//        let projectilePosition = CGPoint(x: body.position.x, y: position.y)
-//        let projectile = Projectile(position: projectilePosition, size: 40)
-//        scene.addChild(projectile)
-//
-//        projectile.startDecay()
-//        if let projectileBody = body.projectile.physicsBody {
-//            projectileBody.usesPreciseCollisionDetection = true
-//            projectileBody.velocity = physicsBody.velocity
-//            projectileBody.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed), dy: direction.dy * projectile.initialSpeed))
-//
-//            projectile.zRotation = atan2(projectileBody.velocity.dy, projectileBody.velocity.dx)
-//        }
-//
-//        canShoot = false
-//
-//        let command: SKAction = .run {
-//            self.canShoot = true
-//        }
-//
-//        let wait: SKAction = .wait(forDuration: 0.015)
-//        let sequence: SKAction = .sequence([wait, command])
-//
-//        run(sequence)
+        let sprite = getSprite()
+        let physicsBody = getPhysicsBody()
+        
+        if !canShoot { return }
+
+        let projectilePosition = CGPoint(x: sprite.position.x, y: sprite.position.y)
+        let projectile = Projectile(position: projectilePosition, size: 40)
+        scene.addChild(projectile.getSprite())
+
+        projectile.startDecay()
+        let projectileBody = projectile.getPhysicsBody()
+        
+        projectileBody.velocity = physicsBody.velocity
+        projectileBody.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed), dy: direction.dy * projectile.initialSpeed))
+        
+        projectile.getSprite().zRotation = atan2(projectileBody.velocity.dy, projectileBody.velocity.dx)
+        
+        canShoot = false
+
+        let command: SKAction = .run {
+            self.canShoot = true
+        }
+
+        let wait: SKAction = .wait(forDuration: 0.015)
+        let sequence: SKAction = .sequence([wait, command])
+
+        sprite.run(sequence)
     }
 }
 

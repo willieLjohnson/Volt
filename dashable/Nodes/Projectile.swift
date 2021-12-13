@@ -10,35 +10,32 @@ import Foundation
 
 import SpriteKit
 
-class Projectile: SKSpriteNode {
-  let initialSpeed: CGFloat = 5
+class Projectile: Actor {
+    let initialSpeed: CGFloat = 5
+    
+    required init() {
+        super.init(Names.Collidable.PROJECTILE, color: Style.PROJECTILE_COLOR, size: Projectile.SIZE)
+    }
 
-  init(position: CGPoint, size: CGFloat, color: SKColor = Style.PROJECTILE_COLOR) {
-    super.init(texture: nil, color: Style.OBSTACLE_COLOR, size: CGSize(width: size * 1.5, height: size * 0.5))
-    self.position = position
-    self.color = color
-
-    name = "projectile"
-    physicsBody = SKPhysicsBody(circleOfRadius: size)
-
-    guard let physicsBody = physicsBody else { return }
-    physicsBody.density = 0.45
-    physicsBody.affectedByGravity = false
-    physicsBody.isDynamic = true
-    physicsBody.usesPreciseCollisionDetection = true
-    physicsBody.categoryBitMask = PhysicsCategory.projectile
-    physicsBody.collisionBitMask = PhysicsCategory.enemy | PhysicsCategory.ground | PhysicsCategory.obstacles
-    physicsBody.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.obstacles
-
-//    addGlow()
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  func startDecay() {
-    let scale = SKAction.scale(to: 0, duration: 2)
-    run(scale, completion: { self.removeFromParent() })
-  }
+    
+    init(position: CGPoint, size: CGFloat = 10, color: SKColor = Style.PROJECTILE_COLOR) {
+        super.init(Names.Collidable.PROJECTILE, color: color, size: CGSize(width: size * 1.5, height: size * 0.5))
+        getSprite().position = position
+        getSprite().name = "projectile"
+        
+        let physicsBody = getPhysicsBody()
+        physicsBody.density = 0.45
+        physicsBody.categoryBitMask = PhysicsCategory.projectile
+        physicsBody.collisionBitMask = PhysicsCategory.all
+        physicsBody.contactTestBitMask = PhysicsCategory.destructables
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func startDecay() {
+        let scale = SKAction.scale(to: 0, duration: 2)
+        getSprite().run(scale, completion: { EntityManager.shared.remove(self) })
+    }
 }

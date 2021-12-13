@@ -11,6 +11,7 @@ import Foundation
 struct Names {
     struct Collidable {
         static let OBSTACLE = "Obstacle"
+        static let PROJECTILE = "Projectile"
         
         struct Actor {
             static let PLAYER = "Player"

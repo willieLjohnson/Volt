@@ -29,7 +29,7 @@ class Enemy: Actor {
         //    for _ in 0...3 {
         //        scene.addBee(position: body.sprite.)
         //    }
-        EntityManager.shared.remove(entity: self)
+        EntityManager.shared.remove(self)
     }
     
     

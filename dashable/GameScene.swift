@@ -74,13 +74,14 @@ class GameScene: SKScene {
         // Move cam to player
         let duration = TimeInterval(0.4 * pow(0.9, abs(playerPhysicsBody.velocity.dx / 100) - 1) + 0.05)
         let xOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100 - 1) - 0.04)
-        let yOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dy) / 100 - 1) - 0.04)
+        let yOffsetExpo = CGFloat(0.2 * pow(0.9, -abs(playerPhysicsBody.velocity.dy) / 100 - 1) - 0.04)
         let scaleExpo = CGFloat(0.001 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100  - 1) + 3.16)
-        let xOffset = xOffsetExpo.clamped(to: -1000...1500) * (playerPhysicsBody.velocity.dx > 0 ? 1 : -1)
+        let xOffset = xOffsetExpo.clamped(to: -1500...1500) * (playerPhysicsBody.velocity.dx > 0 ? 1 : -1)
+        let yOffset = yOffsetExpo.clamped(to: -1500...1500) * (playerPhysicsBody.velocity.dy > 0 ? 1 : -1)
         
         let scale = scaleExpo.clamped(to: 3...5.5)
         cam.setScale(scale)
-        cam.run(SKAction.move(to: CGPoint(x: player.getPosition().x + xOffset, y: player.getPosition().y + (size.height / 2) + yOffsetExpo), duration: duration))
+        cam.run(SKAction.move(to: CGPoint(x: player.getPosition().x + xOffset, y: player.getPosition().y + yOffset), duration: duration))
         
         playerPreviousVelocity = playerPhysicsBody.velocity
         applyGravityMultipliers(to: playerPhysicsBody)
@@ -174,7 +175,7 @@ private extension GameScene {
         movePlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
         movePlayerStick.trackingHandler = { [unowned self] data in
             //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
-            self.player.move(direction: CGVector(dx: data.velocity.x, dy: 0))
+            self.player.move(in: CGVector(dx: data.velocity.x, dy: data.velocity.y))
         }
         cam.addChild(movePlayerStick)
         
@@ -274,7 +275,7 @@ extension GameScene {
 // MARK: Collision detection
 extension GameScene: SKPhysicsContactDelegate {
     func onContactBetween(projectile: SKNode, node: SKNode) {
-        guard let projectile = projectile as? Projectile  else { return }
+        guard let projectile = projectile as? SKSpriteNode  else { return }
         if let node = node as? SKSpriteNode {
             node.run(SKAction.colorize(with: projectile.color, colorBlendFactor: 0.2, duration: 0.01))
             projectile.color = node.color
@@ -297,10 +298,10 @@ extension GameScene: SKPhysicsContactDelegate {
             projectile.color = .systemPink
         }
         
-        //    projectile.physicsBody!.contactTestBitMask = 0
-        if let node = node as? Actor {
+//            projectile.physicsBody!.contactTestBitMask = 0
+//        if let node = node as? Actor {
 //            node.getHealeth().decrease(by: -1)
-        }
+//        }
     }
     
     func onContactBetween(enemy: SKNode, node: SKNode) {

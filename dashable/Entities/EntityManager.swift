@@ -22,7 +22,7 @@ class EntityManager {
         entities[entity.id] = entity
     }
     
-    func remove(entity: Entity) {
+    func remove(_ entity: Entity) {
         if let index = entities.index(forKey: entity.id) {
             entities.remove(at: index)
         }

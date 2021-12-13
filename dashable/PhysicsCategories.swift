@@ -16,6 +16,10 @@ struct PhysicsCategory {
     static let sleeper:  UInt32 = 16
     static let enemy:  UInt32 = 32
     static let projectile:  UInt32 = 64
+    
+    
     static let all: UInt32 = player | ground | obstacles | enemy | projectile
     static let playerContacts: UInt32 = ground | enemy | obstacles
+    static let destructables: UInt32 = enemy | obstacles
+    static let killable: UInt32 = all
 }
