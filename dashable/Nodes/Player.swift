@@ -19,13 +19,13 @@ class Player: Actor {
     var isJumping: Bool = false
     var justJumped: Bool = false
     
-    init(name: String, position: CGPoint, color: SKColor, size: CGSize) {
-        super.init(name: name, color: color, size: size)
-        getBody().sprite.position = position
+    init(_ name: String = Names.Collidable.Actor.PLAYER, position: CGPoint, color: SKColor = Style.PLAYER_COLOR, size: CGSize = Player.SIZE) {
+        super.init(name, color: color, size: size)
+        getSprite().position = position
     }
     
     required init() {
-        super.init(name: Names.Collidable.Actor.PLAYER, color: Style.PLAYER_COLOR, size: Player.SIZE)
+        super.init(Names.Collidable.Actor.PLAYER, color: Style.PLAYER_COLOR, size: Player.SIZE)
     }
     
     func jump() {

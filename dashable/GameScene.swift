@@ -60,14 +60,12 @@ class GameScene: SKScene {
         
         for enemy in enemies {
             enemy.update(self)
-            guard let enemyPhysicsBody = enemy.physicsBody else { continue }
-            applyGravityMultipliers(to: enemyPhysicsBody)
         }
         
         yellowEnemy.update(self)
         
         // Get player bodies
-        guard let playerPhysicsBody = player.physicsBody else { return }
+        let playerPhysicsBody = player.getPhysicsBody()
         
         // Move cam to player
         let duration = TimeInterval(0.4 * pow(0.9, abs(playerPhysicsBody.velocity.dx / 100) - 1) + 0.05)
@@ -78,7 +76,7 @@ class GameScene: SKScene {
         
         let scale = scaleExpo.clamped(to: 3...5.5)
         cam.setScale(scale)
-        cam.run(SKAction.move(to: CGPoint(x: player.position.x + xOffset, y: player.position.y + (size.height / 2) + yOffsetExpo), duration: duration))
+        cam.run(SKAction.move(to: CGPoint(x: player.getPosition().x + xOffset, y: player.getPosition().y + (size.height / 2) + yOffsetExpo), duration: duration))
         
         playerPreviousVelocity = playerPhysicsBody.velocity
         applyGravityMultipliers(to: playerPhysicsBody)
@@ -120,16 +118,14 @@ private extension GameScene {
         ground = Ground(position: CGPoint(x: size.width / 2, y: 0), size: CGSize(width: size.width * 1000, height: size.height / 4))
         addChild(ground)
         
-        player = Player(position:CGPoint(x: size.width / 2, y: size.height / 2)
-        )
-        addChild(player)
+        player = Player(position: CGPoint(x: size.width / 2, y: size.height / 2))
+        addChild(player.getSprite())
         
-        addChaser(position: CGPoint(x: player.position.x - 100, y: size.height / 2))
+        addChaser(position: CGPoint(x: player.getPosition().x - 100, y: size.height / 2))
         
-        yellowEnemy = Enemy(position: CGPoint(x: player.position.x - 100, y: size.height / 1.5), size: CGSize(width: 60, height: 40), color: Style.FLYER_COLOR)
-        yellowEnemy.physicsBody = nil
+        yellowEnemy = Enemy(Names.Collidable.Actor.Enemy.FLYER, position: CGPoint(x: player.getPosition().x - 100, y: size.height / 1.5), color: Style.FLYER_COLOR, size: CGSize(width: 60, height: 40))
         yellowEnemy.logic = Logic.flyerLogic
-        addChild(yellowEnemy)
+        addChild(yellowEnemy.getSprite())
         
         addGroundObstacles()
         cam = SKCameraNode()
@@ -172,7 +168,7 @@ private extension GameScene {
         movePlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
         movePlayerStick.trackingHandler = { [unowned self] data in
             //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
-            self.player.physicsBody?.applyForce(CGVector(dx: data.velocity.x * player.moveSpeed, dy: 0))
+            self.player.getPhysicsBody().applyForce(CGVector(dx: data.velocity.x * player.moveSpeed, dy: 0))
         }
         cam.addChild(movePlayerStick)
         
@@ -201,28 +197,30 @@ private extension GameScene {
     
     
     func addGroundObstacles() {
-        makeObstacles(at: player.position, amount: 100, size: CGSize(width: 500, height: 100), spacing: 2)
-        makeObstacles(at: player.position.applying(CGAffineTransform(translationX: 0, y: 130)), amount: 250, size: CGSize(width: 50, height: 120), spacing: 2)
-        makeObstacles(at: player.position.applying(CGAffineTransform(translationX: 3100, y: 300)), amount: 250, size: CGSize(width: 3000, height: 120), spacing: 1.1)
+        makeObstacles(at: player.getPosition(), amount: 100, size: CGSize(width: 500, height: 100), spacing: 2)
+        makeObstacles(at: player.getPosition().applying(CGAffineTransform(translationX: 0, y: 130)), amount: 250, size: CGSize(width: 50, height: 120), spacing: 2)
+        makeObstacles(at: player.getPosition().applying(CGAffineTransform(translationX: 3100, y: 300)), amount: 250, size: CGSize(width: 3000, height: 120), spacing: 1.1)
     }
     
     func makeObstacles(at origin: CGPoint, amount: Int, size: CGSize, spacing: CGFloat) {
         for i in 0...amount {
             let obstacleSize = CGSize(width: size.width + CGFloat(i), height: size.height + CGFloat(i))
             let obstaclePosition = CGPoint(x: origin.x + CGFloat(obstacleSize.width * CGFloat(i) * spacing), y: origin.y + CGFloat(obstacleSize.height))
-            let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize, isDynamic: true)
-            obstacle.physicsBody!.density = 0.05
-            addChild(obstacle)
+            let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize)
+            obstacle.getPhysicsBody().density = 0.05
+            addChild(obstacle.getSprite())
         }
         
         for i in 0...amount {
             let obstacleSize = CGSize(width: 250, height: 10000)
             let obstaclePosition = CGPoint(x: origin.x + CGFloat(250 * CGFloat(i) * 10), y: 2500)
-            let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize, isDynamic: false)
-            obstacle.physicsBody = nil
-            obstacle.zPosition = -10
-            obstacle.alpha = 0.2
-            addChild(obstacle)
+            let obstacle = Obstacle("wall", position: obstaclePosition, size: obstacleSize)
+            
+            obstacle.getSprite().physicsBody = nil
+            obstacle.getSprite().zPosition = -10
+            obstacle.getSprite().alpha = 0.2
+            
+            addChild(obstacle.getSprite())
         }
     }
     
@@ -231,7 +229,7 @@ private extension GameScene {
         if physicsBody.velocity.dy < 0 {
             physicsBody.applyImpulse(CGVector(dx: 0, dy: physicsWorld.gravity.dy * (fallMultiplier - 1)))
         } else if physicsBody.velocity.dy > 0 && !touchDown {
-            physicsBody.applyImpulse(CGVector(dx: 0, dy: mphysicsWorld.gravity.dy * (lowJumpMultiplier - 1)))
+            physicsBody.applyImpulse(CGVector(dx: 0, dy: physicsWorld.gravity.dy * (lowJumpMultiplier - 1)))
         }
     }
 }
@@ -244,14 +242,14 @@ extension GameScene {
         let randx = CGFloat.random(in: -initalSpeed..<initalSpeed)
         let randy = CGFloat.random(in: -initalSpeed..<initalSpeed)
         enemies.append(chaser)
-        addChild(chaser)
-        chaser.physicsBody!.applyImpulse(CGVector(dx: CGFloat(randx), dy: CGFloat(randy)))
+        addChild(chaser.getSprite())
+        chaser.getPhysicsBody().applyImpulse(CGVector(dx: CGFloat(randx), dy: CGFloat(randy)))
     }
     
     func remove(deadEnemy: Enemy) {
-        enemies.removeAll { enemy in
-            deadEnemy == enemy
-        }
+//        enemies.removeAll { enemy in
+//            deadEnemy == enemy
+//        }
     }
     
     func addBee(position: CGPoint) {
@@ -261,8 +259,8 @@ extension GameScene {
         let randy = CGFloat.random(in: -initalSpeed..<initalSpeed)
         
         enemies.append(bee)
-        addChild(bee)
-        bee.physicsBody!.applyImpulse(CGVector(dx: CGFloat(randx), dy: CGFloat(randy)))
+        addChild(bee.getSprite())
+        bee.getPhysicsBody().applyImpulse(CGVector(dx: CGFloat(randx), dy: CGFloat(randy)))
     }
 }
 
@@ -293,13 +291,13 @@ extension GameScene: SKPhysicsContactDelegate {
         }
         
         //    projectile.physicsBody!.contactTestBitMask = 0
-        if let node = node as? Entity {
-            node.damage()
+        if let node = node as? Actor {
+//            node.getHealeth().decrease(by: -1)
         }
     }
     
     func onContactBetween(enemy: SKNode, node: SKNode) {
-        if node.name == "flyerDrop" {
+        if node.name == "flyerDrop" {≥≥./l;;;/
             
         }
     }
@@ -318,7 +316,9 @@ extension GameScene: SKPhysicsContactDelegate {
         lightImpactFeedbackGenerator.prepare()
         mediumImpactFeedbackGenerator.prepare()
         heavyImpactFeedbackGenerator.prepare()
-        guard let playerPhysicsBody = player.physicsBody else { return }
+        
+        let playerPhysicsBody = player.getPhysicsBody()
+        
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         

@@ -76,7 +76,7 @@ class Actor: Collidable {
     
     required init() {}
     
-    init(name: String, color: SKColor = .clear, size: CGSize = Actor.SIZE, maxHealth: Double = Actor.MAX_HEALTH) {
+    init(_ name: String, color: SKColor = .clear, size: CGSize = Actor.SIZE, maxHealth: Double = Actor.MAX_HEALTH) {
         configureComponents(color: color, size: size, maxHealth: maxHealth)
     }
     
@@ -97,6 +97,10 @@ class Actor: Collidable {
 extension Actor {
     func getControls() -> Controls {
         return getComponent(by: .CONTROLS) as! Controls
+    }
+    
+    func getHealeth() -> Health {
+        return getComponent(by: .HEALTH) as! Health
     }
 }
 

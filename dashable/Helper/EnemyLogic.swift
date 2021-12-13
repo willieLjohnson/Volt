@@ -93,21 +93,20 @@ struct Logic {
             let obstacleSize = CGSize(width: 100 + randWidthModifier, height: 100 + randHeightModifier)
             let obstaclePosition = CGPoint(x: yellowEnemy.getPosition().x, y: yellowEnemy.getPosition().y - obstacleSize.height)
             
-            let obstacle = Obstacle(position: obstaclePosition, color: Style.FLYER_COLOR, size: obstacleSize)
-    
-            obstacle.name = "flyerDrop"
-            scene.addChild(obstacle)
+            let obstacle = Obstacle("flyerDrop", position: obstaclePosition, color: Style.FLYER_COLOR, size: obstacleSize)
+            EntityManager.shared.add(entity: obstacle)
+            scene.addChild(obstacle.getSprite())
             
-            obstacle.run(SKAction.repeatForever(SKAction.sequence([SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 1, duration: 0.1), SKAction.colorize(with: Style.OBSTACLE_COLOR, colorBlendFactor: 1, duration: 0.1)])))
-            obstacle.run(SKAction.scale(to: 5, duration: 2), completion: {
-                scene.addChaser(position: obstacle.position)
+            obstacle.getSprite().run(SKAction.repeatForever(SKAction.sequence([SKAction.colorize(with: Style.CHASER_COLOR, colorBlendFactor: 1, duration: 0.1), SKAction.colorize(with: Style.OBSTACLE_COLOR, colorBlendFactor: 1, duration: 0.1)])))
+            obstacle.getSprite().run(SKAction.scale(to: 5, duration: 2), completion: {
+                scene.addChaser(position: obstacle.getPosition())
                 //                obstacle.die()
             })
             
-            let difference = Useful.differenceBetween(obstacle, and: player.getSprite())
+            let difference = Useful.differenceBetween(obstacle.getSprite(), and: player.getSprite())
             let angle = atan2(difference.y, difference.x)
-            obstacle.physicsBody!.usesPreciseCollisionDetection = true
-            obstacle.physicsBody!.applyImpulse(CGVector(dx: -cos(angle) * (300 * randVelocityModifier), dy: sin(angle) * (1000 * randVelocityModifier)))
+        
+            obstacle.getPhysicsBody().applyImpulse(CGVector(dx: -cos(angle) * (300 * randVelocityModifier), dy: sin(angle) * (1000 * randVelocityModifier)))
         }
         
         let finishAbilityAction = SKAction.run {

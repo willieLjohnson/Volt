@@ -37,13 +37,13 @@ class Enemy: Actor {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(name: String, position: CGPoint, color: SKColor, size: CGSize) {
-        super.init(name: name, color: color, size: size)
+    init(_ name: String = Names.Collidable.Actor.Enemy.CHASER, position: CGPoint, color: SKColor = Style.CHASER_COLOR, size: CGSize = Enemy.SIZE) {
+        super.init(name, color: color, size: size)
         getBody().sprite.position = position
     }
     
     required init() {
-        super.init(name: Names.Collidable.Actor.Enemy.CHASER, color: Style.PLAYER_COLOR, size: Player.SIZE)
+        super.init(Names.Collidable.Actor.Enemy.CHASER, color: Style.PLAYER_COLOR, size: Player.SIZE)
     }
     
     
@@ -75,24 +75,21 @@ class Enemy: Actor {
 
 extension Enemy {
     static func createChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60)) -> Enemy {
-        let chaser = Enemy(name: Names.Collidable.Actor.Enemy.CHASER, position: position, color: Style.CHASER_COLOR, size: size)
-        if let physicsBody = chaser.getPhysicsBody() {
-            physicsBody.contactTestBitMask = PhysicsCategory.obstacles
-        }
+        let chaser = Enemy(Names.Collidable.Actor.Enemy.CHASER, position: position, color: Style.CHASER_COLOR, size: size)
+        chaser.getPhysicsBody().contactTestBitMask = PhysicsCategory.obstacles
         chaser.logic = Logic.chaserLogic
         return chaser
     }
     
     static func createBee(position: CGPoint) -> Enemy {
         let bee = createChaser(position: position, size: CGSize(width: 30, height: 30))
-//        bee.color = Style.BEE_COLOR
-//        bee.name = "bee"
-//        bee.health = 20;
-//        bee.canEvolve = false
-//        bee.physicsBody!.contactTestBitMask = PhysicsCategory.player
-//        bee.physicsBody!.collisionBitMask = bee.physicsBody!.collisionBitMask | PhysicsCategory.enemy
-//        bee.physicsBody!.density = 2
-//        bee.moveSpeed = 1000.0
+        bee.getSprite().color = Style.BEE_COLOR
+        bee.getSprite().name = "bee"
+        bee.health = 20;
+        bee.canEvolve = false
+        bee.getPhysicsBody().contactTestBitMask = PhysicsCategory.player
+        bee.getPhysicsBody().density = 2
+        bee.moveSpeed = 1000.0
         return bee
     }
     
