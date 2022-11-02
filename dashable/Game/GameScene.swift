@@ -39,10 +39,9 @@ class GameScene: SKScene {
   var timeLabel: SKLabelNode!
   var restartButton: SKSpriteNode!
   var progressBar: SKShapeNode!
-
-  let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-  let mediumImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
-  let heavyImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+  
+  var collisionSound = SKAction.playSoundFileNamed(GameConstants.CollisionSoundFileName, waitForCompletion: false)
+  var tapSound = SKAction.playSoundFileNamed(GameConstants.TapSoundFileName, waitForCompletion: false)
 
   override func didMove(to view: SKView) {
     setupScene()
@@ -53,10 +52,11 @@ class GameScene: SKScene {
 
     super.update(currentTime)
     // Make sure that the scene has already loaded.
-    guard scene != nil else { return }
+    guard let scene = scene else { return }
     guard let cam = cam else { return }
 
     player.update(self)
+    scene.physicsWorld.gravity = CGVector.zero
     
     for enemy in enemies {
       enemy.update(self)
@@ -73,12 +73,14 @@ class GameScene: SKScene {
     let duration = TimeInterval(0.4 * pow(0.9, abs(playerPhysicsBody.velocity.dx / 100) - 1) + 0.05)
     let xOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100 - 1) - 0.04)
     let yOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dy) / 100 - 1) - 0.04)
-    let scaleExpo = CGFloat(0.001 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100  - 1) + 3.16)
+    let scaleExpo = CGFloat(0.001 * pow(0.9, -abs(playerPhysicsBody.velocity.magnitude) / 100  - 1) + 3.16)
     let xOffset = xOffsetExpo.clamped(to: -1000...1500) * (playerPhysicsBody.velocity.dx > 0 ? 1 : -1)
+    let yOffset = yOffsetExpo.clamped(to: -1000...1500) * (playerPhysicsBody.velocity.dy > 0 ? 1.5 : -1)
+    print(playerPhysicsBody.velocity)
 
     let scale = scaleExpo.clamped(to: 3...5.5)
     cam.setScale(scale)
-    cam.run(SKAction.move(to: CGPoint(x: player.position.x + xOffset, y: player.position.y + (size.height / 2) + yOffsetExpo), duration: duration))
+    cam.run(SKAction.move(to: CGPoint(x: player.position.x + xOffset, y: player.position.y + yOffset), duration: duration))
 
     playerPreviousVelocity = playerPhysicsBody.velocity
     applyGravityMultipliers(to: playerPhysicsBody)
@@ -118,7 +120,7 @@ private extension GameScene {
     scene.backgroundColor = Style.BACKGROUND_COLOR
 
     ground = Ground(position: CGPoint(x: size.width / 2, y: 0), size: CGSize(width: size.width * 1000, height: size.height / 4))
-    addChild(ground)
+//    addChild(ground)
 
     player = Player(position: CGPoint(x: size.width / 2, y: size.height / 2), size: CGSize(width: 40, height: 40))
     addChild(player)
@@ -152,37 +154,38 @@ private extension GameScene {
     timeLabel = SKLabelNode(fontNamed: "Courier")
     timeLabel.position = CGPoint(x: 0, y: size.height / 5)
     timeLabel.zPosition = 0
-
+    
     restartButton = SKSpriteNode(color: #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.5), size: CGSize(width: 88, height: 44))
     restartButton.name = "restartButton"
     restartButton.position = CGPoint(x: -size.width / 2 + restartButton.frame.width, y: size.height / 2 - restartButton.frame.height)
     restartButton.zPosition = 0
-
+    
     progressBar = SKShapeNode(rectOf: CGSize(width: size.width, height: 22))
     progressBar.fillColor = #colorLiteral(red: 0.5294117647, green: 0.8, blue: 0.8980392157, alpha: 1)
-
+    
     cam.addChild(timeLabel)
     cam.addChild(restartButton)
     cam.setScale(3.5)
-
+    
     // Setup joystick to control player movement.
     movePlayerStick.position = CGPoint(x: -size.width / 2 + movePlayerStick.radius * 2, y: -size.height / 2 + movePlayerStick.radius * 1.7)
     movePlayerStick.stick.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
     movePlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
     movePlayerStick.trackingHandler = { [unowned self] data in
       //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
-      self.player.physicsBody?.applyForce(CGVector(dx: data.velocity.x * player.moveSpeed, dy: 0))
+      self.player.physicsBody?.applyForce(CGVector(dx: data.velocity.x * player.moveSpeed, dy: data.velocity.y * player.moveSpeed))
     }
     cam.addChild(movePlayerStick)
-
-
+    
+    
     // Setup joystick to control player movement.
     shootPlayerStick.position = CGPoint(x: size.width / 2 - shootPlayerStick.radius * 2, y: -size.height / 2 + shootPlayerStick.radius * 1.7)
     shootPlayerStick.stick.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
     shootPlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
     shootPlayerStick.trackingHandler = { [unowned self] data in
-    //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
+      //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
       self.player.shoot(at: CGVector(dx: data.velocity.x, dy: data.velocity.y), scene: self)
+      tapFeedback()
     }
     cam.addChild(shootPlayerStick)
   }
@@ -200,9 +203,7 @@ private extension GameScene {
 
 
   func addGroundObstacles() {
-    makeObstacles(at: player.position, amount: 100, size: CGSize(width: 500, height: 100), spacing: 2)
     makeObstacles(at: player.position.applying(CGAffineTransform(translationX: 0, y: 130)), amount: 250, size: CGSize(width: 50, height: 120), spacing: 2)
-    makeObstacles(at: player.position.applying(CGAffineTransform(translationX: 3100, y: 300)), amount: 250, size: CGSize(width: 3000, height: 120), spacing: 1.1)
   }
   
   func makeObstacles(at origin: CGPoint, amount: Int, size: CGSize, spacing: CGFloat) {
@@ -313,9 +314,6 @@ extension GameScene: SKPhysicsContactDelegate {
 
 
   func didBegin(_ contact: SKPhysicsContact) {
-    lightImpactFeedbackGenerator.prepare()
-    mediumImpactFeedbackGenerator.prepare()
-    heavyImpactFeedbackGenerator.prepare()
     guard let playerPhysicsBody = player.physicsBody else { return }
     guard let nodeA = contact.bodyA.node else { return }
     guard let nodeB = contact.bodyB.node else { return }
@@ -343,17 +341,16 @@ extension GameScene: SKPhysicsContactDelegate {
     case playerPhysicsBody.contactTestBitMask:
       player.isJumping = false
 
-      let deltaVelocity = playerPhysicsBody.velocity - playerPreviousVelocity
-      let speed = abs(deltaVelocity.dx) + abs(deltaVelocity.dy)
-
-      if speed >= 50 && speed < 600 {
-        lightImpactFeedbackGenerator.impactOccurred()
-      } else if speed >= 600 && speed < 1000 {
-        mediumImpactFeedbackGenerator.impactOccurred()
-      } else if speed >= 1000 {
-        heavyImpactFeedbackGenerator.impactOccurred()
+      let deltaVelocity = playerPhysicsBody.velocity.distance(to: playerPreviousVelocity)
+      let speed = deltaVelocity.magnitude
+      
+      if speed > 600 {
+        run(collisionSound)
+        tapFeedback(intensity: 1)
+      } else if speed < 500 {
+        run(tapSound)
+        tapFeedback(intensity: 2)
       }
-
     default:
       return
     }
