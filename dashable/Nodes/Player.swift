@@ -40,6 +40,7 @@ class Player: SKSpriteNode{
         PhysicsCategory.enemy |
         PhysicsCategory.obstacles
       physicsBody.usesPreciseCollisionDetection = true
+      physicsBody.affectedByGravity = false
     }
     self.addGlow()
   }

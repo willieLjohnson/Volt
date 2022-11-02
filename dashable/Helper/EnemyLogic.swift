@@ -39,9 +39,9 @@ struct Logic {
     // TODO: Replace with collision contact detection rather than velocity.
     let hasHitObstacle = abs(currentVelocity.dx) - abs(enemy.previousVelocity.dx) > 10
 
-    let yVelocityIsTooFast = abs(currentVelocity.dy) > 150
+    let yVelocityIsTooFast = abs(currentVelocity.dy) > moveSpeed * 2
     let xVelocityIsTooFast = abs(currentVelocity.dx) > moveSpeed * 2
-    let thinksPlayerTooFast = abs(currentVelocity.dx) > 2500
+    let thinksPlayerTooFast = abs(currentVelocity.dx) > 1500
 
     // TODO: Replace with obstackle/ground contact detection
     let shouldJump = !yVelocityIsTooFast && ((hasHitObstacle) || isObstacleAhead) && !isAbovePlayer
@@ -49,7 +49,7 @@ struct Logic {
     // Calculate forces to apply.
     let angle = atan2(positionDifferenceToPlayer.y, positionDifferenceToPlayer.x)
     let vx: CGFloat = cos(angle) * moveSpeed
-    let vy: CGFloat = shouldJump ? moveSpeed : 0.0
+    let vy: CGFloat = sin(angle) * moveSpeed
 
     if shouldJump {
       enemy.run(SKAction.scale(to: 20, duration: 1))
@@ -63,7 +63,7 @@ struct Logic {
     }
 
     let moveForce = CGVector(dx: vx, dy: vy)
-    let stopForce = CGVector(dx: -currentVelocity.dx / 10, dy: -currentVelocity.dy)
+    let stopForce = CGVector(dx: -currentVelocity.dx / 5, dy: -currentVelocity.dy / 5)
 
     // Stop accelerating once ahead of player.
     if xVelocityIsTooFast && isAheadOfPlayer && !isNearPlayer {
@@ -77,21 +77,22 @@ struct Logic {
   /// Flies above and ehead of the player and drops obstacles.
   static var flyerLogic: EnemyLogic = { yellowEnemy, player, scene in
 
-    yellowEnemy.run(SKAction.move(to: CGPoint(x: player.position.x + player.physicsBody!.velocity.dx, y: player.position.y + 500), duration: 0.8))
+    yellowEnemy.run(SKAction.move(to: CGPoint(x: player.position.x + player.physicsBody!.velocity.dx, y: player.position.y + 500 + player.physicsBody!.velocity.dy), duration: 0.8))
     // Only run if there is no action(dropObstacle) already running
     let shouldDropObstacle = !yellowEnemy.isAbilityActionRunning
     guard shouldDropObstacle else { return }
     // Create an obstacle and launch it towards the player.
     let dropObstacle = SKAction.run {
       yellowEnemy.isAbilityActionRunning = true
-      let randWidthModifier = GKRandomSource.sharedRandom().nextInt(upperBound: 100)
+      let randWidthModifier = GKRandomSource.sharedRandom().nextInt(upperBound: 40)
       let randHeightModifier = GKRandomSource.sharedRandom().nextInt(upperBound: 20)
       let randVelocityModifier = CGFloat(GKRandomSource.sharedRandom().nextUniform()) + 1
 
-      let obstacleSize = CGSize(width: 100 + randWidthModifier, height: 100 + randHeightModifier)
+      let obstacleSize = CGSize(width: 80 + randWidthModifier, height: 80 + randHeightModifier)
       let obstaclePosition = CGPoint(x: yellowEnemy.position.x, y: yellowEnemy.position.y - obstacleSize.height)
 
       let obstacle = Obstacle(position: obstaclePosition, size: obstacleSize)
+    
       obstacle.color = Style.FLYER_COLOR
       obstacle.name = "flyerDrop"
       scene.addChild(obstacle)
@@ -101,11 +102,12 @@ struct Logic {
         scene.addChaser(position: obstacle.position)
         obstacle.die()
       })
+      let dropVelocity: CGFloat = 500
 
       let difference = Useful.differenceBetween(obstacle, and: player)
       let angle = atan2(difference.y, difference.x)
       obstacle.physicsBody!.usesPreciseCollisionDetection = true
-      obstacle.physicsBody!.applyImpulse(CGVector(dx: -cos(angle) * (300 * randVelocityModifier), dy: sin(angle) * (1000 * randVelocityModifier)))
+      obstacle.physicsBody!.applyImpulse(CGVector(dx: -cos(angle) * (dropVelocity * randVelocityModifier), dy: sin(angle) * (dropVelocity * randVelocityModifier)))
     }
 
     let finishAbilityAction = SKAction.run {

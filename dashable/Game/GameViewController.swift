@@ -10,6 +10,8 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+var gen = RNG(seed: 333)
+
 class GameViewController: UIViewController {
 
   override func viewDidLoad() {
