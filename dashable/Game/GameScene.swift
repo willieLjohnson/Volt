@@ -69,16 +69,19 @@ class GameScene: SKScene {
     // Get player bodies
     guard let playerPhysicsBody = player.physicsBody else { return }
 
+    let xOffsetMax = self.size.width 
+    let yOffsetMax = self.size.height
     // Move cam to player
     let duration = TimeInterval(0.4 * pow(0.9, abs(playerPhysicsBody.velocity.dx / 100) - 1) + 0.05)
     let xOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100 - 1) - 0.04)
-    let yOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dy) / 100 - 1) - 0.04)
-    let scaleExpo = CGFloat(0.001 * pow(0.9, -abs(playerPhysicsBody.velocity.magnitude) / 100  - 1) + 3.16)
-    let xOffset = xOffsetExpo.clamped(to: -1000...1500) * (playerPhysicsBody.velocity.dx > 0 ? 1 : -1)
-    let yOffset = yOffsetExpo.clamped(to: -1000...1500) * (playerPhysicsBody.velocity.dy > 0 ? 1.5 : -1)
-    print(playerPhysicsBody.velocity)
-
-    let scale = scaleExpo.clamped(to: 3...5.5)
+    let yOffsetExpo = CGFloat(0.8 * pow(0.9, -abs(playerPhysicsBody.velocity.dy) / 100 - 1) - 0.04)
+    let yScaleExpo = CGFloat(0.001 * pow(0.9, -abs(playerPhysicsBody.velocity.dy) / 100 - 1) + 3.16)
+    let xScaleExpo = CGFloat(0.001 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100 - 1) + 3.16)
+    let xOffset = xOffsetExpo.clamped(to: -xOffsetMax...xOffsetMax) * (playerPhysicsBody.velocity.dx > 0 ? 1 : -1)
+    let yOffset = yOffsetExpo.clamped(to: -yOffsetMax...yOffsetMax) * (playerPhysicsBody.velocity.dy > 0 ? 1 : -1)
+    
+    let scaleExpo = max(xScaleExpo, yScaleExpo)
+    let scale = scaleExpo.clamped(to: 3...7)
     cam.setScale(scale)
     cam.run(SKAction.move(to: CGPoint(x: player.position.x + xOffset, y: player.position.y + yOffset), duration: duration))
 
@@ -173,7 +176,21 @@ private extension GameScene {
     movePlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
     movePlayerStick.trackingHandler = { [unowned self] data in
       //      self.player.physicsBody?.applyImpulse(CGVector(dx: data.velocity.x * 0.1, dy: 0))
-      self.player.physicsBody?.applyForce(CGVector(dx: data.velocity.x * player.moveSpeed, dy: data.velocity.y * player.moveSpeed))
+      guard let physicsBody = player.physicsBody else { return }
+      physicsBody.applyForce(CGVector(dx: data.velocity.x * player.moveSpeed , dy: data.velocity.y * player.moveSpeed))
+      
+      let canBoost = abs(physicsBody.velocity.dx) < 1200 && abs(physicsBody.velocity.dy) < 1200 && (abs(physicsBody.velocity.dx) > 500 || abs(physicsBody.velocity.dy) > 500)
+      let willBoost = abs(data.velocity.x) > 0.98 || abs(data.velocity.y) > 0.98
+      
+      if self.player.isBoosting && canBoost && willBoost {
+        let boostDir = CGVector(dx: data.velocity.x, dy: data.velocity.y)
+        let impulse = CGVector(dx:  boostDir.dx * player.moveSpeed * 2, dy: boostDir.dy * player.moveSpeed * 2)
+        physicsBody.applyImpulse(impulse)
+        self.player.isBoosting = false
+      }
+    }
+    movePlayerStick.beginHandler = {
+      self.player.isBoosting = true
     }
     cam.addChild(movePlayerStick)
     

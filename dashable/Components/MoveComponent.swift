@@ -45,7 +45,7 @@ class MoveComponent : GKAgent2D, GKAgentDelegate {
 
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
-    var targetMoveComponent: GKAgent2D
+    var _: GKAgent2D
 
     // Reset behavior
     behavior = MoveBehavior(targetSpeed: maxSpeed, seek: GKAgent(), avoid: [])

@@ -11,4 +11,7 @@ import Foundation
 struct GameConstants {
   static let CollisionSoundFileName = "soft-light.mp3"
   static let TapSoundFileName = "soft.mp3"
+  static let PlayerName = "player"
+  static let ProjectileName = "projectile"
+
 }

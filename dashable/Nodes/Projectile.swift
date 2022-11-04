@@ -18,7 +18,7 @@ class Projectile: SKSpriteNode {
     self.position = position
     self.color = color
 
-    name = "projectile"
+    name = GameConstants.ProjectileName
     physicsBody = SKPhysicsBody(circleOfRadius: size)
 
     guard let physicsBody = physicsBody else { return }

@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Player: SKSpriteNode{
+class Player: SKSpriteNode {
   var health: Int = 1000
   var canEvolve: Bool = false
   var canShoot = true
@@ -17,6 +17,7 @@ class Player: SKSpriteNode{
   var defaultDensity: CGFloat = 1
   var defaultMoveSpeed: CGFloat = 2
   var moveSpeed: CGFloat = 2
+  var isBoosting: Bool = false
   var isJumping: Bool = false
   var justJumped: Bool = false
 
@@ -24,7 +25,7 @@ class Player: SKSpriteNode{
     super.init(texture: nil, color: color, size: size)
     self.position = position
     self.zPosition = 10
-    name = "player"
+    name = GameConstants.PlayerName
     
     physicsBody = SKPhysicsBody(rectangleOf: size)
     if let physicsBody = physicsBody {
