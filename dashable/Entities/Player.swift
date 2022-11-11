@@ -8,22 +8,26 @@
 
 import SpriteKit
 
-class Player: SKSpriteNode {
+class Player: Entity {
   var health: Int = 1000
   var canEvolve: Bool = false
   var canShoot = true
   var jumpDensity: CGFloat = 10
   var jumpMoveSpeed: CGFloat = 20
   var defaultDensity: CGFloat = 1
-  var defaultMoveSpeed: CGFloat = 2
-  var moveSpeed: CGFloat = 2
+  var defaultMoveSpeed: CGFloat = 6
+  var moveSpeed: CGFloat = 10
   var isBoosting: Bool = false
   var isJumping: Bool = false
   var justJumped: Bool = false
+  
+  private var canPlayShootSound: Bool = true
 
-  required init(position: CGPoint, size: CGSize, color: SKColor = Style.PLAYER_COLOR, categoryMask: UInt32 = PhysicsCategory.player) {
-    super.init(texture: nil, color: color, size: size)
-    self.position = position
+  required init(size: CGSize, color: SKColor = Style.PLAYER_COLOR, categoryMask: UInt32 = PhysicsCategory.player) {
+    let shapeNode = SKShapeNode(rectOf: size)
+    shapeNode.fillColor = color
+    
+    super.init(texture: shapeNode.fillTexture, color: color, size: size)
     self.zPosition = 10
     name = GameConstants.PlayerName
     
@@ -43,7 +47,6 @@ class Player: SKSpriteNode {
       physicsBody.usesPreciseCollisionDetection = true
       physicsBody.affectedByGravity = false
     }
-    self.addGlow()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -66,7 +69,7 @@ class Player: SKSpriteNode {
     if !canShoot { return }
 
     let projectilePosition = CGPoint(x: position.x, y: position.y)
-    let projectile = Projectile(position: projectilePosition, size: 40)
+    let projectile = Projectile(position: projectilePosition, size: 60)
     scene.addChild(projectile)
 
     projectile.startDecay()
@@ -75,28 +78,36 @@ class Player: SKSpriteNode {
       projectileBody.velocity = physicsBody.velocity
       projectileBody.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed), dy: direction.dy * projectile.initialSpeed))
       
-      projectile.zRotation = atan2(projectileBody.velocity.dy, projectileBody.velocity.dx)
+      projectileBody.angularVelocity = projectile.initialSpeed * max(direction.dx, direction.dy) * 1
+      projectile.zRotation = CGFloat.random(in: -1...1)
     }
-
     canShoot = false
-
-    let command: SKAction = .run {
+    let fireRateAction = SKAction.sequence([.wait(forDuration: 0.1), .run { [unowned self] in
       self.canShoot = true
+    }])
+    run(fireRateAction)
+
+    if canPlayShootSound {
+      GameWorld.global.playAudio(GameConstants.shootSounds.LazerFileName, duration: 1, volume: 0.01, volumeChangeSpeed: 0.2)
+      let audioRateAction = SKAction.sequence([.wait(forDuration: 0.05), .run { [unowned self] in
+        self.canPlayShootSound = true
+      }])
+      self.run(audioRateAction)
     }
 
-    let wait: SKAction = .wait(forDuration: 0.015)
-    let sequence: SKAction = .sequence([wait, command])
-
-    run(sequence)
+    self.circleWaveMedium(-direction)
+    self.circleWaveHuge()
   }
 }
 
-extension Player: Entity {
+extension Player {
   func move(velocity: CGVector) {
     return
   }
 
-  func update(_ scene: GameScene) {
+  func update(_ scene: GameScene, deltaTime: TimeInterval) {
+    super.update(deltaTime: deltaTime)
+    
     if !isJumping && justJumped {
       physicsBody!.density = defaultDensity
       moveSpeed = defaultMoveSpeed

@@ -13,20 +13,20 @@ import GameplayKit
 var gen = RNG(seed: 333)
 
 class GameViewController: UIViewController {
+  private var debug = true
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     if let view = self.view as! SKView? {
-      // Load the GameScene
-      let scene = GameScene(size: view.bounds.size)
-      scene.scaleMode = .aspectFill
-      view.presentScene(scene)
+      let game = GameWorld.startNewGame(size: view.bounds.size)
+      view.presentScene(game)
       // Configure view
       view.ignoresSiblingOrder = true
-      view.showsFPS = true
-      view.showsDrawCount = true
-      view.showsNodeCount = true
+      if debug {
+        view.showsFPS = true
+        view.showsDrawCount = true
+        view.showsNodeCount = true
+      }
     }
   }
 

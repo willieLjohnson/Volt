@@ -128,6 +128,7 @@ open class AnalogJoystick: SKNode {
   var stopHandler: (() -> Void)?
   var substrate: AnalogJoystickSubstrate!
   var stick: AnalogJoystickStick!
+  private var didChangeDir: Bool = false
   private var tracking = false
   private(set) var data = AnalogJoystickData()
   var haptics: Bool = true
@@ -209,7 +210,7 @@ open class AnalogJoystick: SKNode {
     
     if let touch = touches.first, stick == atPoint(touch.location(in: self)) {
       tracking = true
-      if haptics { tapFeedback(intensity: 1)}
+      if haptics { tapFeedback(intensity: 2)}
       beginHandler?()
     }
   }
@@ -223,20 +224,31 @@ open class AnalogJoystick: SKNode {
         return
       }
       
-      let maxDistantion = substrate.radius,
-          realDistantion = sqrt(pow(location.x, 2) + pow(location.y, 2)),
-          needPosition = realDistantion <= maxDistantion ? CGPoint(x: location.x, y: location.y) : CGPoint(x: location.x / realDistantion * maxDistantion, y: location.y / realDistantion * maxDistantion)
+      let maxDistantion = substrate.radius
+      let realDistantion = sqrt(pow(location.x, 2) + pow(location.y, 2))
+      let needPosition = realDistantion <= maxDistantion ? CGPoint(x: location.x, y: location.y) : CGPoint(x: location.x / realDistantion * maxDistantion, y: location.y / realDistantion * maxDistantion)
+
       stick.position = needPosition
-      data = AnalogJoystickData(velocity: needPosition, angular: -atan2(needPosition.x, needPosition.y))
+      if abs(stick.position.x) > maxDistantion * 0.1 || abs(stick.position.y) > maxDistantion * 0.1 {
+        if haptics && didChangeDir {
+          tapFeedback(intensity: 1)
+          didChangeDir = false
+        }
+      } else {
+        didChangeDir = true
+      }
+      data = AnalogJoystickData(velocity: needPosition.normalized, angular: -atan2(needPosition.x, needPosition.y))
     }
   }
   
   open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     resetStick()
+    if haptics { tapFeedback(intensity: 1)}
   }
   
   open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
     resetStick()
+    if haptics { tapFeedback(intensity: 1)}
   }
   
   // CustomStringConvertible protocol

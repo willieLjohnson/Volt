@@ -10,44 +10,48 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-class MoveComponent : GKAgent2D, GKAgentDelegate {
-  let entityManager: EntityManager
-
-  init(maxSpeed: Float, maxAcceleration: Float, radius: Float, entityManager: EntityManager) {
-    self.entityManager = entityManager
-    super.init()
-    delegate = self
-    self.maxSpeed = maxSpeed
-    self.maxAcceleration = maxAcceleration
-    self.radius = radius
-    self.mass = 0.01
+class MoveComponent: Component {
+  private var baseMoveSpeed: CGFloat = 1.0
+  var moveSpeed: CGFloat = 1.0
+  
+  init(entity: Entity? = nil, moveSpeed: CGFloat = 1.0) {
+    super.init(entity: entity)
+    self.moveSpeed = moveSpeed
+    self.baseMoveSpeed = moveSpeed
   }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+  
+  func follow(other: Entity) {
+    self.impulseTowards(point: other.position)
   }
-
-  func agentWillUpdate(_ agent: GKAgent) {
-    guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
-      return
-    }
-
-    position = float2(spriteComponent.spriteNode.position)
+  
+  func move(dir: CGVector) {
+    self.impulse(velocity: dir * self.moveSpeed)
   }
-
-  func agentDidUpdate(_ agent: GKAgent) {
-    guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
-      return
-    }
-
-    spriteComponent.spriteNode.position = CGPoint(position)
+  
+  func impulse(velocity: CGVector) {
+    guard let entity = self.entity else { return }
+    guard let physicsBody = entity.physicsBody else { return }
+    physicsBody.applyImpulse(velocity)
   }
-
-  override func update(deltaTime seconds: TimeInterval) {
-    super.update(deltaTime: seconds)
-    var _: GKAgent2D
-
-    // Reset behavior
-    behavior = MoveBehavior(targetSpeed: maxSpeed, seek: GKAgent(), avoid: [])
+  
+  func match(velocity: CGVector) {
+    guard let entity = self.entity else { return }
+    guard let physicsBody = entity.physicsBody else { return }
+    physicsBody.velocity = velocity
+  }
+  
+  func impulseTowards(point: CGPoint) {
+    guard let entity = self.entity else { return }
+    let dir = point.difference(with: entity.position).direction
+    self.move(dir: CGVector(dx: dir.x, dy: dir.y))
+  }
+  
+  func getBaseMoveSpeed() -> CGFloat {
+    return baseMoveSpeed
+  }
+  
+  func setBase(moveSpeed: CGFloat) {
+    self.baseMoveSpeed = moveSpeed
+    self.moveSpeed = moveSpeed
   }
 }

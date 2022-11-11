@@ -11,33 +11,26 @@ import GameplayKit
 import SpriteKit
 
 class EntityManager {
-  var entities = Set<GKEntity>()
-  let scene: SKScene
+  var entities = Set<Entity>()
+  let game: GameScene
 
-  lazy var componentSystems: [GKComponentSystem] = {
-    let moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
-    return [moveSystem]
-  }()
-
-  init(scene: SKScene) {
-    self.scene = scene
+  init(game: GameScene) {
+    self.game = game
   }
-
-  func add(_ entity: GKEntity) {
+  func add(entity: Entity) {
     entities.insert(entity)
-
-    for componentSystem in componentSystems {
-      componentSystem.addComponent(foundIn: entity)
-    }
-
-    if let spriteNode = entity.component(ofType: SpriteComponent.self)?.spriteNode {
-      scene.addChild(spriteNode)
-    }
   }
-
-  func update(_ deltaTime: CFTimeInterval) {
-    for componentSystem in componentSystems {
-      componentSystem.update(deltaTime: deltaTime)
+  
+  func remove(entity: Entity) {
+    _ = entity.components.map {
+      entity.removeComponent(ofType: type(of: $0))
+    }
+    entities.remove(entity)
+  }
+  
+  func update(deltaTime: TimeInterval) {
+    _ = entities.map {
+      $0.update(deltaTime: deltaTime)
     }
   }
 }

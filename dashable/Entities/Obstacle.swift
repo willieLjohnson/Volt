@@ -8,8 +8,7 @@
 
 import SpriteKit
 
-class Obstacle: SKSpriteNode, Entity {
-
+class Obstacle: Entity {
   var canEvolve: Bool = false
   var health: Int = 10
   var moveSpeed: CGFloat = 0

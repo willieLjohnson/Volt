@@ -22,17 +22,6 @@ extension Strideable where Self.Stride: SignedInteger {
 }
 
 // MARK: Points and vectors
-extension CGPoint {
-  init(_ point: float2) {
-    x = CGFloat(point.x)
-    y = CGFloat(point.y)
-  }
-}
-extension float2 {
-  init(_ point: CGPoint) {
-    self.init(x: Float(point.x), y: Float(point.y))
-  }
-}
 
 // MARK: Interpolation
 struct Useful {

@@ -15,5 +15,27 @@ struct PhysicsCategory {
   static let obstacles:  UInt32 = 8
   static let sleeper:  UInt32 = 16
   static let enemy:  UInt32 = 32
-  static let projectile:  UInt32 = 64
+  static let flyerEnemy:  UInt32 = 64
+  static let projectile:  UInt32 = 128
+  static let gunFlare:  UInt32 = 256
+  
+  struct collisionMasks {
+    static let enemy = PhysicsCategory.ground |
+      PhysicsCategory.player |
+      PhysicsCategory.projectile |
+      PhysicsCategory.obstacles |
+      PhysicsCategory.enemy |
+      PhysicsCategory.gunFlare
+    static let player =
+      PhysicsCategory.ground |
+      PhysicsCategory.enemy |
+      PhysicsCategory.obstacles
+    static let flyer = PhysicsCategory.projectile
+    static let enemyEggs = PhysicsCategory.player | PhysicsCategory.enemy | PhysicsCategory.obstacles
+    static let bullet = PhysicsCategory.enemy |
+      PhysicsCategory.ground |
+      PhysicsCategory.obstacles |
+      PhysicsCategory.flyerEnemy
+  }
+  
 }
