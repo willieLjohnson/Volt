@@ -18,8 +18,8 @@ class GameViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     if let view = self.view as! SKView? {
-      let game = GameWorld.startNewGame(size: view.bounds.size)
-      view.presentScene(game)
+      let gameWorld = GameWorld(game: GameScene(size: view.bounds.size))
+      view.presentScene(gameWorld.game)
       // Configure view
       view.ignoresSiblingOrder = true
       if debug {
