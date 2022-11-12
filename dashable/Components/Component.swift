@@ -8,15 +8,23 @@
 
 import Foundation
 
-typealias EntityHandler = (Entity) -> ()
 
-class Component {
-  var entity: Entity?
-  var game: GameScene? {
-    self.entity?.game
+class Component: Hashable {
+  var id: UUID = UUID()
+  
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+    hasher.combine(entity)
   }
+  static func == (lhs: Component, rhs: Component) -> Bool {
+    lhs.id == rhs.id
+  }
+  
+  var entity: Entity? = nil
+  var game: GameScene? = nil
   init(entity: Entity? = nil) {
     self.entity = entity
+    self.game = entity?.game
   }
   func checkStatus() {}
   func update(_ deltaTime: TimeInterval?) {}

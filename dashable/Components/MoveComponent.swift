@@ -24,6 +24,10 @@ class MoveComponent: Component {
     self.impulseTowards(point: other.position)
   }
   
+  func flee(other: Entity) {
+    self.impulseAway(point: other.position)
+  }
+  
   func move(dir: CGVector) {
     self.impulse(velocity: dir * self.moveSpeed)
   }
@@ -45,6 +49,13 @@ class MoveComponent: Component {
     let dir = point.difference(with: entity.position).direction
     self.move(dir: CGVector(dx: dir.x, dy: dir.y))
   }
+  
+  func impulseAway(point: CGPoint) {
+    guard let entity = self.entity else { return }
+    let dir = point.difference(with: entity.position).direction
+    self.move(dir: CGVector(dx: -dir.x, dy: -dir.y))
+  }
+  
   
   func getBaseMoveSpeed() -> CGFloat {
     return baseMoveSpeed

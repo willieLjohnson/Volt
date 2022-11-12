@@ -9,9 +9,11 @@
 import Foundation
 import SpriteKit
 
+typealias EntityHandler = (Entity) -> ()
+
 class Entity: SKSpriteNode {
   var id: UUID = UUID()
-  var components: [Component] = [Component]()
+  var components: Set<Component> = Set<Component>()
   var observer: NSKeyValueObservation?
   var isAbilityActionRunning: Bool = false
   var isDying: Bool = false
@@ -41,7 +43,6 @@ class Entity: SKSpriteNode {
   }
   
   func beforeDie() {
-    
   }
   
   func update(deltaTime: TimeInterval) {
@@ -52,7 +53,7 @@ class Entity: SKSpriteNode {
 
   
   func addComponent(component: Component) {
-    self.components.append(component)
+    self.components.insert(component)
   }
   
   func component<ComponentType>(ofType componentClass: ComponentType.Type) -> Component? where ComponentType : Component {
@@ -62,9 +63,8 @@ class Entity: SKSpriteNode {
   }
   
   func removeComponent<ComponentType>(ofType componentClass: ComponentType.Type) where ComponentType : Component {
-    self.components.removeAll {
-      type(of: $0) == componentClass
-    }
+    guard let component = component(ofType: componentClass) else { return }
+    self.components.remove(component)
   }
   
   func die(afterDie: (()->())? = nil) {

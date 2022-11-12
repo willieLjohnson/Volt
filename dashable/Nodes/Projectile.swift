@@ -32,7 +32,6 @@ class Projectile: Entity {
     physicsBody.categoryBitMask = PhysicsCategory.projectile
     physicsBody.collisionBitMask = PhysicsCategory.enemy | PhysicsCategory.ground | PhysicsCategory.obstacles | PhysicsCategory.flyerEnemy
     physicsBody.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.obstacles | PhysicsCategory.flyerEnemy
-    self.addGlow()
   }
 
   required init?(coder aDecoder: NSCoder) {

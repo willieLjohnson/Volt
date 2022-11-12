@@ -10,28 +10,14 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-class Logic {
-  private var stateMachine: GKStateMachine
-  
-  var states: [GKState] {
-    didSet {
-      self.stateMachine = GKStateMachine(states: states)
-    }
-  }
-  
-  init(states: [GKState]) {
-    self.stateMachine = GKStateMachine(states: states)
-    self.states = states
-  }
-  
-  func enter(state: AnyClass) {
-    self.stateMachine.enter(state)
-  }
-  
-  func update(_ deltaTime: TimeInterval) {
-    self.stateMachine.update(deltaTime: deltaTime)
+class Logic: GKStateMachine {}
+extension Logic {
+  func entered(_ state: AnyClass) -> Self {
+    self.enter(state)
+    return self
   }
 }
+
 
 class EnemyLogic: Logic {
   let enemy: Enemy
@@ -45,14 +31,12 @@ class EnemyLogic: Logic {
 //TODO: Refactor code and clean up for easier read
 struct EnemyLogicConstants {
   /// Attempts to get ahead and stop the target by growing in size on blocking their way.
-  static var chaserLogic: LogicHandler = { state, enemy in
+  static var chaserLogic: LogicHandler = { logic, enemy in
     guard let game = enemy.game else {return}
-    guard let moveComponent = enemy.component(ofType: MoveComponent.self) as? MoveComponent else {
-      return
-    }
-    guard let targetComponent = enemy.component(ofType: TargetComponent.self) as? TargetComponent else {
-      return
-    }
+    
+    guard let moveComponent = enemy.component(ofType: MoveComponent.self) as? MoveComponent else {return}
+    guard let targetComponent = enemy.component(ofType: TargetComponent.self) as? TargetComponent else {return}
+    
     guard let target = targetComponent.target else { return }
     
     let moveSpeed: CGFloat = moveComponent.moveSpeed
@@ -67,8 +51,6 @@ struct EnemyLogicConstants {
     let velocityDifference = targetVelocity.distance(to: enemyVelocity)
     
     let distanceTotarget = target.position.distance(to: enemy.position)
-    print("distance3")
-    print(distanceTotarget)
     let areMovingInTheSameDirection = enemyVelocity.dot(targetVelocity) > 0
 
     // Analyze target.
@@ -92,16 +74,15 @@ struct EnemyLogicConstants {
     }
     
     if isInAttackRange {
-      enemy.run(SKAction.scale(to: 20, duration: 0.1))
+      logic.enter(AttackState.self)
     } else {
       enemy.run(.scale(to: 1, duration: 0.1))
     }
-
     moveComponent.follow(other: target)
   }
 
   /// Flies above and ehead of the target and drops obstacles.
-  static var flyerLogic: LogicHandler = { state, flyer in
+  static var flyerLogic: LogicHandler = { logic, flyer in
     guard let game = flyer.game else {return}
     
     guard let moveComponent = flyer.component(ofType: MoveComponent.self) as? MoveComponent else {return}

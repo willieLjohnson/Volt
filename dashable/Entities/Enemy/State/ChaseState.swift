@@ -18,8 +18,10 @@ class ChaseState: EnemyState {
   }
   
   override func update(deltaTime seconds: TimeInterval) {
+    guard let stateMachine = self.stateMachine as? EnemyLogic else { return }
+    
     if let logicHandler = logicHandler  {
-      logicHandler(self, enemy)
+      logicHandler(stateMachine, enemy)
     } else {
       guard let moveComponent = self.enemy.component(ofType: MoveComponent.self) as? MoveComponent else {return}
       guard let targetComponent = self.enemy.component(ofType: TargetComponent.self) as? TargetComponent else {return}

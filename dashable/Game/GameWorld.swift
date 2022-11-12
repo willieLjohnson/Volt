@@ -9,8 +9,18 @@
 import Foundation
 import SpriteKit
 
+var gen = RNG(seed: 333)
+
 class GameWorld {
   static var global: GameWorld!
+  static var seed: UInt64 = 333 {
+    willSet {
+      gen = RNG(seed: newValue)
+    }
+    didSet {
+      gen = RNG(seed: self.seed)
+    }
+  }
   var game: GameScene
   var canPlayAudio = true
   

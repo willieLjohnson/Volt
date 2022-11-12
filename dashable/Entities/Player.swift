@@ -77,8 +77,6 @@ class Player: Entity {
       projectileBody.usesPreciseCollisionDetection = true
       projectileBody.velocity = physicsBody.velocity
       projectileBody.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed), dy: direction.dy * projectile.initialSpeed))
-      
-      projectileBody.angularVelocity = projectile.initialSpeed * max(direction.dx, direction.dy) * 1
       projectile.zRotation = CGFloat.random(in: -1...1)
     }
     canShoot = false

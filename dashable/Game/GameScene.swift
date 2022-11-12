@@ -100,25 +100,25 @@ private extension GameScene {
   func setupScene() {
     guard let scene = scene else { return }
     scene.backgroundColor = Style.BACKGROUND_COLOR
-    let backgroundGrid = Factory.effects.createLightGrid(size: self.size * 1000, position: .zero, color: Style.PLAYER_COLOR)
+    let backgroundGrid = Factory.effects.createLightGrid(size: self.size * 2000, position: .zero, color: Style.PLAYER_COLOR)
     backgroundGrid.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     backgroundGrid.zPosition = -12
     addChild(backgroundGrid)
     
-    
-    ground = Ground(position: CGPoint(x: size.width / 2, y: 0), size: CGSize(width: size.width * 1000, height: size.height / 4))
-    //    addChild(ground)
-    
     player = Player(size: CGSize(width: 40, height: 40))
     addChild(player)
     player.position = CGPoint(x: size.width / 2, y: size.height / 2)
+    
     addChaser(position: CGPoint(x: player.position.x - 100, y: size.height / 2))
     yellowEnemy = addFlyer(position: player.position + CGPoint(xy: 1) * 2)
+    
     addGroundObstacles()
+    
     cam = SKCameraNode()
     cam.zPosition = 1000
     
     setupUI()
+    
     physicsWorld.contactDelegate = self
     
     self.camera = cam
@@ -137,15 +137,19 @@ private extension GameScene {
     timeLabel = SKLabelNode(fontNamed: "Courier")
     timeLabel.position = CGPoint(x: 0, y: size.height / 5)
     timeLabel.zPosition = 0
+    
     restartButton = SKSpriteNode(color: #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.5), size: CGSize(width: 88, height: 44))
     restartButton.name = "restartButton"
     restartButton.position = CGPoint(x: -size.width / 2 + restartButton.frame.width, y: size.height / 2 - restartButton.frame.height)
     restartButton.zPosition = 0
+    
     progressBar = SKShapeNode(rectOf: CGSize(width: size.width, height: 22))
     progressBar.fillColor = #colorLiteral(red: 0.5294117647, green: 0.8, blue: 0.8980392157, alpha: 1)
+    
     cam.addChild(timeLabel)
     cam.addChild(restartButton)
     cam.setScale(3.5)
+    
     // Setup joystick to control player movement.
     movePlayerStick.position = CGPoint(x: -size.width / 2 + movePlayerStick.radius * 2, y: -size.height / 2 + movePlayerStick.radius * 1.7)
     movePlayerStick.stick.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
@@ -219,9 +223,9 @@ private extension GameScene {
   
   func applyGravityMultipliers(to physicsBody: SKPhysicsBody) {
     if physicsBody.velocity.dy < 0 {
-      physicsBody.applyImpulse(CGVector(dx: 0, dy: physicsWorld.gravity.dy * (fallMultiplier - 1)))
+      physicsBody.applyImpulse(CGVector(dx: physicsWorld.gravity.dx * (fallMultiplier - 1), dy: physicsWorld.gravity.dy * (fallMultiplier - 1)))
     } else if physicsBody.velocity.dy > 0 && !touchDown {
-      physicsBody.applyImpulse(CGVector(dx: 0, dy: physicsWorld.gravity.dy * (lowJumpMultiplier - 1)))
+      physicsBody.applyImpulse(CGVector(dx: physicsWorld.gravity.dx * (lowJumpMultiplier - 1), dy: physicsWorld.gravity.dy * (lowJumpMultiplier - 1)))
     }
   }
 }
@@ -230,11 +234,6 @@ private extension GameScene {
 extension GameScene {
   func addChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60)) {
     let chaser = Enemy.createChaser(position: position, size: size, game: self)
-    let logicComponent = LogicComponent(entity: chaser, logic: EnemyLogic(enemy: chaser, states: [
-      ChaseState(enemy: chaser, logicHandler: EnemyLogicConstants.chaserLogic)
-    ]))
-    chaser.addComponent(component: logicComponent)
-    logicComponent.logic.enter(state: ChaseState.self)
     add(enemy: chaser)
   }
   
@@ -255,19 +254,11 @@ extension GameScene {
   
   func addBee(position: CGPoint) {
     let bee = Enemy.createBee(position: position, game: self)
-    let logicComponent = LogicComponent(entity: bee, logic: EnemyLogic(enemy: bee, states: [
-      ChaseState(enemy: bee, logicHandler: EnemyLogicConstants.chaserLogic)
-    ]))
-    bee.addComponent(component: logicComponent)
     add(enemy: bee)
   }
   
   func addFlyer(position: CGPoint) -> Enemy {
     let flyer = Enemy.createFlyer(position: position, game: self)
-    let logicComponent = LogicComponent(entity: flyer, logic: EnemyLogic(enemy: flyer, states: [
-      ChaseState(enemy: flyer, logicHandler: EnemyLogicConstants.flyerLogic)
-    ]))
-    flyer.addComponent(component: logicComponent)
     add(enemy: flyer)
     return flyer
   }

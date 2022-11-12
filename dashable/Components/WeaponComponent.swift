@@ -9,12 +9,14 @@
 import Foundation
 
 class WeaponComponent: Component {
+  var attackRange: CGFloat = 500
   var canShoot: Bool = true
   var fireRate: CGFloat = 0.15
   var baseDamage: CGFloat = 1
   
-  init(entity: Entity, fireRate: CGFloat = 0.15, canShoot: Bool = true) {
+  init(entity: Entity, attackRange: CGFloat = 500, fireRate: CGFloat = 0.15, canShoot: Bool = true) {
     super.init(entity: entity)
+    self.attackRange = attackRange
     self.canShoot = canShoot
     self.fireRate = fireRate
   }
