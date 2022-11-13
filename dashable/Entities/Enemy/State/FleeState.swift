@@ -19,14 +19,11 @@ class FleeState: EnemyState {
     }
   }
   
-  
   override func update(deltaTime seconds: TimeInterval) {
     guard let moveComponent = self.enemy.component(ofType: MoveComponent.self) as? MoveComponent else {return}
     guard let targetComponent = self.enemy.component(ofType: TargetComponent.self) as? TargetComponent else {return}
     guard let target = targetComponent.target else { return }
     moveComponent.flee(other: target)
-    
   }
-  
 }
 
