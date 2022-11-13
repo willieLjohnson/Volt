@@ -23,18 +23,21 @@ class EnemyAction: Hashable {
   var id: UUID = UUID()
   var enemy: Enemy
   var status: Status = .Init
-  var updateHandler: ActionHandler?
+  var didInit: ActionHandler?
+  var didUpdate: ActionHandler?
   
-  init(enemy: Enemy, updateHandler: ActionHandler? = nil) {
+  init(enemy: Enemy, didInit: ActionHandler? = nil, didUpdate: ActionHandler? = nil) {
     self.enemy = enemy
-    self.updateHandler = updateHandler
+    self.didUpdate = didUpdate
+    self.didInit = didInit
   }
   
   func update(_ deltaimeTime: TimeInterval) {
-    updateHandler?(self, self.enemy)
+    didUpdate?(self, enemy)
   }
   
   func start() {
+    didInit?(self, enemy)
     self.status = .Running
   }
 }

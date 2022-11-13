@@ -13,7 +13,7 @@
 		3D28C258205CF0F70058771E /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28C257205CF0F70058771E /* EntityManager.swift */; };
 		3D28C25A205CF1700058771E /* HealthComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28C259205CF1700058771E /* HealthComponent.swift */; };
 		3D28C25E205CF6180058771E /* MoveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28C25D205CF6180058771E /* MoveComponent.swift */; };
-		3D36AA2E2063944A0004A9DF /* EnemyLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36AA2D2063944A0004A9DF /* EnemyLogic.swift */; };
+		3D36AA2E2063944A0004A9DF /* EnemyStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36AA2D2063944A0004A9DF /* EnemyStateMachine.swift */; };
 		3D4D46902058765B00747B26 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4D468F2058765B00747B26 /* Enemy.swift */; };
 		3D55FDE6205B7DB70059FC92 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D55FDE5205B7DB70059FC92 /* Obstacle.swift */; };
 		3D55FDEA205BD19E0059FC92 /* Useful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D55FDE9205BD19E0059FC92 /* Useful.swift */; };
@@ -83,7 +83,7 @@
 		3D28C257205CF0F70058771E /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		3D28C259205CF1700058771E /* HealthComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthComponent.swift; sourceTree = "<group>"; };
 		3D28C25D205CF6180058771E /* MoveComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveComponent.swift; sourceTree = "<group>"; };
-		3D36AA2D2063944A0004A9DF /* EnemyLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyLogic.swift; sourceTree = "<group>"; };
+		3D36AA2D2063944A0004A9DF /* EnemyStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyStateMachine.swift; sourceTree = "<group>"; };
 		3D4D468F2058765B00747B26 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		3D55FDE5205B7DB70059FC92 /* Obstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 		3D55FDE9205BD19E0059FC92 /* Useful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Useful.swift; sourceTree = "<group>"; };
@@ -335,7 +335,7 @@
 		E3C7B9FF291E877E008A769A /* State */ = {
 			isa = PBXGroup;
 			children = (
-				3D36AA2D2063944A0004A9DF /* EnemyLogic.swift */,
+				3D36AA2D2063944A0004A9DF /* EnemyStateMachine.swift */,
 				E39E46AF291DBE1400D42D8E /* ChaseState.swift */,
 				E39E46B1291DBE2200D42D8E /* AttackState.swift */,
 				E39E46B3291DBE2C00D42D8E /* FleeState.swift */,
@@ -455,7 +455,7 @@
 				3D28C25A205CF1700058771E /* HealthComponent.swift in Sources */,
 				E34DA6D02912AD31009163E1 /* GameConstants.swift in Sources */,
 				E3E11BF0291D872E00208EA2 /* PauseState.swift in Sources */,
-				3D36AA2E2063944A0004A9DF /* EnemyLogic.swift in Sources */,
+				3D36AA2E2063944A0004A9DF /* EnemyStateMachine.swift in Sources */,
 				3D55FDE6205B7DB70059FC92 /* Obstacle.swift in Sources */,
 				E34DA6C62912A7BC009163E1 /* SpriteKit+Extensions.swift in Sources */,
 				E326C2A429200EFE001FF2FD /* Fleeing.swift in Sources */,

@@ -33,7 +33,7 @@ class AttackState: EnemyState {
   
   override func didEnter(from previousState: GKState?) {
     self.actions = [
-      EnemyAttacking(enemy: self.enemy, updateHandler: { action, enemy in
+      EnemyAttacking(enemy: self.enemy, didInit: { action, enemy in
         enemy.run(.scale(to: 10, duration: 0.1)) {
           action.status = .Success
         }

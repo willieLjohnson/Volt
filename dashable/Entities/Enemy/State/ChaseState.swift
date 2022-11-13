@@ -15,11 +15,16 @@ class ChaseState: EnemyState {
   }
   
   override func didEnter(from previousState: GKState?) {
+    self.actions = [
+      Chasing(enemy: self.enemy, didInit: { action,enemy in
+        enemy.run(.scale(to: 1, duration: 0.1))
+      })
+    ]
+    self.execute(Chasing.self)
   }
   
   override func update(deltaTime seconds: TimeInterval) {
     guard let stateMachine = self.stateMachine as? EnemyLogic else { return }
-    
     if let logicHandler = logicHandler  {
       logicHandler(stateMachine, enemy)
     } else {

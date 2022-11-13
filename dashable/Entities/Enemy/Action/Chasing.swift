@@ -7,3 +7,5 @@
 //
 
 import Foundation
+
+class Chasing: EnemyAction {}

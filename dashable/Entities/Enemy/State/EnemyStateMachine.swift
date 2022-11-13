@@ -76,7 +76,6 @@ struct EnemyLogicConstants {
     if isInAttackRange {
       logic.enter(AttackState.self)
     } else {
-      enemy.run(.scale(to: 1, duration: 0.1))
     }
     moveComponent.follow(other: target)
   }
