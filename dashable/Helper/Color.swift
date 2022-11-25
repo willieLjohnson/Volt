@@ -32,10 +32,32 @@ struct Color {
     self.alpha = UInt8(round(Float(color.alpha) * 255))
   }
 }
+  
+struct HSBA {
+    var hue: CGFloat = 0
+    var saturation: CGFloat = 0
+    var brightness: CGFloat = 0
+    var alpha: CGFloat = 0
+}
 
 extension SKColor {
   var red: CGFloat{ return CIColor(color: self).red }
   var green: CGFloat{ return CIColor(color: self).green }
   var blue: CGFloat{ return CIColor(color: self).blue }
   var alpha: CGFloat{ return CIColor(color: self).alpha }
+  var hsba: HSBA { getHSBA() }
+  
+  func getHSBA() -> HSBA {
+    var hsba = HSBA()
+    self.getHue(&hsba.hue, saturation: &hsba.saturation, brightness: &hsba.brightness, alpha: &hsba.alpha)
+    return hsba
+  }
+  
+  func with(alpha: CGFloat? = nil, red: CGFloat? = nil, green: CGFloat? = nil, blue: CGFloat? = nil) -> SKColor {
+    return SKColor(red: red ?? self.red, green: green ?? self.green, blue: blue ??  self.blue, alpha: alpha ?? self.alpha)
+  }
+  func with(hue: CGFloat? = nil, saturation: CGFloat? = nil, brightness: CGFloat? = nil, alpha: CGFloat? = nil) -> SKColor {
+    let hsba = self.hsba
+    return SKColor(hue: hue ?? hsba.hue, saturation: saturation ?? hsba.saturation, brightness: brightness ?? hsba.brightness, alpha: alpha ?? hsba.alpha)
+  }
 }

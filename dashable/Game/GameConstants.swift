@@ -56,10 +56,21 @@ struct Factory {
         SKUniform(name: "u_brightness", float: 10),
       ]
       node.alpha = 0.01
-      let lightGridShader = SKShader(fromFile: "SHKLightGrid", uniforms: uniforms)
+      node.shader = SKShader(fromFile: "SHKLightGrid", uniforms: uniforms)
+      return node
+    }
+    static func createBoard(size: CGSize, position: CGPoint, color: SKColor, parent: SKNode? = nil) -> SKSpriteNode {
+      let node = SKSpriteNode(color: color, size: size)
+      node.position = position
       
-      node.shader = lightGridShader
-      
+      let uniforms: [SKUniform] = [
+        SKUniform(name: "u_rows", float: Float(size.width)/1080),
+        SKUniform(name: "u_cols", float: Float(size.height)/1000),
+        SKUniform(name: "u_first_color", color: color),
+        SKUniform(name: "u_second_color", color: color.with(hue: nil, saturation: color.hsba.saturation * 1, brightness: color.hsba.brightness * 0.8)),
+      ]
+      node.alpha = 0.5
+      node.shader = SKShader(fromFile: "SHKCheckerboard", uniforms: uniforms)
       return node
     }
     static func createCircleWave(size: CGSize, position: CGPoint, color: SKColor, parent: SKNode? = nil) -> SKSpriteNode {

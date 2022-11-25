@@ -101,7 +101,7 @@ private extension GameScene {
   func setupScene() {
     guard let scene = scene else { return }
     scene.backgroundColor = Style.BACKGROUND_COLOR
-    let backgroundGrid = Factory.effects.createLightGrid(size: self.size * 1000, position: .zero, color: Style.PLAYER_COLOR)
+    let backgroundGrid = Factory.effects.createBoard(size: self.size * 1000, position: .zero, color: Style.CHASER_COLOR)
     backgroundGrid.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     backgroundGrid.zPosition = -12
     addChild(backgroundGrid)
