@@ -11,7 +11,11 @@ import GameplayKit
 import SpriteKit
 
 class HealthComponent: Component {
-  var health: Int = 1
+  var health: Int = 1 {
+    didSet {
+      notifySubscribers()
+    }
+  }
   
   init(entity: Entity, health: Int = 1) {
     super.init(entity: entity)
@@ -26,8 +30,7 @@ class HealthComponent: Component {
   override func checkStatus() {
     guard let entity = entity else { return }
     if health <= 0 {
-      entity.die()
+      entity.decompose()
     }
   }
-
 }

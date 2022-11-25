@@ -74,6 +74,10 @@ extension CGVector {
     return sqrt(dx*dx + dy*dy)
   }
   
+  public func lengthSquared() -> CGFloat {
+    return dx*dx + dy*dy
+  }
+
   // Distance between two vectors
   public func distance(to vector: CGVector) -> CGFloat {
     return (self - vector).magnitude
@@ -103,9 +107,26 @@ extension CGVector {
   public func lerp(start: CGVector, end: CGVector, t: CGFloat) -> CGVector {
     return start + (end - start) * t
   }
+  
+  public func similar(to vector: CGVector, tolerance: CGFloat) -> Bool {
+    let diffV = vector - self
+    let similarX = abs(diffV.dx/self.dx)
+    let similarY = abs(diffV.dy/self.dy)
+    print("\(similarX),\(similarY)")
+    return similarX <= tolerance && similarY <= tolerance
+  }
+  
 }
 
 extension CGPoint {
+  public func lerp(end: CGPoint, t: CGFloat) -> CGPoint {
+    return self + (end - self) * t
+  }
+  
+  public static func lerp(start: CGPoint, end: CGPoint, t: CGFloat) -> CGPoint {
+    return start + (end - start) * t
+  }
+  
   
   public var magnitude: CGFloat {
     return sqrt(x*x + y*y)
@@ -158,13 +179,37 @@ extension CGSize {
 
 // MARK: - Init
 extension CGVector {
+  static var one: CGVector {
+    CGVector(1.0)
+  }
   init(_ point: CGPoint) {
     self.init(dx: point.x, dy: point.y)
   }
+  init(_ dxdy: CGFloat) {
+    self.init(dx: dxdy, dy: dxdy)
+  }
+  func adding(_ rhs: CGFloat) -> CGVector {
+    return CGVector(dx: self.dx + rhs, dy: self.dy + rhs)
+  }
 }
 
+// MARK: - Init
 extension CGPoint {
-  init(xy: CGFloat) {
+  static var one: CGPoint {
+    CGPoint(1.0)
+  }
+  init(_ vector: CGVector) {
+    self.init(x: vector.dx, y: vector.dy)
+  }
+  
+  func adding(_ rhs: CGFloat) -> CGPoint {
+    return CGPoint(x: self.x + rhs, y: self.y + rhs)
+  }
+}
+
+
+extension CGPoint {
+  init(_ xy: CGFloat) {
     self.init(x: xy, y: xy)
   }
   init(_ point: float2) {
@@ -176,10 +221,15 @@ extension float2 {
     self.init(x: Float(point.x), y: Float(point.y))
   }
 }
-
 extension CGPoint {
-  var direction: CGPoint {
-    CGPoint(x: self.x > 0 ? 1 : -1, y: self.y > 0 ? 1 : -1)
+
+  func direction(to point: CGPoint) -> CGPoint {
+    let angle = atan2(point.y - self.y, point.x - self.x)
+    return CGPoint(x: cos(angle), y: sin(angle))
+  }
+  func generalDirection(to point: CGPoint) -> CGPoint {
+    let angle = atan2(point.y - self.y, point.x - self.x)
+    return CGPoint(x: cos(angle), y: sin(angle))
   }
   static func pointOnCircle(center: CGPoint, radius: CGFloat, angle: CGFloat) -> CGPoint {
     let x = center.x + radius * cos(angle)

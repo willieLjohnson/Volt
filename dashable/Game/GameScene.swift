@@ -60,9 +60,11 @@ class GameScene: SKScene {
   }
   
   override func update(_ currentTime: TimeInterval) {
+    playerPreviousVelocity = self.player.physicsBody!.velocity
     lastUpdateTimeInterval = currentTime
     stateMachine.update(deltaTime: currentTime)
     super.update(currentTime)
+    timeLabel.text = String(format: "%.2f", player.physicsBody!.velocity.magnitude/100)
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -72,7 +74,6 @@ class GameScene: SKScene {
     }
     touchLocation = touch.location(in: cam)
       
-    player.jump()
     
     // Get UI node that was touched.
     let touchedNodes = cam.nodes(at: touchLocation)
@@ -100,36 +101,37 @@ private extension GameScene {
   func setupScene() {
     guard let scene = scene else { return }
     scene.backgroundColor = Style.BACKGROUND_COLOR
-    let backgroundGrid = Factory.effects.createLightGrid(size: self.size * 2000, position: .zero, color: Style.PLAYER_COLOR)
+    let backgroundGrid = Factory.effects.createLightGrid(size: self.size * 1000, position: .zero, color: Style.PLAYER_COLOR)
     backgroundGrid.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     backgroundGrid.zPosition = -12
     addChild(backgroundGrid)
     
-    player = Player(size: CGSize(width: 40, height: 40))
+    player = Player(size: CGSize(width: 2, height: 2))
+    player.add(component: MoveComponent(entity: player, moveSpeed: 0.001))
     addChild(player)
-    player.position = CGPoint(x: size.width / 2, y: size.height / 2)
     
-    addChaser(position: CGPoint(x: player.position.x - 100, y: size.height / 2))
-    yellowEnemy = addFlyer(position: player.position + CGPoint(xy: 1) * 2)
+    addChaser(position: CGPoint(x: player.size.width / 2, y: size.height / 2))
+    yellowEnemy = addFlyer(position: player.position + CGPoint.one * size.height * 0.2)
     
     addGroundObstacles()
     
     cam = SKCameraNode()
     cam.zPosition = 1000
+    cam.setScale(2)
     
     setupUI()
     
     physicsWorld.contactDelegate = self
     
     self.camera = cam
-    
+   
     addChild(cam!)
     let timeAction = SKAction.run { [unowned self] in
       self.time += Double(self.physicsWorld.speed / 100)
       self.timeLabel.text = String(format: "%.2f", self.time)
     }
     
-    run(SKAction.repeatForever(SKAction.sequence([timeAction, .wait(forDuration: 0.01)])))
+//    run(SKAction.repeatForever(SKAction.sequence([timeAction, .wait(forDuration: 0.01)])))
     stateMachine.enter(PauseState.self)
   }
   
@@ -148,15 +150,14 @@ private extension GameScene {
     
     cam.addChild(timeLabel)
     cam.addChild(restartButton)
-    cam.setScale(3.5)
+    cam.setScale(1)
     
     // Setup joystick to control player movement.
     movePlayerStick.position = CGPoint(x: -size.width / 2 + movePlayerStick.radius * 2, y: -size.height / 2 + movePlayerStick.radius * 1.7)
     movePlayerStick.stick.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
     movePlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
     movePlayerStick.trackingHandler = { [unowned self] data in
-      guard let physicsBody = player.physicsBody else { return }
-      physicsBody.applyImpulse(CGVector(dx: data.velocity.x * player.moveSpeed , dy: data.velocity.y * player.moveSpeed))
+      MoveComponent.component(from: self.player).dash(dir: CGVector(data.velocity))
     }
     movePlayerStick.beginHandler = {
       self.player.isBoosting = true
@@ -168,6 +169,7 @@ private extension GameScene {
     shootPlayerStick.stick.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
     shootPlayerStick.substrate.color = #colorLiteral(red: 0.6722276476, green: 0.6722276476, blue: 0.6722276476, alpha: 0.3)
     shootPlayerStick.trackingHandler = { [unowned self] data in
+      guard let physicsBody = player.physicsBody else { return }
       self.player.shoot(at: CGVector(dx: data.velocity.x, dy: data.velocity.y), scene: self)
     }
     cam.addChild(shootPlayerStick)
@@ -187,7 +189,7 @@ private extension GameScene {
   
   
   func addGroundObstacles() {
-    makeObstacles(at: player.position.applying(CGAffineTransform(translationX: self.size.width, y: -self.size.height)), amount: 1000, size: CGSize(width: 200, height: 25), spacing: 400)
+    makeObstacles(at: player.position.applying(CGAffineTransform(translationX: self.size.width/2, y: self.size.height/2)), amount: 1000, size: CGSize(width: 2, height: 2), spacing: 10)
   }
   
   func makeObstacles(at origin: CGPoint, amount: Int, size: CGSize, spacing: CGFloat) {
@@ -197,7 +199,7 @@ private extension GameScene {
       // misc blocks
       let miscBlockSize = size.height * 2
       var obstacleSize = CGSize(width: miscBlockSize + CGFloat.random(in: miscBlockSize...miscBlockSize*4), height: miscBlockSize + CGFloat.random(in: miscBlockSize...miscBlockSize*4))
-      var obstaclePosition = CGPoint(x: origin.x + obstacleSize.width + CGFloat.random(in: -distrX*0.2...distrX), y: origin.y + obstacleSize.height + CGFloat.random(in: -distrY*0.2...distrY))
+      var obstaclePosition = CGPoint(x: origin.x + obstacleSize.width + CGFloat.random(in: -distrX*0.2...distrX), y: origin.y + obstacleSize.height + CGFloat.random(in: -distrY...distrY * 0.5))
       var obstacle = Obstacle(position: obstaclePosition, size: obstacleSize, isDynamic: true)
       obstacle.physicsBody!.density = 0.001
       obstacle.alpha = 0.6
@@ -232,7 +234,7 @@ private extension GameScene {
 
 // MARK: Public helpers
 extension GameScene {
-  func addChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60)) {
+  func addChaser(position: CGPoint, size: CGSize = CGSize(width: 4, height:  4)) {
     let chaser = Enemy.createChaser(position: position, size: size, game: self)
     add(enemy: chaser)
   }

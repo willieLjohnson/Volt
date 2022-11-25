@@ -6,6 +6,7 @@ class PlayState: GameState {
         switch stateClass {
         case is PauseState.Type:
             return true
+          
         default:
             return false
         }
@@ -25,26 +26,32 @@ class PlayState: GameState {
       guard let player = game.player else { return }
       player.update(game, deltaTime: deltaTime)
       for enemy in game.enemies {
-        enemy.update(deltaTime: deltaTime)
+        enemy.update(deltaTime)
       }
       
       // Get player bodies
       guard let playerPhysicsBody = player.physicsBody else { return }
+      // t = t*t*t * (t * (6f*t - 15f) + 10f)
+      // t = t*t * (3f - 2f*t)
       
-      let xOffsetMax = game.size.width * 2
-      let yOffsetMax = game.size.height * 2
-      // Move cam to player
-      let duration = TimeInterval(0.4 * pow(0.9, abs(playerPhysicsBody.velocity.magnitude / 100) - 1) + 0.05)
-      let xOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100 - 1) - 0.04)
-      let yOffsetExpo = CGFloat(0.4 * pow(0.9, -abs(playerPhysicsBody.velocity.dy) / 100 - 1) - 0.04)
-      let yScaleExpo = CGFloat(0.01 * pow(0.9, -abs(playerPhysicsBody.velocity.dy) / 100 - 1) + 3.16)
-      let xScaleExpo = CGFloat(0.01 * pow(0.9, -abs(playerPhysicsBody.velocity.dx) / 100 - 1) + 3.16)
-      let xOffset = xOffsetExpo.clamped(to: -xOffsetMax...xOffsetMax) * (playerPhysicsBody.velocity.dx > 0 ? 1 : -1)
-      let yOffset = yOffsetExpo.clamped(to: -yOffsetMax...yOffsetMax) * (playerPhysicsBody.velocity.dy > 0 ? 1 : -1)
-      let scaleExpo = max(xScaleExpo, yScaleExpo)
-      let scale = scaleExpo.clamped(to: 5...10)
-      cam.setScale(scale)
-      cam.run(.move(to: CGPoint(x: player.position.x + xOffset, y: player.position.y + yOffset), duration: duration))
+      let playerVelocity = playerPhysicsBody.velocity
+      
+      let velocityLerp = playerVelocity / 360 * 0.01
+      let speedLerp = playerVelocity.magnitude / 360 * 0.01
+      let ispeedLerp = 1 - speedLerp
+      let ivelocityLerp = CGVector.one - velocityLerp
+      
+      let scale = (0.1 + speedLerp) * 2
+      let duration = 0.01 + 0.01 * ispeedLerp
+      
+      let xoffsetMax = game.size.width * 2
+      let yoffsetMax = game.size.height * 2
+      
+      let offsetFactor = CGPoint(x: xoffsetMax * velocityLerp.dx, y: yoffsetMax * velocityLerp.dy)
+      cam.setScale(scale.clamped(to: 0.1...2))
+//      print((velocityLerp, offsetFactor, scale, duration))
+//      print(cam.xScale)
+      cam.run(.move(to: CGPoint(x: player.position.x + offsetFactor.x, y: player.position.y + offsetFactor.y), duration: duration))
       
       game.playerPreviousVelocity = playerPhysicsBody.velocity
     }

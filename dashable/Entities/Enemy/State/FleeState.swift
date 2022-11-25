@@ -9,19 +9,19 @@
 import Foundation
 import GameplayKit
 
-class FleeState: EnemyState {
-  override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-    switch stateClass {
-    case is AttackState.Type:
+class FleeState: EnemyAction {
+  func can(transtionTo transition: Transition.Type) -> Bool {
+    switch transition {
+    case is CombatState.Type:
       return false
     default:
       return true
     }
   }
   
-  override func update(deltaTime seconds: TimeInterval) {
-    guard let moveComponent = self.enemy.component(ofType: MoveComponent.self) as? MoveComponent else {return}
-    guard let targetComponent = self.enemy.component(ofType: TargetComponent.self) as? TargetComponent else {return}
+  func update(deltaTime seconds: TimeInterval) {
+    guard let moveComponent = self.agent?.component(ofType: MoveComponent.self) as? MoveComponent else {return}
+    guard let targetComponent = self.agent?.component(ofType: TargetComponent.self) as? TargetComponent else {return}
     guard let target = targetComponent.target else { return }
     moveComponent.flee(other: target)
   }

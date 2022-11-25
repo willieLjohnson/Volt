@@ -33,7 +33,7 @@ class Player: Entity {
     
     physicsBody = SKPhysicsBody(rectangleOf: size)
     if let physicsBody = physicsBody {
-      physicsBody.affectedByGravity = true
+      physicsBody.affectedByGravity = false
       physicsBody.categoryBitMask = PhysicsCategory.player
       physicsBody.collisionBitMask =
         PhysicsCategory.ground |
@@ -53,23 +53,13 @@ class Player: Entity {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func jump() {
-    if isJumping { return }
-    guard let physicsBody = physicsBody else { return }
-
-    isJumping = true
-    justJumped = true
-    physicsBody.density = jumpDensity
-    moveSpeed = jumpMoveSpeed
-    physicsBody.applyImpulse(CGVector(dx: 0, dy: 800))
-  }
 
   func shoot(at direction: CGVector, scene: GameScene) {
     guard let physicsBody = physicsBody else { return }
     if !canShoot { return }
 
     let projectilePosition = CGPoint(x: position.x, y: position.y)
-    let projectile = Projectile(position: projectilePosition, size: 60)
+    let projectile = Projectile(position: projectilePosition, size: 1)
     scene.addChild(projectile)
 
     projectile.startDecay()
@@ -78,6 +68,7 @@ class Player: Entity {
       projectileBody.velocity = physicsBody.velocity
       projectileBody.applyImpulse(CGVector(dx: (direction.dx * projectile.initialSpeed), dy: direction.dy * projectile.initialSpeed))
       projectile.zRotation = CGFloat.random(in: -1...1)
+      physicsBody.applyImpulse(-direction * projectile.initialSpeed * 0.001)
     }
     canShoot = false
     let fireRateAction = SKAction.sequence([.wait(forDuration: 0.1), .run { [unowned self] in
@@ -86,11 +77,12 @@ class Player: Entity {
     run(fireRateAction)
 
     if canPlayShootSound {
-      GameWorld.global.playAudio(GameConstants.shootSounds.LazerFileName, duration: 1, volume: 0.01, volumeChangeSpeed: 0.2)
+      GameWorld.global.playAudio(GameConstants.shootSounds.LazerFileName, duration: 1, volume: 0.1, volumeChangeSpeed: 0.1)
       let audioRateAction = SKAction.sequence([.wait(forDuration: 0.05), .run { [unowned self] in
         self.canPlayShootSound = true
       }])
       self.run(audioRateAction)
+
     }
 
     self.circleWaveMedium(-direction)
@@ -104,13 +96,7 @@ extension Player {
   }
 
   func update(_ scene: GameScene, deltaTime: TimeInterval) {
-    super.update(deltaTime: deltaTime)
-    
-    if !isJumping && justJumped {
-      physicsBody!.density = defaultDensity
-      moveSpeed = defaultMoveSpeed
-      justJumped = false
-    }
+    super.update(deltaTime)
   }
 
   func onContact(with: SKNode) {

@@ -21,16 +21,16 @@ class EntityManager {
     entities.insert(entity)
   }
   
-  func remove(entity: Entity) {
+  func remove(entity: inout Entity) {
     _ = entity.components.map {
-      entity.removeComponent(ofType: type(of: $0))
+      entity.remove(componentOf: type(of: $0))
     }
     entities.remove(entity)
   }
   
   func update(deltaTime: TimeInterval) {
     _ = entities.map {
-      $0.update(deltaTime: deltaTime)
+      $0.update(deltaTime)
     }
   }
 }

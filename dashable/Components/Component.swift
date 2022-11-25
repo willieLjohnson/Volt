@@ -9,11 +9,19 @@
 import Foundation
 
 
-class Component: Hashable {
-  var id: UUID = UUID()
+  
+protocol Subscribable: Updatable {
+  var subscribers: [UUID: [()->()]] { get set }
+  mutating func subscribe(uuid: UUID, onUpdate: @escaping ()->())
+  mutating func notifySubscribers()
+}
 
+class Component: Subscribable {
+  var id: UUID = UUID()
   var entity: Entity? = nil
   var game: GameScene? = nil
+  var subscribers: [UUID : [()->()]] = [:]
+  
   init(entity: Entity? = nil) {
     self.entity = entity
     self.game = entity?.game
@@ -21,8 +29,26 @@ class Component: Hashable {
   func checkStatus() {}
   func update(_ deltaTime: TimeInterval?) {}
   
-  static func component(from entity: Entity) -> Self {
+  static func component(from entity: any Composable) -> Self {
     entity.component(ofType: Self.self) as! Self
+  }
+  
+  func subscribe(uuid: UUID, onUpdate: @escaping () -> ()) {
+    if self.subscribers[uuid] != nil {
+      var list = self.subscribers[uuid]
+      list!.append(onUpdate)
+      subscribers[uuid] = list
+    } else {
+      self.subscribers[uuid] = [onUpdate]
+    }
+  }
+  
+  func notifySubscribers() {
+    for subscriber in self.subscribers {
+      for onUpdate in subscriber.value {
+        onUpdate()
+      }
+    }
   }
 }
 

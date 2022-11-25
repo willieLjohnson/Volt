@@ -14,7 +14,7 @@ class Projectile: Entity {
   var health: Int = 1
   var moveSpeed: CGFloat = 1
   var canEvolve: Bool = false
-  let initialSpeed: CGFloat = 5000
+  let initialSpeed: CGFloat = 0.01
 
   init(position: CGPoint, size: CGFloat, color: SKColor = Style.PROJECTILE_COLOR) {
     super.init(texture: nil, color: Style.OBSTACLE_COLOR, size: CGSize(width: size * 0.6, height: size * 1.4))

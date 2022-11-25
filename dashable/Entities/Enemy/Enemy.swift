@@ -22,18 +22,18 @@ class Enemy: Entity {
   }
   
   /// Update state.
-  override func update(deltaTime: TimeInterval) {
-    super.update(deltaTime: deltaTime)
+  override func update(_ deltaTime: TimeInterval?) {
+    super.update(deltaTime)
   }
   
   
-  override func beforeDie() {
+  override func beforeDecomposing() {
     guard let game = game else { return }
     game.remove(deadEnemy: self)
   }
   
-  override func die(afterDie: (() -> ())? = nil) {
-    super.die(afterDie: afterDie != nil ? afterDie : {
+  override func decompose(afterDecomposing: (() -> ())? = nil) {
+    super.decompose(afterDecomposing: afterDecomposing != nil ? afterDecomposing : {
       self.evolve()
     })
   }
@@ -45,64 +45,68 @@ class Enemy: Entity {
 }
 
 extension Enemy {
-  static func createEnemy(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60), game: GameScene? = nil) -> Enemy {
-    let enemy = Enemy(size: size, color: Style.CHASER_COLOR, position: position, game: game)
+  static func createEnemy(position: CGPoint, size: CGSize = CGSize(width: 4, height:  4), game: GameScene? = nil) -> Enemy {
+    var enemy = Enemy(size: size, color: Style.CHASER_COLOR, position: position, game: game)
     _ = [
-      MoveComponent(entity: enemy, moveSpeed: 500),
+      MoveComponent(entity: enemy, moveSpeed: 0.02),
       HealthComponent(entity: enemy, health: 25),
-      CollisionComponent(entity: enemy, category: PhysicsCategory.enemy, density: 8),
+      CollisionComponent(entity: enemy, category: PhysicsCategory.enemy, density: 2),
       TargetComponent(entity: enemy, target: game != nil ? game!.player : nil),
       WeaponComponent(entity: enemy),
       EvolveComponent(entity: enemy, canEvolve: true),
-      LogicComponent(entity: enemy)
+      ActionComponent<Enemy>(entity: enemy),
     ].map {
-      enemy.addComponent(component: $0)
+      enemy.add(component: $0)
     }
     return enemy
   }
   
-  static func createChaser(position: CGPoint, size: CGSize = CGSize(width: 60, height:  60), game: GameScene? = nil) -> Enemy {
+  static func createChaser(position: CGPoint, size: CGSize = CGSize(width: 4, height:  4), game: GameScene? = nil) -> Enemy {
     let chaser = createEnemy(position: position, size: size, game: game)
     EvolveComponent.component(from: chaser).onEvolveHandler = { enemy in
       guard let game = enemy.game else { return }
-      EvolveComponent.component(from: enemy).canEvolve = false
       for _ in 0...3 {
-        game.addBee(position: position)
+        game.addBee(position: enemy.position)
       }
     }
-    LogicComponent.component(from: chaser).logic = EnemyLogic(enemy: chaser, states: [
-      ChaseState(enemy: chaser, logicHandler: EnemyLogicConstants.chaserLogic),
-      AttackState(enemy: chaser, logicHandler: nil)
-    ]).entered(ChaseState.self)
+    ActionComponent<Enemy>.component(from: chaser).machine = EnemyAction(agent: chaser, actions: [
+      CombatState(agent: chaser, actions: [
+        Chasing(agent: chaser)
+      ]),
+    ]).executing(CombatState.self)
+    
     return chaser
   }
 
   static func createBee(position: CGPoint, game: GameScene? = nil) -> Enemy {
-    let bee = createChaser(position: position, size: CGSize(width: 30, height: 30), game: game)
+    var bee = createChaser(position: position, size: CGSize(width: 3, height: 3), game: game)
     bee.color = Style.BEE_COLOR
     bee.name = "bee"
     bee.physicsBody!.contactTestBitMask = PhysicsCategory.player
     bee.physicsBody!.collisionBitMask = bee.physicsBody!.collisionBitMask | PhysicsCategory.enemy
-    bee.physicsBody!.density = 2
+    bee.physicsBody!.density = 1
     
     HealthComponent.component(from: bee).health = 5
-    EvolveComponent.component(from: bee).canEvolve = false
-    MoveComponent.component(from: bee).setBase(moveSpeed: 800)
+//    MoveComponent.component(from: bee).setBase(moveSpeed: 0.1)
+    bee.remove(componentOf: EvolveComponent.self)
     return bee
   }
 
   static func createFlyer(position: CGPoint, game: GameScene? = nil) -> Enemy {
-    let flyer = createEnemy(position: position, size: CGSize(width: 200, height: 200), game: game)
+    let flyer = createEnemy(position: position, size: CGSize(width: 5, height: 5), game: game)
     flyer.color = Style.FLYER_COLOR
     flyer.name = "flyer"
     flyer.physicsBody!.collisionBitMask = PhysicsCategory.projectile
     flyer.physicsBody!.categoryBitMask = PhysicsCategory.flyerEnemy
     HealthComponent.component(from: flyer).health  *= 1000
-    MoveComponent.component(from: flyer).setBase(moveSpeed: 1700)
-    LogicComponent.component(from: flyer).logic = EnemyLogic(enemy: flyer, states: [
-      ChaseState(enemy: flyer, logicHandler: EnemyLogicConstants.flyerLogic),
-      AttackState(enemy: flyer, logicHandler: nil)
-    ]).entered(ChaseState.self)
+    MoveComponent.component(from: flyer).setBase(moveSpeed: 0.5)
+    WeaponComponent.component(from: flyer).attackRange = 10
+    ActionComponent<Enemy>.component(from: flyer).machine = EnemyAction(agent: flyer, actions: [
+      CombatState(agent: flyer, actions: [
+        Chasing(agent: flyer, movementType: .Match(2))
+      ]),
+    ])
+    
     return flyer
   }
 }

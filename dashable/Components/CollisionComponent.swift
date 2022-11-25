@@ -19,6 +19,8 @@ class CollisionComponent: Component {
     entity.physicsBody = SKPhysicsBody(rectangleOf: entity.size)
     if let physicsBody = entity.physicsBody {
       physicsBody.density = density
+      physicsBody.allowsRotation = true
+      physicsBody.isDynamic = true
       physicsBody.affectedByGravity = false
       physicsBody.categoryBitMask = category
       physicsBody.collisionBitMask = collisionMask

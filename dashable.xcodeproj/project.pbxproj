@@ -13,7 +13,7 @@
 		3D28C258205CF0F70058771E /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28C257205CF0F70058771E /* EntityManager.swift */; };
 		3D28C25A205CF1700058771E /* HealthComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28C259205CF1700058771E /* HealthComponent.swift */; };
 		3D28C25E205CF6180058771E /* MoveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D28C25D205CF6180058771E /* MoveComponent.swift */; };
-		3D36AA2E2063944A0004A9DF /* EnemyStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36AA2D2063944A0004A9DF /* EnemyStateMachine.swift */; };
+		3D36AA2E2063944A0004A9DF /* ActionMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36AA2D2063944A0004A9DF /* ActionMachine.swift */; };
 		3D4D46902058765B00747B26 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4D468F2058765B00747B26 /* Enemy.swift */; };
 		3D55FDE6205B7DB70059FC92 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D55FDE5205B7DB70059FC92 /* Obstacle.swift */; };
 		3D55FDEA205BD19E0059FC92 /* Useful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D55FDE9205BD19E0059FC92 /* Useful.swift */; };
@@ -32,14 +32,13 @@
 		3DEBB396205B02010017C9BB /* AnalogJoystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBB395205B02010017C9BB /* AnalogJoystick.swift */; };
 		3DEDC91C2063549E0076364E /* CGVector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEDC91B2063549E0076364E /* CGVector+Extensions.swift */; };
 		E326C2A229200EEF001FF2FD /* Attacking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E326C2A129200EEF001FF2FD /* Attacking.swift */; };
-		E326C2A429200EFE001FF2FD /* Fleeing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E326C2A329200EFE001FF2FD /* Fleeing.swift */; };
 		E326C2A629200F0A001FF2FD /* Chasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E326C2A529200F0A001FF2FD /* Chasing.swift */; };
 		E326C2A829200F19001FF2FD /* EnemyAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E326C2A729200F19001FF2FD /* EnemyAction.swift */; };
 		E343C51D291A2134006B73F4 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = E343C51C291A2134006B73F4 /* Component.swift */; };
 		E343C51F291A2367006B73F4 /* CollisionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E343C51E291A2367006B73F4 /* CollisionComponent.swift */; };
 		E343C521291A2852006B73F4 /* EvolveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E343C520291A2852006B73F4 /* EvolveComponent.swift */; };
 		E343C523291A316F006B73F4 /* WeaponComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E343C522291A316F006B73F4 /* WeaponComponent.swift */; };
-		E343C525291A3D05006B73F4 /* LogicComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E343C524291A3D05006B73F4 /* LogicComponent.swift */; };
+		E343C525291A3D05006B73F4 /* ActionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E343C524291A3D05006B73F4 /* ActionComponent.swift */; };
 		E343C527291C3C1F006B73F4 /* boom.wav in Resources */ = {isa = PBXBuildFile; fileRef = E343C526291C3C1F006B73F4 /* boom.wav */; };
 		E34DA6C62912A7BC009163E1 /* SpriteKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34DA6C52912A7BC009163E1 /* SpriteKit+Extensions.swift */; };
 		E34DA6C82912A83E009163E1 /* RNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34DA6C72912A83E009163E1 /* RNG.swift */; };
@@ -52,8 +51,7 @@
 		E35013A92918A9DA00430F5A /* lazer-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = E35013A82918A9D900430F5A /* lazer-1.wav */; };
 		E35013AB2918AADC00430F5A /* lazer-2.wav in Resources */ = {isa = PBXBuildFile; fileRef = E35013AA2918AADC00430F5A /* lazer-2.wav */; };
 		E35013AD2918AC8300430F5A /* damage-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = E35013AC2918AC8300430F5A /* damage-1.wav */; };
-		E39E46B0291DBE1400D42D8E /* ChaseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39E46AF291DBE1400D42D8E /* ChaseState.swift */; };
-		E39E46B2291DBE2200D42D8E /* AttackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39E46B1291DBE2200D42D8E /* AttackState.swift */; };
+		E39E46B0291DBE1400D42D8E /* CombatState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39E46AF291DBE1400D42D8E /* CombatState.swift */; };
 		E39E46B4291DBE2C00D42D8E /* FleeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39E46B3291DBE2C00D42D8E /* FleeState.swift */; };
 		E3BC023129161630000B807A /* SHKWater.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E3BC022A29161630000B807A /* SHKWater.fsh */; };
 		E3BC023229161630000B807A /* SHKLightGrid.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E3BC022B29161630000B807A /* SHKLightGrid.fsh */; };
@@ -71,7 +69,7 @@
 		E3E11BF0291D872E00208EA2 /* PauseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E11BEE291D872E00208EA2 /* PauseState.swift */; };
 		E3E11BF2291D874300208EA2 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E11BF1291D874300208EA2 /* GameState.swift */; };
 		E3F07431291DC3D8007E144B /* DamageResponseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F07430291DC3D8007E144B /* DamageResponseState.swift */; };
-		E3F07434291DC431007E144B /* EnemyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F07433291DC431007E144B /* EnemyState.swift */; };
+		E3F07434291DC431007E144B /* EnemyActionMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F07433291DC431007E144B /* EnemyActionMachine.swift */; };
 		E3F07437291DC97A007E144B /* StateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F07436291DC97A007E144B /* StateComponent.swift */; };
 		E3F07439291DFEE6007E144B /* TargetComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F07438291DFEE6007E144B /* TargetComponent.swift */; };
 /* End PBXBuildFile section */
@@ -83,7 +81,7 @@
 		3D28C257205CF0F70058771E /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		3D28C259205CF1700058771E /* HealthComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthComponent.swift; sourceTree = "<group>"; };
 		3D28C25D205CF6180058771E /* MoveComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveComponent.swift; sourceTree = "<group>"; };
-		3D36AA2D2063944A0004A9DF /* EnemyStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyStateMachine.swift; sourceTree = "<group>"; };
+		3D36AA2D2063944A0004A9DF /* ActionMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionMachine.swift; sourceTree = "<group>"; };
 		3D4D468F2058765B00747B26 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		3D55FDE5205B7DB70059FC92 /* Obstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 		3D55FDE9205BD19E0059FC92 /* Useful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Useful.swift; sourceTree = "<group>"; };
@@ -104,14 +102,13 @@
 		3DEBB395205B02010017C9BB /* AnalogJoystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalogJoystick.swift; sourceTree = "<group>"; };
 		3DEDC91B2063549E0076364E /* CGVector+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGVector+Extensions.swift"; sourceTree = "<group>"; };
 		E326C2A129200EEF001FF2FD /* Attacking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attacking.swift; sourceTree = "<group>"; };
-		E326C2A329200EFE001FF2FD /* Fleeing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fleeing.swift; sourceTree = "<group>"; };
 		E326C2A529200F0A001FF2FD /* Chasing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chasing.swift; sourceTree = "<group>"; };
 		E326C2A729200F19001FF2FD /* EnemyAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyAction.swift; sourceTree = "<group>"; };
 		E343C51C291A2134006B73F4 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		E343C51E291A2367006B73F4 /* CollisionComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionComponent.swift; sourceTree = "<group>"; };
 		E343C520291A2852006B73F4 /* EvolveComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolveComponent.swift; sourceTree = "<group>"; };
 		E343C522291A316F006B73F4 /* WeaponComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponComponent.swift; sourceTree = "<group>"; };
-		E343C524291A3D05006B73F4 /* LogicComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicComponent.swift; sourceTree = "<group>"; };
+		E343C524291A3D05006B73F4 /* ActionComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionComponent.swift; sourceTree = "<group>"; };
 		E343C526291C3C1F006B73F4 /* boom.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boom.wav; sourceTree = "<group>"; };
 		E34DA6C52912A7BC009163E1 /* SpriteKit+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpriteKit+Extensions.swift"; sourceTree = "<group>"; };
 		E34DA6C72912A83E009163E1 /* RNG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNG.swift; sourceTree = "<group>"; };
@@ -124,8 +121,7 @@
 		E35013A82918A9D900430F5A /* lazer-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "lazer-1.wav"; sourceTree = "<group>"; };
 		E35013AA2918AADC00430F5A /* lazer-2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "lazer-2.wav"; sourceTree = "<group>"; };
 		E35013AC2918AC8300430F5A /* damage-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "damage-1.wav"; sourceTree = "<group>"; };
-		E39E46AF291DBE1400D42D8E /* ChaseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaseState.swift; sourceTree = "<group>"; };
-		E39E46B1291DBE2200D42D8E /* AttackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackState.swift; sourceTree = "<group>"; };
+		E39E46AF291DBE1400D42D8E /* CombatState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombatState.swift; sourceTree = "<group>"; };
 		E39E46B3291DBE2C00D42D8E /* FleeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FleeState.swift; sourceTree = "<group>"; };
 		E3BC022A29161630000B807A /* SHKWater.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SHKWater.fsh; sourceTree = "<group>"; };
 		E3BC022B29161630000B807A /* SHKLightGrid.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SHKLightGrid.fsh; sourceTree = "<group>"; };
@@ -143,7 +139,7 @@
 		E3E11BEE291D872E00208EA2 /* PauseState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseState.swift; sourceTree = "<group>"; };
 		E3E11BF1291D874300208EA2 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		E3F07430291DC3D8007E144B /* DamageResponseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageResponseState.swift; sourceTree = "<group>"; };
-		E3F07433291DC431007E144B /* EnemyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyState.swift; sourceTree = "<group>"; };
+		E3F07433291DC431007E144B /* EnemyActionMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyActionMachine.swift; sourceTree = "<group>"; };
 		E3F07436291DC97A007E144B /* StateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateComponent.swift; sourceTree = "<group>"; };
 		E3F07438291DFEE6007E144B /* TargetComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -176,7 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				3D28C259205CF1700058771E /* HealthComponent.swift */,
-				E343C524291A3D05006B73F4 /* LogicComponent.swift */,
+				E343C524291A3D05006B73F4 /* ActionComponent.swift */,
 				3D28C25D205CF6180058771E /* MoveComponent.swift */,
 				E343C51C291A2134006B73F4 /* Component.swift */,
 				E343C51E291A2367006B73F4 /* CollisionComponent.swift */,
@@ -256,9 +252,9 @@
 			isa = PBXGroup;
 			children = (
 				E326C2A129200EEF001FF2FD /* Attacking.swift */,
-				E326C2A329200EFE001FF2FD /* Fleeing.swift */,
 				E326C2A529200F0A001FF2FD /* Chasing.swift */,
 				E326C2A729200F19001FF2FD /* EnemyAction.swift */,
+				E3F07433291DC431007E144B /* EnemyActionMachine.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -335,11 +331,9 @@
 		E3C7B9FF291E877E008A769A /* State */ = {
 			isa = PBXGroup;
 			children = (
-				3D36AA2D2063944A0004A9DF /* EnemyStateMachine.swift */,
-				E39E46AF291DBE1400D42D8E /* ChaseState.swift */,
-				E39E46B1291DBE2200D42D8E /* AttackState.swift */,
+				3D36AA2D2063944A0004A9DF /* ActionMachine.swift */,
+				E39E46AF291DBE1400D42D8E /* CombatState.swift */,
 				E39E46B3291DBE2C00D42D8E /* FleeState.swift */,
-				E3F07433291DC431007E144B /* EnemyState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -386,6 +380,7 @@
 				TargetAttributes = {
 					3DA7C5AD2051FC9D005C60B9 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -450,17 +445,16 @@
 				E343C51D291A2134006B73F4 /* Component.swift in Sources */,
 				3D4D46902058765B00747B26 /* Enemy.swift in Sources */,
 				3D272483274C3C4A0084E7F5 /* Entity.swift in Sources */,
-				E3F07434291DC431007E144B /* EnemyState.swift in Sources */,
+				E3F07434291DC431007E144B /* EnemyActionMachine.swift in Sources */,
 				3DEBB396205B02010017C9BB /* AnalogJoystick.swift in Sources */,
 				3D28C25A205CF1700058771E /* HealthComponent.swift in Sources */,
 				E34DA6D02912AD31009163E1 /* GameConstants.swift in Sources */,
 				E3E11BF0291D872E00208EA2 /* PauseState.swift in Sources */,
-				3D36AA2E2063944A0004A9DF /* EnemyStateMachine.swift in Sources */,
+				3D36AA2E2063944A0004A9DF /* ActionMachine.swift in Sources */,
 				3D55FDE6205B7DB70059FC92 /* Obstacle.swift in Sources */,
 				E34DA6C62912A7BC009163E1 /* SpriteKit+Extensions.swift in Sources */,
-				E326C2A429200EFE001FF2FD /* Fleeing.swift in Sources */,
 				E3F07439291DFEE6007E144B /* TargetComponent.swift in Sources */,
-				E39E46B0291DBE1400D42D8E /* ChaseState.swift in Sources */,
+				E39E46B0291DBE1400D42D8E /* CombatState.swift in Sources */,
 				3DA7C5B82051FC9E005C60B9 /* GameScene.swift in Sources */,
 				3DEDC91C2063549E0076364E /* CGVector+Extensions.swift in Sources */,
 				E3BC023929161878000B807A /* Shaders.swift in Sources */,
@@ -468,7 +462,7 @@
 				3DA7C5BA2051FC9E005C60B9 /* GameViewController.swift in Sources */,
 				3D28C25E205CF6180058771E /* MoveComponent.swift in Sources */,
 				E326C2A629200F0A001FF2FD /* Chasing.swift in Sources */,
-				E343C525291A3D05006B73F4 /* LogicComponent.swift in Sources */,
+				E343C525291A3D05006B73F4 /* ActionComponent.swift in Sources */,
 				E343C523291A316F006B73F4 /* WeaponComponent.swift in Sources */,
 				E39E46B4291DBE2C00D42D8E /* FleeState.swift in Sources */,
 				E3E11BF2291D874300208EA2 /* GameState.swift in Sources */,
@@ -486,7 +480,6 @@
 				3DA7C5CB2051FE71005C60B9 /* Ground.swift in Sources */,
 				3D59A2E3205A60A5006CAB22 /* QuickMaths.swift in Sources */,
 				3DA7C5CD2051FE77005C60B9 /* Player.swift in Sources */,
-				E39E46B2291DBE2200D42D8E /* AttackState.swift in Sources */,
 				3DA7C5B22051FC9E005C60B9 /* AppDelegate.swift in Sources */,
 				E3BC023B2916B97A000B807A /* SKTexture+Extensions.swift in Sources */,
 				E326C2A229200EEF001FF2FD /* Attacking.swift in Sources */,
