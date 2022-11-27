@@ -1,0 +1,949 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E3210A642933EDF800333DB2 /* VoltTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A632933EDF800333DB2 /* VoltTests.swift */; };
+		E3210A6E2933EDF800333DB2 /* VoltUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A6D2933EDF800333DB2 /* VoltUITests.swift */; };
+		E3210A702933EDF800333DB2 /* VoltUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A6F2933EDF800333DB2 /* VoltUITestsLaunchTests.swift */; };
+		E3210ACF2933EEEF00333DB2 /* QuickMaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A7E2933EEEE00333DB2 /* QuickMaths.swift */; };
+		E3210AD02933EEEF00333DB2 /* Useful.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A7F2933EEEE00333DB2 /* Useful.swift */; };
+		E3210AD12933EEEF00333DB2 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A802933EEEE00333DB2 /* Styles.swift */; };
+		E3210AD22933EEEF00333DB2 /* AnalogJoystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A812933EEEE00333DB2 /* AnalogJoystick.swift */; };
+		E3210AD32933EEEF00333DB2 /* RNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A822933EEEE00333DB2 /* RNG.swift */; };
+		E3210AD42933EEEF00333DB2 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A832933EEEE00333DB2 /* Color.swift */; };
+		E3210AD52933EEEF00333DB2 /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A852933EEEE00333DB2 /* Ground.swift */; };
+		E3210AD62933EEEF00333DB2 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A862933EEEE00333DB2 /* Entity.swift */; };
+		E3210AD72933EEEF00333DB2 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A882933EEEE00333DB2 /* Enemy.swift */; };
+		E3210AD82933EEEF00333DB2 /* FleeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A8A2933EEEE00333DB2 /* FleeState.swift */; };
+		E3210AD92933EEEF00333DB2 /* ActionMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A8B2933EEEE00333DB2 /* ActionMachine.swift */; };
+		E3210ADA2933EEEF00333DB2 /* CombatState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A8C2933EEEE00333DB2 /* CombatState.swift */; };
+		E3210ADB2933EEEF00333DB2 /* Attacking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A8E2933EEEE00333DB2 /* Attacking.swift */; };
+		E3210ADC2933EEEF00333DB2 /* Chasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A8F2933EEEE00333DB2 /* Chasing.swift */; };
+		E3210ADD2933EEEF00333DB2 /* EnemyAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A902933EEEE00333DB2 /* EnemyAction.swift */; };
+		E3210ADE2933EEEF00333DB2 /* EnemyActionMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A912933EEEE00333DB2 /* EnemyActionMachine.swift */; };
+		E3210ADF2933EEEF00333DB2 /* DamageResponseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A922933EEEE00333DB2 /* DamageResponseState.swift */; };
+		E3210AE02933EEEF00333DB2 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A932933EEEE00333DB2 /* EntityManager.swift */; };
+		E3210AE12933EEEF00333DB2 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A942933EEEE00333DB2 /* Player.swift */; };
+		E3210AE22933EEEF00333DB2 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A952933EEEE00333DB2 /* Obstacle.swift */; };
+		E3210AE32933EEEF00333DB2 /* StateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A972933EEEE00333DB2 /* StateComponent.swift */; };
+		E3210AE42933EEEF00333DB2 /* LocusComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A982933EEEE00333DB2 /* LocusComponent.swift */; };
+		E3210AE52933EEEF00333DB2 /* HealthComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A992933EEEE00333DB2 /* HealthComponent.swift */; };
+		E3210AE62933EEEF00333DB2 /* WeaponComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A9A2933EEEE00333DB2 /* WeaponComponent.swift */; };
+		E3210AE72933EEEF00333DB2 /* MoveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A9B2933EEEE00333DB2 /* MoveComponent.swift */; };
+		E3210AE82933EEEF00333DB2 /* EvolveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A9C2933EEEE00333DB2 /* EvolveComponent.swift */; };
+		E3210AE92933EEEF00333DB2 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A9D2933EEEE00333DB2 /* Component.swift */; };
+		E3210AEA2933EEEF00333DB2 /* ActionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A9E2933EEEE00333DB2 /* ActionComponent.swift */; };
+		E3210AEB2933EEEF00333DB2 /* CollisionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210A9F2933EEEE00333DB2 /* CollisionComponent.swift */; };
+		E3210AEC2933EEEF00333DB2 /* GameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AA12933EEEE00333DB2 /* GameWorld.swift */; };
+		E3210AED2933EEEF00333DB2 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AA22933EEEE00333DB2 /* GameViewController.swift */; };
+		E3210AEE2933EEEF00333DB2 /* PlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AA42933EEEE00333DB2 /* PlayState.swift */; };
+		E3210AEF2933EEEF00333DB2 /* PauseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AA52933EEEE00333DB2 /* PauseState.swift */; };
+		E3210AF02933EEEF00333DB2 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AA62933EEEE00333DB2 /* GameState.swift */; };
+		E3210AF12933EEEF00333DB2 /* GameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AA72933EEEE00333DB2 /* GameConstants.swift */; };
+		E3210AF22933EEEF00333DB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AA82933EEEE00333DB2 /* AppDelegate.swift */; };
+		E3210AF32933EEEF00333DB2 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AA92933EEEE00333DB2 /* GameScene.swift */; };
+		E3210AF42933EEEF00333DB2 /* Projectile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AAB2933EEEE00333DB2 /* Projectile.swift */; };
+		E3210AF52933EEEF00333DB2 /* PhysicsCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AAC2933EEEE00333DB2 /* PhysicsCategories.swift */; };
+		E3210AF62933EEEF00333DB2 /* CGVector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AAE2933EEEE00333DB2 /* CGVector+Extensions.swift */; };
+		E3210AF72933EEEF00333DB2 /* SKTexture+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AAF2933EEEE00333DB2 /* SKTexture+Extensions.swift */; };
+		E3210AF82933EEEF00333DB2 /* SpriteKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AB02933EEEE00333DB2 /* SpriteKit+Extensions.swift */; };
+		E3210AF92933EEEF00333DB2 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3210AB12933EEEE00333DB2 /* Shaders.swift */; };
+		E3210AFA2933EEEF00333DB2 /* magic.sks in Resources */ = {isa = PBXBuildFile; fileRef = E3210AB32933EEEF00333DB2 /* magic.sks */; };
+		E3210AFB2933EEEF00333DB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3210AB42933EEEF00333DB2 /* Assets.xcassets */; };
+		E3210AFC2933EEEF00333DB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3210AB52933EEEF00333DB2 /* LaunchScreen.storyboard */; };
+		E3210AFD2933EEEF00333DB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3210AB72933EEEF00333DB2 /* Main.storyboard */; };
+		E3210AFE2933EEEF00333DB2 /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = E3210AB92933EEEF00333DB2 /* spark.sks */; };
+		E3210AFF2933EEEF00333DB2 /* talking.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3210ABB2933EEEF00333DB2 /* talking.wav */; };
+		E3210B002933EEEF00333DB2 /* damage-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3210ABC2933EEEF00333DB2 /* damage-1.wav */; };
+		E3210B012933EEEF00333DB2 /* lazer-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3210ABD2933EEEF00333DB2 /* lazer-1.wav */; };
+		E3210B022933EEEF00333DB2 /* soft.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E3210ABE2933EEEF00333DB2 /* soft.mp3 */; };
+		E3210B032933EEEF00333DB2 /* lazer-2.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3210ABF2933EEEF00333DB2 /* lazer-2.wav */; };
+		E3210B042933EEEF00333DB2 /* soft-light.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E3210AC02933EEEF00333DB2 /* soft-light.mp3 */; };
+		E3210B052933EEEF00333DB2 /* boom.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3210AC12933EEEF00333DB2 /* boom.wav */; };
+		E3210B062933EEEF00333DB2 /* bass-shoot-3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E3210AC22933EEEF00333DB2 /* bass-shoot-3.mp3 */; };
+		E3210B072933EEEF00333DB2 /* bass-shoot-2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E3210AC32933EEEF00333DB2 /* bass-shoot-2.mp3 */; };
+		E3210B082933EEEF00333DB2 /* bass-shoot-0.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E3210AC42933EEEF00333DB2 /* bass-shoot-0.mp3 */; };
+		E3210B092933EEEF00333DB2 /* bass-shoot-1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E3210AC52933EEEF00333DB2 /* bass-shoot-1.mp3 */; };
+		E3210B0A2933EEEF00333DB2 /* CircleWave.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E3210AC72933EEEF00333DB2 /* CircleWave.fsh */; };
+		E3210B0B2933EEEF00333DB2 /* SHKWater.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E3210AC82933EEEF00333DB2 /* SHKWater.fsh */; };
+		E3210B0C2933EEEF00333DB2 /* SHKEmbossColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E3210AC92933EEEF00333DB2 /* SHKEmbossColor.fsh */; };
+		E3210B0D2933EEEF00333DB2 /* SHKLightGrid.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E3210ACA2933EEEF00333DB2 /* SHKLightGrid.fsh */; };
+		E3210B0E2933EEEF00333DB2 /* SHKPixelate.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E3210ACB2933EEEF00333DB2 /* SHKPixelate.fsh */; };
+		E3210B0F2933EEEF00333DB2 /* SHKColorize.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E3210ACC2933EEEF00333DB2 /* SHKColorize.fsh */; };
+		E3210B102933EEEF00333DB2 /* SHKCheckerboard.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E3210ACD2933EEEF00333DB2 /* SHKCheckerboard.fsh */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E3210A602933EDF800333DB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3210A3E2933EDF600333DB2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E3210A452933EDF600333DB2;
+			remoteInfo = Volt;
+		};
+		E3210A6A2933EDF800333DB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3210A3E2933EDF600333DB2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E3210A452933EDF600333DB2;
+			remoteInfo = Volt;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E3210A462933EDF600333DB2 /* Volt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Volt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3210A5F2933EDF800333DB2 /* VoltTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoltTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3210A632933EDF800333DB2 /* VoltTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltTests.swift; sourceTree = "<group>"; };
+		E3210A692933EDF800333DB2 /* VoltUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoltUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3210A6D2933EDF800333DB2 /* VoltUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltUITests.swift; sourceTree = "<group>"; };
+		E3210A6F2933EDF800333DB2 /* VoltUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoltUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E3210A7E2933EEEE00333DB2 /* QuickMaths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickMaths.swift; sourceTree = "<group>"; };
+		E3210A7F2933EEEE00333DB2 /* Useful.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Useful.swift; sourceTree = "<group>"; };
+		E3210A802933EEEE00333DB2 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		E3210A812933EEEE00333DB2 /* AnalogJoystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalogJoystick.swift; sourceTree = "<group>"; };
+		E3210A822933EEEE00333DB2 /* RNG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNG.swift; sourceTree = "<group>"; };
+		E3210A832933EEEE00333DB2 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		E3210A852933EEEE00333DB2 /* Ground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
+		E3210A862933EEEE00333DB2 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		E3210A882933EEEE00333DB2 /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
+		E3210A8A2933EEEE00333DB2 /* FleeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FleeState.swift; sourceTree = "<group>"; };
+		E3210A8B2933EEEE00333DB2 /* ActionMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionMachine.swift; sourceTree = "<group>"; };
+		E3210A8C2933EEEE00333DB2 /* CombatState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombatState.swift; sourceTree = "<group>"; };
+		E3210A8E2933EEEE00333DB2 /* Attacking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attacking.swift; sourceTree = "<group>"; };
+		E3210A8F2933EEEE00333DB2 /* Chasing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chasing.swift; sourceTree = "<group>"; };
+		E3210A902933EEEE00333DB2 /* EnemyAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyAction.swift; sourceTree = "<group>"; };
+		E3210A912933EEEE00333DB2 /* EnemyActionMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyActionMachine.swift; sourceTree = "<group>"; };
+		E3210A922933EEEE00333DB2 /* DamageResponseState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DamageResponseState.swift; sourceTree = "<group>"; };
+		E3210A932933EEEE00333DB2 /* EntityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
+		E3210A942933EEEE00333DB2 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		E3210A952933EEEE00333DB2 /* Obstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
+		E3210A972933EEEE00333DB2 /* StateComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateComponent.swift; sourceTree = "<group>"; };
+		E3210A982933EEEE00333DB2 /* LocusComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocusComponent.swift; sourceTree = "<group>"; };
+		E3210A992933EEEE00333DB2 /* HealthComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthComponent.swift; sourceTree = "<group>"; };
+		E3210A9A2933EEEE00333DB2 /* WeaponComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponComponent.swift; sourceTree = "<group>"; };
+		E3210A9B2933EEEE00333DB2 /* MoveComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveComponent.swift; sourceTree = "<group>"; };
+		E3210A9C2933EEEE00333DB2 /* EvolveComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvolveComponent.swift; sourceTree = "<group>"; };
+		E3210A9D2933EEEE00333DB2 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		E3210A9E2933EEEE00333DB2 /* ActionComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionComponent.swift; sourceTree = "<group>"; };
+		E3210A9F2933EEEE00333DB2 /* CollisionComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollisionComponent.swift; sourceTree = "<group>"; };
+		E3210AA12933EEEE00333DB2 /* GameWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWorld.swift; sourceTree = "<group>"; };
+		E3210AA22933EEEE00333DB2 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		E3210AA42933EEEE00333DB2 /* PlayState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayState.swift; sourceTree = "<group>"; };
+		E3210AA52933EEEE00333DB2 /* PauseState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseState.swift; sourceTree = "<group>"; };
+		E3210AA62933EEEE00333DB2 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		E3210AA72933EEEE00333DB2 /* GameConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
+		E3210AA82933EEEE00333DB2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E3210AA92933EEEE00333DB2 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		E3210AAB2933EEEE00333DB2 /* Projectile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Projectile.swift; sourceTree = "<group>"; };
+		E3210AAC2933EEEE00333DB2 /* PhysicsCategories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicsCategories.swift; sourceTree = "<group>"; };
+		E3210AAE2933EEEE00333DB2 /* CGVector+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGVector+Extensions.swift"; sourceTree = "<group>"; };
+		E3210AAF2933EEEE00333DB2 /* SKTexture+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKTexture+Extensions.swift"; sourceTree = "<group>"; };
+		E3210AB02933EEEE00333DB2 /* SpriteKit+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpriteKit+Extensions.swift"; sourceTree = "<group>"; };
+		E3210AB12933EEEE00333DB2 /* Shaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
+		E3210AB32933EEEF00333DB2 /* magic.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = magic.sks; sourceTree = "<group>"; };
+		E3210AB42933EEEF00333DB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E3210AB62933EEEF00333DB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E3210AB82933EEEF00333DB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E3210AB92933EEEF00333DB2 /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
+		E3210ABB2933EEEF00333DB2 /* talking.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = talking.wav; sourceTree = "<group>"; };
+		E3210ABC2933EEEF00333DB2 /* damage-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "damage-1.wav"; sourceTree = "<group>"; };
+		E3210ABD2933EEEF00333DB2 /* lazer-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "lazer-1.wav"; sourceTree = "<group>"; };
+		E3210ABE2933EEEF00333DB2 /* soft.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = soft.mp3; sourceTree = "<group>"; };
+		E3210ABF2933EEEF00333DB2 /* lazer-2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "lazer-2.wav"; sourceTree = "<group>"; };
+		E3210AC02933EEEF00333DB2 /* soft-light.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "soft-light.mp3"; sourceTree = "<group>"; };
+		E3210AC12933EEEF00333DB2 /* boom.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boom.wav; sourceTree = "<group>"; };
+		E3210AC22933EEEF00333DB2 /* bass-shoot-3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bass-shoot-3.mp3"; sourceTree = "<group>"; };
+		E3210AC32933EEEF00333DB2 /* bass-shoot-2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bass-shoot-2.mp3"; sourceTree = "<group>"; };
+		E3210AC42933EEEF00333DB2 /* bass-shoot-0.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bass-shoot-0.mp3"; sourceTree = "<group>"; };
+		E3210AC52933EEEF00333DB2 /* bass-shoot-1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bass-shoot-1.mp3"; sourceTree = "<group>"; };
+		E3210AC72933EEEF00333DB2 /* CircleWave.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CircleWave.fsh; sourceTree = "<group>"; };
+		E3210AC82933EEEF00333DB2 /* SHKWater.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SHKWater.fsh; sourceTree = "<group>"; };
+		E3210AC92933EEEF00333DB2 /* SHKEmbossColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SHKEmbossColor.fsh; sourceTree = "<group>"; };
+		E3210ACA2933EEEF00333DB2 /* SHKLightGrid.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SHKLightGrid.fsh; sourceTree = "<group>"; };
+		E3210ACB2933EEEF00333DB2 /* SHKPixelate.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SHKPixelate.fsh; sourceTree = "<group>"; };
+		E3210ACC2933EEEF00333DB2 /* SHKColorize.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SHKColorize.fsh; sourceTree = "<group>"; };
+		E3210ACD2933EEEF00333DB2 /* SHKCheckerboard.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SHKCheckerboard.fsh; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E3210A432933EDF600333DB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3210A5C2933EDF800333DB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3210A662933EDF800333DB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E3210A3D2933EDF600333DB2 = {
+			isa = PBXGroup;
+			children = (
+				E3210A482933EDF600333DB2 /* Volt */,
+				E3210A622933EDF800333DB2 /* VoltTests */,
+				E3210A6C2933EDF800333DB2 /* VoltUITests */,
+				E3210A472933EDF600333DB2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E3210A472933EDF600333DB2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3210A462933EDF600333DB2 /* Volt.app */,
+				E3210A5F2933EDF800333DB2 /* VoltTests.xctest */,
+				E3210A692933EDF800333DB2 /* VoltUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3210A482933EDF600333DB2 /* Volt */ = {
+			isa = PBXGroup;
+			children = (
+				E3210AB22933EEEF00333DB2 /* Assets */,
+				E3210A962933EEEE00333DB2 /* Components */,
+				E3210A842933EEEE00333DB2 /* Entities */,
+				E3210AAD2933EEEE00333DB2 /* Extensions */,
+				E3210AA02933EEEE00333DB2 /* Game */,
+				E3210A7D2933EEEE00333DB2 /* Helper */,
+				E3210AAA2933EEEE00333DB2 /* Nodes */,
+			);
+			path = Volt;
+			sourceTree = "<group>";
+		};
+		E3210A622933EDF800333DB2 /* VoltTests */ = {
+			isa = PBXGroup;
+			children = (
+				E3210A632933EDF800333DB2 /* VoltTests.swift */,
+			);
+			path = VoltTests;
+			sourceTree = "<group>";
+		};
+		E3210A6C2933EDF800333DB2 /* VoltUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E3210A6D2933EDF800333DB2 /* VoltUITests.swift */,
+				E3210A6F2933EDF800333DB2 /* VoltUITestsLaunchTests.swift */,
+			);
+			path = VoltUITests;
+			sourceTree = "<group>";
+		};
+		E3210A7D2933EEEE00333DB2 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				E3210A7E2933EEEE00333DB2 /* QuickMaths.swift */,
+				E3210A7F2933EEEE00333DB2 /* Useful.swift */,
+				E3210A802933EEEE00333DB2 /* Styles.swift */,
+				E3210A812933EEEE00333DB2 /* AnalogJoystick.swift */,
+				E3210A822933EEEE00333DB2 /* RNG.swift */,
+				E3210A832933EEEE00333DB2 /* Color.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		E3210A842933EEEE00333DB2 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				E3210A852933EEEE00333DB2 /* Ground.swift */,
+				E3210A862933EEEE00333DB2 /* Entity.swift */,
+				E3210A872933EEEE00333DB2 /* Enemy */,
+				E3210A932933EEEE00333DB2 /* EntityManager.swift */,
+				E3210A942933EEEE00333DB2 /* Player.swift */,
+				E3210A952933EEEE00333DB2 /* Obstacle.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		E3210A872933EEEE00333DB2 /* Enemy */ = {
+			isa = PBXGroup;
+			children = (
+				E3210A882933EEEE00333DB2 /* Enemy.swift */,
+				E3210A892933EEEE00333DB2 /* State */,
+				E3210A8D2933EEEE00333DB2 /* Action */,
+				E3210A922933EEEE00333DB2 /* DamageResponseState.swift */,
+			);
+			path = Enemy;
+			sourceTree = "<group>";
+		};
+		E3210A892933EEEE00333DB2 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				E3210A8A2933EEEE00333DB2 /* FleeState.swift */,
+				E3210A8B2933EEEE00333DB2 /* ActionMachine.swift */,
+				E3210A8C2933EEEE00333DB2 /* CombatState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		E3210A8D2933EEEE00333DB2 /* Action */ = {
+			isa = PBXGroup;
+			children = (
+				E3210A8E2933EEEE00333DB2 /* Attacking.swift */,
+				E3210A8F2933EEEE00333DB2 /* Chasing.swift */,
+				E3210A902933EEEE00333DB2 /* EnemyAction.swift */,
+				E3210A912933EEEE00333DB2 /* EnemyActionMachine.swift */,
+			);
+			path = Action;
+			sourceTree = "<group>";
+		};
+		E3210A962933EEEE00333DB2 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E3210A972933EEEE00333DB2 /* StateComponent.swift */,
+				E3210A982933EEEE00333DB2 /* LocusComponent.swift */,
+				E3210A992933EEEE00333DB2 /* HealthComponent.swift */,
+				E3210A9A2933EEEE00333DB2 /* WeaponComponent.swift */,
+				E3210A9B2933EEEE00333DB2 /* MoveComponent.swift */,
+				E3210A9C2933EEEE00333DB2 /* EvolveComponent.swift */,
+				E3210A9D2933EEEE00333DB2 /* Component.swift */,
+				E3210A9E2933EEEE00333DB2 /* ActionComponent.swift */,
+				E3210A9F2933EEEE00333DB2 /* CollisionComponent.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		E3210AA02933EEEE00333DB2 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				E3210AA12933EEEE00333DB2 /* GameWorld.swift */,
+				E3210AA22933EEEE00333DB2 /* GameViewController.swift */,
+				E3210AA32933EEEE00333DB2 /* States */,
+				E3210AA72933EEEE00333DB2 /* GameConstants.swift */,
+				E3210AA82933EEEE00333DB2 /* AppDelegate.swift */,
+				E3210AA92933EEEE00333DB2 /* GameScene.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		E3210AA32933EEEE00333DB2 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				E3210AA42933EEEE00333DB2 /* PlayState.swift */,
+				E3210AA52933EEEE00333DB2 /* PauseState.swift */,
+				E3210AA62933EEEE00333DB2 /* GameState.swift */,
+			);
+			path = States;
+			sourceTree = "<group>";
+		};
+		E3210AAA2933EEEE00333DB2 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				E3210AAB2933EEEE00333DB2 /* Projectile.swift */,
+				E3210AAC2933EEEE00333DB2 /* PhysicsCategories.swift */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		E3210AAD2933EEEE00333DB2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E3210AAE2933EEEE00333DB2 /* CGVector+Extensions.swift */,
+				E3210AAF2933EEEE00333DB2 /* SKTexture+Extensions.swift */,
+				E3210AB02933EEEE00333DB2 /* SpriteKit+Extensions.swift */,
+				E3210AB12933EEEE00333DB2 /* Shaders.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E3210AB22933EEEF00333DB2 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				E3210AB32933EEEF00333DB2 /* magic.sks */,
+				E3210AB42933EEEF00333DB2 /* Assets.xcassets */,
+				E3210AB52933EEEF00333DB2 /* LaunchScreen.storyboard */,
+				E3210AB72933EEEF00333DB2 /* Main.storyboard */,
+				E3210AB92933EEEF00333DB2 /* spark.sks */,
+				E3210ABA2933EEEF00333DB2 /* Sounds */,
+				E3210AC62933EEEF00333DB2 /* Shaders */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		E3210ABA2933EEEF00333DB2 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				E3210ABB2933EEEF00333DB2 /* talking.wav */,
+				E3210ABC2933EEEF00333DB2 /* damage-1.wav */,
+				E3210ABD2933EEEF00333DB2 /* lazer-1.wav */,
+				E3210ABE2933EEEF00333DB2 /* soft.mp3 */,
+				E3210ABF2933EEEF00333DB2 /* lazer-2.wav */,
+				E3210AC02933EEEF00333DB2 /* soft-light.mp3 */,
+				E3210AC12933EEEF00333DB2 /* boom.wav */,
+				E3210AC22933EEEF00333DB2 /* bass-shoot-3.mp3 */,
+				E3210AC32933EEEF00333DB2 /* bass-shoot-2.mp3 */,
+				E3210AC42933EEEF00333DB2 /* bass-shoot-0.mp3 */,
+				E3210AC52933EEEF00333DB2 /* bass-shoot-1.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		E3210AC62933EEEF00333DB2 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				E3210AC72933EEEF00333DB2 /* CircleWave.fsh */,
+				E3210AC82933EEEF00333DB2 /* SHKWater.fsh */,
+				E3210AC92933EEEF00333DB2 /* SHKEmbossColor.fsh */,
+				E3210ACA2933EEEF00333DB2 /* SHKLightGrid.fsh */,
+				E3210ACB2933EEEF00333DB2 /* SHKPixelate.fsh */,
+				E3210ACC2933EEEF00333DB2 /* SHKColorize.fsh */,
+				E3210ACD2933EEEF00333DB2 /* SHKCheckerboard.fsh */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E3210A452933EDF600333DB2 /* Volt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3210A732933EDF800333DB2 /* Build configuration list for PBXNativeTarget "Volt" */;
+			buildPhases = (
+				E3210A422933EDF600333DB2 /* Sources */,
+				E3210A432933EDF600333DB2 /* Frameworks */,
+				E3210A442933EDF600333DB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Volt;
+			productName = Volt;
+			productReference = E3210A462933EDF600333DB2 /* Volt.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E3210A5E2933EDF800333DB2 /* VoltTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3210A762933EDF800333DB2 /* Build configuration list for PBXNativeTarget "VoltTests" */;
+			buildPhases = (
+				E3210A5B2933EDF800333DB2 /* Sources */,
+				E3210A5C2933EDF800333DB2 /* Frameworks */,
+				E3210A5D2933EDF800333DB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3210A612933EDF800333DB2 /* PBXTargetDependency */,
+			);
+			name = VoltTests;
+			productName = VoltTests;
+			productReference = E3210A5F2933EDF800333DB2 /* VoltTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E3210A682933EDF800333DB2 /* VoltUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3210A792933EDF800333DB2 /* Build configuration list for PBXNativeTarget "VoltUITests" */;
+			buildPhases = (
+				E3210A652933EDF800333DB2 /* Sources */,
+				E3210A662933EDF800333DB2 /* Frameworks */,
+				E3210A672933EDF800333DB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3210A6B2933EDF800333DB2 /* PBXTargetDependency */,
+			);
+			name = VoltUITests;
+			productName = VoltUITests;
+			productReference = E3210A692933EDF800333DB2 /* VoltUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E3210A3E2933EDF600333DB2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					E3210A452933EDF600333DB2 = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					E3210A5E2933EDF800333DB2 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = E3210A452933EDF600333DB2;
+					};
+					E3210A682933EDF800333DB2 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = E3210A452933EDF600333DB2;
+					};
+				};
+			};
+			buildConfigurationList = E3210A412933EDF600333DB2 /* Build configuration list for PBXProject "Volt" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E3210A3D2933EDF600333DB2;
+			productRefGroup = E3210A472933EDF600333DB2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E3210A452933EDF600333DB2 /* Volt */,
+				E3210A5E2933EDF800333DB2 /* VoltTests */,
+				E3210A682933EDF800333DB2 /* VoltUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E3210A442933EDF600333DB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3210B0D2933EEEF00333DB2 /* SHKLightGrid.fsh in Resources */,
+				E3210B092933EEEF00333DB2 /* bass-shoot-1.mp3 in Resources */,
+				E3210B042933EEEF00333DB2 /* soft-light.mp3 in Resources */,
+				E3210B0C2933EEEF00333DB2 /* SHKEmbossColor.fsh in Resources */,
+				E3210B102933EEEF00333DB2 /* SHKCheckerboard.fsh in Resources */,
+				E3210B012933EEEF00333DB2 /* lazer-1.wav in Resources */,
+				E3210AFE2933EEEF00333DB2 /* spark.sks in Resources */,
+				E3210AFD2933EEEF00333DB2 /* Main.storyboard in Resources */,
+				E3210B0B2933EEEF00333DB2 /* SHKWater.fsh in Resources */,
+				E3210B062933EEEF00333DB2 /* bass-shoot-3.mp3 in Resources */,
+				E3210B0E2933EEEF00333DB2 /* SHKPixelate.fsh in Resources */,
+				E3210AFC2933EEEF00333DB2 /* LaunchScreen.storyboard in Resources */,
+				E3210B032933EEEF00333DB2 /* lazer-2.wav in Resources */,
+				E3210AFB2933EEEF00333DB2 /* Assets.xcassets in Resources */,
+				E3210B022933EEEF00333DB2 /* soft.mp3 in Resources */,
+				E3210B002933EEEF00333DB2 /* damage-1.wav in Resources */,
+				E3210B0A2933EEEF00333DB2 /* CircleWave.fsh in Resources */,
+				E3210AFF2933EEEF00333DB2 /* talking.wav in Resources */,
+				E3210B0F2933EEEF00333DB2 /* SHKColorize.fsh in Resources */,
+				E3210B052933EEEF00333DB2 /* boom.wav in Resources */,
+				E3210B072933EEEF00333DB2 /* bass-shoot-2.mp3 in Resources */,
+				E3210B082933EEEF00333DB2 /* bass-shoot-0.mp3 in Resources */,
+				E3210AFA2933EEEF00333DB2 /* magic.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3210A5D2933EDF800333DB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3210A672933EDF800333DB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E3210A422933EDF600333DB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3210AD12933EEEF00333DB2 /* Styles.swift in Sources */,
+				E3210AEE2933EEEF00333DB2 /* PlayState.swift in Sources */,
+				E3210AD22933EEEF00333DB2 /* AnalogJoystick.swift in Sources */,
+				E3210AE22933EEEF00333DB2 /* Obstacle.swift in Sources */,
+				E3210AF12933EEEF00333DB2 /* GameConstants.swift in Sources */,
+				E3210AE32933EEEF00333DB2 /* StateComponent.swift in Sources */,
+				E3210AEC2933EEEF00333DB2 /* GameWorld.swift in Sources */,
+				E3210AE02933EEEF00333DB2 /* EntityManager.swift in Sources */,
+				E3210AD52933EEEF00333DB2 /* Ground.swift in Sources */,
+				E3210AEF2933EEEF00333DB2 /* PauseState.swift in Sources */,
+				E3210AF52933EEEF00333DB2 /* PhysicsCategories.swift in Sources */,
+				E3210ACF2933EEEF00333DB2 /* QuickMaths.swift in Sources */,
+				E3210ADE2933EEEF00333DB2 /* EnemyActionMachine.swift in Sources */,
+				E3210AF22933EEEF00333DB2 /* AppDelegate.swift in Sources */,
+				E3210AD62933EEEF00333DB2 /* Entity.swift in Sources */,
+				E3210AEA2933EEEF00333DB2 /* ActionComponent.swift in Sources */,
+				E3210AD72933EEEF00333DB2 /* Enemy.swift in Sources */,
+				E3210AE92933EEEF00333DB2 /* Component.swift in Sources */,
+				E3210ADF2933EEEF00333DB2 /* DamageResponseState.swift in Sources */,
+				E3210AE72933EEEF00333DB2 /* MoveComponent.swift in Sources */,
+				E3210AF62933EEEF00333DB2 /* CGVector+Extensions.swift in Sources */,
+				E3210ADD2933EEEF00333DB2 /* EnemyAction.swift in Sources */,
+				E3210AE42933EEEF00333DB2 /* LocusComponent.swift in Sources */,
+				E3210AD02933EEEF00333DB2 /* Useful.swift in Sources */,
+				E3210AE52933EEEF00333DB2 /* HealthComponent.swift in Sources */,
+				E3210AD32933EEEF00333DB2 /* RNG.swift in Sources */,
+				E3210AEB2933EEEF00333DB2 /* CollisionComponent.swift in Sources */,
+				E3210AF32933EEEF00333DB2 /* GameScene.swift in Sources */,
+				E3210AD42933EEEF00333DB2 /* Color.swift in Sources */,
+				E3210AED2933EEEF00333DB2 /* GameViewController.swift in Sources */,
+				E3210AF42933EEEF00333DB2 /* Projectile.swift in Sources */,
+				E3210AF82933EEEF00333DB2 /* SpriteKit+Extensions.swift in Sources */,
+				E3210AF02933EEEF00333DB2 /* GameState.swift in Sources */,
+				E3210ADB2933EEEF00333DB2 /* Attacking.swift in Sources */,
+				E3210AD82933EEEF00333DB2 /* FleeState.swift in Sources */,
+				E3210AF92933EEEF00333DB2 /* Shaders.swift in Sources */,
+				E3210AD92933EEEF00333DB2 /* ActionMachine.swift in Sources */,
+				E3210AE12933EEEF00333DB2 /* Player.swift in Sources */,
+				E3210AE62933EEEF00333DB2 /* WeaponComponent.swift in Sources */,
+				E3210ADA2933EEEF00333DB2 /* CombatState.swift in Sources */,
+				E3210AE82933EEEF00333DB2 /* EvolveComponent.swift in Sources */,
+				E3210ADC2933EEEF00333DB2 /* Chasing.swift in Sources */,
+				E3210AF72933EEEF00333DB2 /* SKTexture+Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3210A5B2933EDF800333DB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3210A642933EDF800333DB2 /* VoltTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3210A652933EDF800333DB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3210A6E2933EDF800333DB2 /* VoltUITests.swift in Sources */,
+				E3210A702933EDF800333DB2 /* VoltUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E3210A612933EDF800333DB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E3210A452933EDF600333DB2 /* Volt */;
+			targetProxy = E3210A602933EDF800333DB2 /* PBXContainerItemProxy */;
+		};
+		E3210A6B2933EDF800333DB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E3210A452933EDF600333DB2 /* Volt */;
+			targetProxy = E3210A6A2933EDF800333DB2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E3210AB52933EEEF00333DB2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3210AB62933EEEF00333DB2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E3210AB72933EEEF00333DB2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3210AB82933EEEF00333DB2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E3210A712933EDF800333DB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E3210A722933EDF800333DB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E3210A742933EDF800333DB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RFQY6T2L4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.liwtec.Volt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E3210A752933EDF800333DB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RFQY6T2L4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.liwtec.Volt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E3210A772933EDF800333DB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RFQY6T2L4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.liwtec.VoltTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Volt.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Volt";
+			};
+			name = Debug;
+		};
+		E3210A782933EDF800333DB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RFQY6T2L4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.liwtec.VoltTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Volt.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Volt";
+			};
+			name = Release;
+		};
+		E3210A7A2933EDF800333DB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RFQY6T2L4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.liwtec.VoltUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Volt;
+			};
+			name = Debug;
+		};
+		E3210A7B2933EDF800333DB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RFQY6T2L4D;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.liwtec.VoltUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Volt;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E3210A412933EDF600333DB2 /* Build configuration list for PBXProject "Volt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3210A712933EDF800333DB2 /* Debug */,
+				E3210A722933EDF800333DB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3210A732933EDF800333DB2 /* Build configuration list for PBXNativeTarget "Volt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3210A742933EDF800333DB2 /* Debug */,
+				E3210A752933EDF800333DB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3210A762933EDF800333DB2 /* Build configuration list for PBXNativeTarget "VoltTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3210A772933EDF800333DB2 /* Debug */,
+				E3210A782933EDF800333DB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3210A792933EDF800333DB2 /* Build configuration list for PBXNativeTarget "VoltUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3210A7A2933EDF800333DB2 /* Debug */,
+				E3210A7B2933EDF800333DB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E3210A3E2933EDF600333DB2 /* Project object */;
+}
