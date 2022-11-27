@@ -72,6 +72,7 @@ class GameScene: SKScene {
     
     if let scene = scene {
       scene.physicsWorld.gravity = .zero
+      scene.view!.isMultipleTouchEnabled = true
     }
     setupScene()
   }
@@ -90,54 +91,58 @@ class GameScene: SKScene {
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    guard let touch = touches.first else { return }
-    if stateMachine.currentState is PauseState {
-      stateMachine.enter(PlayState.self)
-    }
-    touchLocation = touch.location(in: cam)
-    
-    if touchLocation.x < -cam.frame.size.width * 0.75 {
-      movePlayerStick.position = touchLocation
-    } else if touchLocation.x < -cam.frame.size.width * 0.75 {
-      shootPlayerStick.position = touchLocation
-    }
-    
-    // Get UI node that was touched.
-    let touchedNodes = cam.nodes(at: touchLocation)
-    for node in touchedNodes {
-      if node.name == "restartButton" {
-        let scene = GameScene(size: size)
-        scene.scaleMode = scaleMode
-        let animation = SKTransition.fade(withDuration: 0.2)
-        view?.presentScene(scene, transition: animation)
-      } else if node.name == "movePlayerStick" {
+    for touch in touches {
+      if stateMachine.currentState is PauseState {
+        stateMachine.enter(PlayState.self)
+      }
+      touchLocation = touch.location(in: cam)
+      
+      if touchLocation.x < -size.width * 0.05 {
+        movePlayerStick.position = touchLocation
         movePlayerStick.forceBegan(touches, with: event)
-      } else if node.name == "shootPlayerStick" {
+      } else if touchLocation.x > size.width * 0.05 {
+        shootPlayerStick.position = touchLocation
         shootPlayerStick.forceBegan(touches, with: event)
       }
+      
+      // Get UI node that was touched.
+      let touchedNodes = cam.nodes(at: touchLocation)
+      for node in touchedNodes {
+        if node.name == "restartButton" {
+          let scene = GameScene(size: size)
+          scene.scaleMode = scaleMode
+          let animation = SKTransition.fade(withDuration: 0.2)
+          view?.presentScene(scene, transition: animation)
+        }
+      }
+      
+      touchDown = true
     }
-    
-    touchDown = true
   }
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    guard let touch = touches.first else { return }
-    let touchLocation = touch.location(in: cam)
-    for touchedNode in cam.nodes(at: touchLocation) {
-      if touchedNode.name == "movePlayerStick" {
+    for touch in touches {
+     let touchLocation = touch.location(in: cam)
+      print((touchLocation, size.width * 0.5))
+      if touchLocation.x < -size.width * 0.05 {
         movePlayerStick.touchesMoved(touches, with: event)
-      }
-      if touchedNode.name == "shootPlayerStick" {
+        if movePlayerStick.position.distance(to: touchLocation) > movePlayerStick.maxDistantion * 2 {
+          movePlayerStick.position = touchLocation
+        }
+      } else if touchLocation.x > size.width * 0.05 {
         shootPlayerStick.touchesMoved(touches, with: event)
+        if shootPlayerStick.position.distance(to: touchLocation) > shootPlayerStick.maxDistantion * 2 {
+          shootPlayerStick.position = touchLocation
+        }
       }
     }
   }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    touchDown = false
     
     guard let touch = touches.first else { return }
     let touchLocation = touch.location(in: cam)
+    touchDown = false
     
     if touchLocation.x < 0 {
         movePlayerStick.touchesEnded(touches, with: event)

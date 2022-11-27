@@ -168,6 +168,9 @@ open class AnalogJoystick: SKNode {
     }
   }
   
+  
+  var maxDistantion: CGFloat { substrate.radius * 2 }
+  
   init(substrate: AnalogJoystickSubstrate, stick: AnalogJoystickStick) {
     super.init()
     self.substrate = substrate
@@ -220,7 +223,6 @@ open class AnalogJoystick: SKNode {
     tracking = true
     if haptics { tapFeedback(intensity: 1)}
     beginHandler?()
-    touchesBegan(touches, with: event)
   }
   
   open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -232,7 +234,8 @@ open class AnalogJoystick: SKNode {
         return
       }
       
-      let maxDistantion = substrate.radius
+      guard location.distance(to: stick.position) < maxDistantion  else { return }
+      
       let realDistantion = sqrt(pow(location.x, 2) + pow(location.y, 2))
       let needPosition = realDistantion <= maxDistantion ? CGPoint(x: location.x, y: location.y) : CGPoint(x: location.x / realDistantion * maxDistantion, y: location.y / realDistantion * maxDistantion)
 
